@@ -1,19 +1,21 @@
+//script
+//setting file variables, decryption key, etc.
 file temp;
 string[] contents;
 string filename="soundsdata.dat";
-string decryption_key="superpollo1234567890MCY";
+string decryption_key="";
 string end="";
 pack_file pfile;
 void main()
 {
 if (filename=="")
 {
-alert("error!","Error extractin sounds file...");
+alert("error!","Error extractin sounds file... Ops, se ha producido un error al extraer el paquete de sonidos...");
 exit();
 }
 if (get_last_error()==-12)
 {
-alert("error","an error has caused the program to fail the extraction. exiting");
+alert("error","an error has caused the program to fail the extraction. exiting. El programa ha causado un fallo durante la estracción del paquete. Saliendo...");
 exit();
 }
 if (get_last_error()==-12)
@@ -36,8 +38,10 @@ directory_create("sounds/"+filename+"/decrypted");
 }
 string output;
 double temp=-1;
-show_game_window("extracting sounds");
+//show the window:
+show_game_window("extracting soundpack. Extrayendo paquete de sonidos.");
 for (double i=0; i<contents.length(); i++)
+//setting the extraction progress:
 {
 double percent=(i+1)/contents.length()*100.0;
 percent=round(percent,0);
@@ -60,6 +64,7 @@ directory_delete("sounds/"+filename+"/decrypted");
 }
 tone_synth progress_synth;
 sound@ progress_sound;
+//setting the percentage function in audio.
 void beep_percentage(double val)
 {
 val=round(val,0);
@@ -68,7 +73,7 @@ if(val>100) val=100;
 double freq=110*2**(val/25);
 progress_synth.waveform_type=4;
 progress_synth.set_edge_fades(1,1);
-progress_synth.freq_ms(""+freq,40);
+progress_synth.freq_ms(""+freq,65);
 @progress_sound=progress_synth.write_wave_sound();
 progress_synth.reset();
 progress_sound.play();

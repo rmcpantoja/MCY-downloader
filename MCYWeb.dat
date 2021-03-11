@@ -1,0 +1,15 @@
+[updater]
+LatestVersion=0.7
+soundsversion=0.7
+updater.exe=1.1.0.4
+[portable[
+What is the download link=no
+[setup pack]
+What is the download link=no
+[Sounds]
+What is the download link=no
+[motd]
+Latest=3
+mode=text
+text1=¡Hola! Se ha creado una versión de 32 bits para este programa. Puedes enconttrarlo en la sección de programas en la web. Así mismo, se encuentran los demás enlaces para los usuarios de 64. Así mismo, me había percatado de que la versión instalador de Google Drive se detectó recientemente como archivo infectado, pero la trataré de resubir uno de estos días. Descarga aquí: http://mateocedillo.260mb.net/programs.html
+text2=Hello! A 32-bit version has been created for this program. You can find it in the programs section on the web. Likewise, there are the other links for 64 users. Also, I had noticed that the Google Drive installer version was recently detected as an infected file, but I will try to re-upload it one of these days. Download here: http://mateocedillo.260mb.net/programs.html
