@@ -1,0 +1,13 @@
+Update messajes:
+Updating...
+Please wait while MCY Downloader updates.
+This will not take long.
+Notas de teclado
+1. Añadir mensajes de activado/desactivado de letras
+2. Mejorar las traducciones para los comandos de edición y más
+3. Capturar lo que se está cortando, copiando, pegando, seleccionando o deshaciendo, para que tenga más sentido.
+ACTUALIZAR Speak UDF a la 0.2.
+Haz que reemplace el ispressed por hotKeyset para mayor rendimiento.
+hay un bug cuando activas y desactivas la lectura al escribir.
+Añadiendo el soporte para leer las teclas especiales
+agregado lector (reader) esto para lectores de pantalla, migrado desde el antiguo de bgt pero con nuevas funciones y en AutoIt.
