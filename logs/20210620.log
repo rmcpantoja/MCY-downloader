@@ -1,0 +1,29 @@
+2021-06-20 14:30: Initialicing...
+2021-06-20 14:30: Checking architecture
+2021-06-20 14:30: Windows 64 bit
+2021-06-20 14:30: Checking program copy...
+2021-06-20 14:30: Copy: Portable.
+2021-06-20 14:30: Checking for updates...
+2021-06-20 14:30: Warning! Update available. Your version:0.0.0.0. New version:0.8.1
+2021-06-20 14:31: Initialicing...
+2021-06-20 14:31: Checking architecture
+2021-06-20 14:31: Windows 64 bit
+2021-06-20 14:31: Checking program copy...
+2021-06-20 14:31: Copy: Portable.
+2021-06-20 14:31: Checking for updates...
+2021-06-20 14:31: Website motd: 5
+2021-06-20 14:31: actual motd: 5
+2021-06-20 14:31: Welcome! Saludos angel, Y Bienvenido a MCY downloader, versión 0.8.1 beta
+2021-06-20 14:31: Creating multimedia folders:
+2021-06-20 14:31: Downloading Multimedia.
+2021-06-20 14:31: Downloading as Mp3
+2021-06-20 14:31: Starting process...
+2021-06-20 14:31: downloading https://www.youtube.com/watch?v=XdU3dl9qUSo
+2021-06-20 14:31: [download]   3.5% of 3.54MiB at  4.67MiB/s ETA 00:00 
+2021-06-20 14:31: [download]   7.0% of 3.54MiB at  5.03MiB/s ETA 00:00 [download]  14.1% of 3.54MiB at  5.71MiB/s ETA 00:00 
+2021-06-20 14:31: [download]  28.2% of 3.54MiB at  5.35MiB/s ETA 00:00 
+2021-06-20 14:31: [download]  56.5% of 3.54MiB at  5.76MiB/s ETA 00:00 
+2021-06-20 14:32: [download] 100.0% of 3.54MiB at  5.78MiB/s ETA 00:00 [download] 100% of 3.54MiB in 00:00                  
+
+2021-06-20 14:32: video Downloaded. Open Folder=yes. Opening: C:\MCY\Download\Audio
+2021-06-20 14:32: exiting...
