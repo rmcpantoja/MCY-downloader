@@ -1,4 +1,4 @@
-;Auto Actualizador (Auto updater)
+;Auto updater
 ;Created by Mateo Cedillo.
 ;Script:
 ;Including scripts
@@ -100,8 +100,8 @@ $iTotalDownloaded /= 1024
 If (Int($iTotalDownloaded) = 0) Then Return Round($iTotalDownloaded * 1024, $iPlaces) & " " & $aSize[$i]
 Next
 EndFunc
-func _Updater_Update($S_executable, $S_URLinstallable, $S_URLPortable)
-$bagground = $device.opensound ("sounds\soundsdata.dat\update.ogg", 0)
+func _Updater_Update($S_executable, $S_URLPortable)
+$bagground = $device.opensound ("sounds/soundsdata.dat/update.ogg", true)
 $sLanguage = iniRead ("config\config.st", "General settings", "language", "")
 $ReadAccs = iniRead ("config\config.st", "Accessibility", "Enable enanced accessibility", "")
 $bagground.play
@@ -112,16 +112,9 @@ ProgressOn("Descargando actualización.", "espera...", "0%", 100, 100, 16)
 case $sLanguage ="Eng"
 ProgressOn("Downloading update.", "Please wait...", "0%", 100, 100, 16)
 endselect
-$type = iniRead ("config\config.st", "General settings", "Program Type", "")
 $iPlaces = 2
-select
-case $type ="installable"
-$AppUrl = $s_URLInstallable
-$fldr = 'MCY_Setup_Package.exe'
-case $type ="portable"
 $AppUrl = $S_URLPortable
 $fldr = 'Extract.exe'
-endselect
 $hInet = InetGet($AppUrl, $fldr, 1, 1)
 $URLSize = InetGetSize($AppUrl)
 While Not InetGetInfo($hInet, 2)
@@ -142,7 +135,7 @@ select
 case $ReadAccs ="yes"
 speaking("FileSize in bites:" & $URLSize & ". Downloaded: " & $Size& ". Progress: " & $Percentage & "%. Remaining: " & $iSize)
 case $ReadAccs ="no"
-msgbox (0, "Information", "FileSize in bites:" & $URLSize & ". Downloaded: " & $Size& ". Progress: " & $Percentage & "%. Remaining: " & $iSize)
+msgbox (48, "Information", "FileSize in bites:" & $URLSize & ". Downloaded: " & $Size& ". Progress: " & $Percentage & "%. Remaining: " & $iSize)
 endselect
 endif
 WEnd
@@ -159,20 +152,11 @@ case $sLanguage ="Eng"
 ProgressSet(99, "Installing update.", "Please wait while the program updates")
 endselect
 sleep(3000)
-select
-case $type ="installable"
-run("MCY_Setup_package.exe /silent")
-sleep(1000)
-$bagground2.stop
-ProgressOff()
-exitpersonaliced()
-case $type ="portable"
 run("extract.exe")
 sleep(1000)
 $bagground.stop
 ProgressOff()
 exitpersonaliced()
-endselect
 endfunc
 func DownloadEMK()
 $sLanguage = iniRead ("config\config.st", "General settings", "language", "")
@@ -212,9 +196,9 @@ ProgressSet(90, "ending up", "ending up... Please wait.")
 endselect
 select
 case $sLanguage ="Es"
-ProgressSet(99, "Instalando la actualización.", "Emulate keys se está instalando.")
+ProgressSet(99, "Instalando la actualización.", "El programa se está actualizando.")
 case $sLanguage ="Eng"
-ProgressSet(99, "Installing update.", "Emulate keys is installing.")
+ProgressSet(99, "Installing update.", "The program is updating.")
 endselect
 sleep(4000)
 $process = ProcessExists("EMK.exe")

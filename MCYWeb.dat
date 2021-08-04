@@ -1,7 +1,6 @@
 [updater]
-LatestVersion=0.7
+LatestVersion=0.9
 soundsversion=0.7
-updater.exe=1.1.0.4
 [portable[
 What is the download link=no
 [setup pack]
@@ -9,7 +8,7 @@ What is the download link=no
 [Sounds]
 What is the download link=no
 [motd]
-Latest=3
+Latest=6
 mode=text
-text1=¡Hola! Se ha creado una versión de 32 bits para este programa. Puedes enconttrarlo en la sección de programas en la web. Así mismo, se encuentran los demás enlaces para los usuarios de 64. Así mismo, me había percatado de que la versión instalador de Google Drive se detectó recientemente como archivo infectado, pero la trataré de resubir uno de estos días. Descarga aquí: http://mateocedillo.260mb.net/programs.html
-text2=Hello! A 32-bit version has been created for this program. You can find it in the programs section on the web. Likewise, there are the other links for 64 users. Also, I had noticed that the Google Drive installer version was recently detected as an infected file, but I will try to re-upload it one of these days. Download here: http://mateocedillo.260mb.net/programs.html
+text1=Bienvenidos a MCY Downloader 0.9. Te invitamos que disfrutes las últimas novedades e esta versión, descarga tus canciones, videos, playlists, canales o usuarios favoritos, busca contenido y mucho más. Ante cualquier falla o sugerencia, puedes comentarlo en errores y sugerencias.
+text2=Welcome to MCY Downloader 0.9. We invite you to enjoy the latest news in this version, download your favorite songs, videos, playlists, channels or users, search for content and much more. Before any failure or suggestion, you can comment on errors and suggestions.

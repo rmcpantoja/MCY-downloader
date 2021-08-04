@@ -5,4 +5,4 @@
 $say = "1"
 NVDA_SayCharacters()
 While 1
-Wend
+WEnd

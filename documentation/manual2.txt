@@ -1,0 +1,63 @@
+MCY downloader user manual. Program to download multimedia.
+what is this?
+This program is simple, it consists of downloading music or videos from youtube, facebook, drive and many other sites.
+How do i download multimedia?
+to download what you need, open the MCY.exe file
+First, a window opens indicating that the program is loaded together with its components.
+*Important announcement!
+When you run for the first time, it is normal for a window to appear "installing the necessary audio libraries". This is so that the program can work, since they work a lot with these libraries.
+Notice: In the first session, if there are no settings, it will ask you if you want to activate enhanced accessibility. This was only done for people with some kind of disability. If you are not someone with visual impairment, we recommend that you do not activate, that is up to the user.
+Once the upload is complete, a window will be shown to you so that you can select your preferred language in which this program is. By default, English and Spanish are included. If you want to help me add more languages, please suggest it in the bug reporter, I'll explain how it works below. Your help is welcome.
+Note: You can change the language later in options (see below)
+There are 2 metods to select language, which are as follows:
+* Method1: For improved accessibility, the language selector menu can be used with the up and down arrows on your keyboard and selecting the corresponding option with enter.
+* Method2: For the program in general, this simple method has been made to select your language. On the selector screen, just click the language of your preference.
+Once the initial configuration is finished, the options selected by you will be saved and the program begins with its execution, so you can begin to interact.
+Note: If you run it for the first time, the program will create a folder on the local disk with the name MCY \ Download \ Audio / and video, since that is where the downloaded files with the corresponding categories will be stored.
+After this, the main window will appear where it tells you that you can open the menu where you can access various functions and buttons that allow you to access help, changes, github and more.
+To know all the functions, they are found by opening the menu. This can be opened by pressing alt (commonly like all menus) by clicking it or by pressing the "open menu" button on the main screen.
+* Knowing the new interface:
+This interface brings the following menus and submenus with their respective options, below we will describe what they are for and how to use them:
+MCY menu: In this one there are 5 functions which are the following:
+Download multimedia link, playlists and more ...: As its title indicates. It allows you to download multimedia from many sites, also supporting download as video and mp3,subtitles, users, channels and playlists, as well as you can share your link to social networks.
+Note: MCY has the great advantage of downloading and saving audio and video at the same time, just in case, since in some cases the videos you watch may be useful to you.
+Now the download interface has been expanded and you have more options which are as follows:
+"Enter a URL": IN this text field you only have to enter your multimedia link to download.
+Note: For the first time what is on the clipboard is captured for greater ease.
+Note 2: When you insert an invalid URL you will be shown an alert indicating that something is wrong.
+"Download only in video": As the name implies, download only the original multimedia (if it is a link from youtube)
+"download as audio": If you check this box, the multimedia is downloaded, only converting it to mp3 (audio format)
+"download subtitles": In case you want to download the subtitles of a video. Checking this box will bring up a combo box to select the download method.
+"Download Playlist": MCY Downloader automatically detects if it is a playlist, so in unique video links it is normal that this box does not appear yet. When you mark it, you will download the playlist that you have placed in the field. Next, 2 subfields appear, which are the following:
+• download from: The number from which video in your playlist you want to download. It can be a number that is within the range of the number of videos.
+• download up to: Up to which video you want to download.
+Note: If you don't fill in these fields, the complete playlist (all videos) will be downloaded.
+"Destination folder": This is a box where the path of the downloaded audios and videos is.
+"Select button": Useful if you want to download your multimedia in a different folder, although you can also change it in options.
+"Download button": Finally, the multimedia download begins with the options you selected.
+After confirming the download, a window appears with a progress bar indicating the percentage.
+Notice: When you finish downloading multimedia, you will be asked if you want to open the download folder.
+Share link button: A menu is displayed where you can share the link to different media such as Facebook, WhatsApp, Skype.
+* Search from YouTube (beta): allows you to Search youTube from this application. It probably contains errors, but you can help me with errors and suggestions or through Github.
+For this, just type the search term, press the "search" button and after a few seconds the results will appear. These results for now are filtered by links, but you can copy them and thus download them in the function previously exposed. It was possible to filter by names but these were not displayed correctly.
+Radio: Open the MCY Radio accessory, in this you can enjoy music,entertainment and all kinds of content. If you want to know more about its use, please take a look at the folder documentation/radio/manual2.txt.
+Options: In this options menu you can modify things to your liking, for example: Change destination folder, audio quality, accessibility, rearrange audio and video in the corresponding folders, interface, etc.
+Exit option: Exits the program.
+Tools menu: This menu has:
+File converter: It allows you to convert files from wav or other formats to mp3.
+The file converter is simple to use, you only have to select the files you want to share, finally you choose the audio quality and it will start the process.
+URL player: It is a tool where it will allow you to play direct links to music or other types of audio.
+To do this, you just have to paste a direct URL in the field and it will start playing, at the same time allowing you to modify parameters such as volume.
+Help menu: This menu consists of 7 options:
+Changes: Shows you the most recent changes to a text document.
+User Manual: Displays this manual on the screen.
+Errors and Suggestions: Do you want to make a suggestion for this program, or maybe report a bug you have found? Well, this option is for you.
+You will be redirected to a form in your browser to submit your report or suggestion. Just fill in the requested fields (application name, your name, message and email) And if possible, log file.
+Errors and suggestions (gitHub): It is something similar to the previous option, only that it allows you to report errors or make suggestions through the program's repository on GitHub. Note: For this you need to have an account on the platform.
+Visit website: Our new website opens in your default browser, in case you want to review our content.
+Check for updates: For now, the program looks for an update to the YouTube DL library. If so, it will automatically download it. The update takes depending on your internet connection.
+About: It shows you on the screen the information of the program, version, etc.
+*Thanks:
+In this space I want to thank all my friends who have helped me in the project, who had to test both the code and the program itself. Your support and help are welcome.
+Special thanks to Rayo Alcantar for helping me with the domain and also for the host of the new website, as well as the users who reported their errors, as well as the beta testers. Really, thank you all.
+End

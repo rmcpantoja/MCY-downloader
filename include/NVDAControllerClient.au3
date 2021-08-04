@@ -14,7 +14,7 @@ my gmail is :
 baaziznacer.140@gmail.com
 #ce
 #### global variables ###
-global $_h_NVDAHandle = -1
+Global $_h_NVDAHandle = -1
 ### end ###
 
 
@@ -48,17 +48,17 @@ _nvdaControllerClient_testIfRunning()
 ; Link ..........;
 ; Example .......;
 ; ===============================================================================================================================
-func _nvdaControllerClient_Load($s_FileName = @scriptDir & "\nvdaControllerClient32.dll")
-if $_h_NVDAHandle <> -1 then return 1
-if fileExists($s_FileName) then
-$_h_NVDAHandle = DllOpen($s_FileName)
-if $_h_NVDAHandle = -1 then return SetError(1)
-return $_h_NVDAHandle
-else
-setError(-1)
-return false
-endIf
-endFunc
+Func _nvdaControllerClient_Load($s_FileName = @ScriptDir & "\nvdaControllerClient32.dll")
+	If $_h_NVDAHandle <> -1 Then Return 1
+	If FileExists($s_FileName) Then
+		$_h_NVDAHandle = DllOpen($s_FileName)
+		If $_h_NVDAHandle = -1 Then Return SetError(1)
+		Return $_h_NVDAHandle
+	Else
+		SetError(-1)
+		Return False
+	EndIf
+EndFunc   ;==>_nvdaControllerClient_Load
 
 
 ; #FUNCTION# ====================================================================================================================
@@ -77,22 +77,22 @@ endFunc
 ; Link ..........;
 ; Example .......;
 ; ===============================================================================================================================
-func _nvdaControllerClient_free($DllHandle = $_h_NVDAHandle)
-if $DllHandle <> -1 then
-setError(0)
-return false
-endIf
-DllClose($DllHandle)
-$_h_NVDAHandle = -1
-return $_h_NVDAHandle
-endFunc
+Func _nvdaControllerClient_free($DllHandle = $_h_NVDAHandle)
+	If $DllHandle <> -1 Then
+		SetError(0)
+		Return False
+	EndIf
+	DllClose($DllHandle)
+	$_h_NVDAHandle = -1
+	Return $_h_NVDAHandle
+EndFunc   ;==>_nvdaControllerClient_free
 
 
 ; #FUNCTION# ====================================================================================================================
 ; Name...........: _nvdaControllerClient_SpeakText
 ; Description ...: speak a custom text using the NVDA screen Reader
 ; Syntax.........: _nvdaControllerClient_SpeakText($s_text, $DllHandle = $_h_NVDAHandle)
-; Parameters ....:  -		$s_text the text-	
+; Parameters ....:  -		$s_text the text-
 ; -	$DllHandle	-	 the dllOpen handel returned by _nvdaControllerClient_Load.
 ; Return values .: Success      - Returns 1 .
 ;                  Failure      - Returns False and sets @ERROR
@@ -107,22 +107,22 @@ endFunc
 ; Example .......;
 ; ===============================================================================================================================
 
-func _nvdaControllerClient_SpeakText($s_text, $DllHandle = $_h_NVDAHandle)
-if $DllHandle = -1 then
-setError(0)
-return false
-endIf
-local $aDLLSpeak = DllCall($DllHandle, "long", "nvdaController_speakText", "wstr", String($s_text))
-if @error then return $aDLLSpeak
-return 1
-endFunc
+Func _nvdaControllerClient_SpeakText($s_text, $DllHandle = $_h_NVDAHandle)
+	If $DllHandle = -1 Then
+		SetError(0)
+		Return False
+	EndIf
+	Local $aDLLSpeak = DllCall($DllHandle, "long", "nvdaController_speakText", "wstr", String($s_text))
+	If @error Then Return $aDLLSpeak
+	Return 1
+EndFunc   ;==>_nvdaControllerClient_SpeakText
 
 
 ; #FUNCTION# ====================================================================================================================
 ; Name...........: _nvdaControllerClient_brailleMessage
 ; Description ...: View any custom text in the Braille line
 ; Syntax.........: _nvdaControllerClient_brailleMessage($s_text, $DllHandle = $_h_NVDAHandle)
-; Parameters ....:  -		$s_text the text-	
+; Parameters ....:  -		$s_text the text-
 ; -	$DllHandle	-	 the dllOpen handel returned by _nvdaControllerClient_Load.
 ; Return values .: Success      - Returns 1 .
 ;                  Failure      - Returns False and sets @ERROR
@@ -137,15 +137,15 @@ endFunc
 ; Example .......;
 ; ===============================================================================================================================
 
-func _nvdaControllerClient_brailleMessage($s_text, $DllHandle = $_h_NVDAHandle)
-if $DllHandle = -1 then
-setError(0)
-return false
-endIf
-local $aDLLMSg = DllCall($DllHandle, "long", "nvdaController_brailleMessage", "wstr", String($s_text))
-if @error then return $aDLlMSG
-return 1
-endFunc
+Func _nvdaControllerClient_brailleMessage($s_text, $DllHandle = $_h_NVDAHandle)
+	If $DllHandle = -1 Then
+		SetError(0)
+		Return False
+	EndIf
+	Local $aDLLMSg = DllCall($DllHandle, "long", "nvdaController_brailleMessage", "wstr", String($s_text))
+	If @error Then Return $aDLLMSg
+	Return 1
+EndFunc   ;==>_nvdaControllerClient_brailleMessage
 
 ; #FUNCTION# ====================================================================================================================
 ; Name...........: _nvdaControllerClient_cancelSpeech
@@ -165,15 +165,15 @@ endFunc
 ; Example .......;
 ; ===============================================================================================================================
 
-func _nvdaControllerClient_cancelSpeech($DllHandle = $_h_NVDAHandle)
-if $DllHandle = -1 then 
-setError(0)
-return false
-endIf
-local $aDLLCancel = DllCall($DllHandle, "long", "nvdaController_cancelSpeech");, "wstr", "")
-if @error then return $aDLLCancel
-return 1
-endFunc
+Func _nvdaControllerClient_cancelSpeech($DllHandle = $_h_NVDAHandle)
+	If $DllHandle = -1 Then
+		SetError(0)
+		Return False
+	EndIf
+	Local $aDLLCancel = DllCall($DllHandle, "long", "nvdaController_cancelSpeech") ;, "wstr", "")
+	If @error Then Return $aDLLCancel
+	Return 1
+EndFunc   ;==>_nvdaControllerClient_cancelSpeech
 
 ; #FUNCTION# ====================================================================================================================
 ; Name...........: _nvdaControllerClient_testIfRunning
@@ -194,14 +194,14 @@ endFunc
 ; ===============================================================================================================================
 
 
-func _nvdaControllerClient_testIfRunning($DllHandle = $_h_NVDAHandle)
-if $DllHandle = -1 then
-setError(0)
-return false
-endIf
-local $aDLLIsRun = DllCall($DllHandle, "long", "nvdaController_testIfRunning")
-if not (isArray($aDLLIsRun)) then return setError(-1)
-if $aDLLIsRun[0] <> 0 then return false
-return true
-endFunc
+Func _nvdaControllerClient_testIfRunning($DllHandle = $_h_NVDAHandle)
+	If $DllHandle = -1 Then
+		SetError(0)
+		Return False
+	EndIf
+	Local $aDLLIsRun = DllCall($DllHandle, "long", "nvdaController_testIfRunning")
+	If Not (IsArray($aDLLIsRun)) Then Return SetError(-1)
+	If $aDLLIsRun[0] <> 0 Then Return False
+	Return True
+EndFunc   ;==>_nvdaControllerClient_testIfRunning
 ### end ####

@@ -1,8 +1,21 @@
-;Begining off script. Comienzo del script.
+;Begining off script.
 global $arquitectura = "x64"
-; Defining the version number, and program info. definiendo el número de versión del programa e información del mismo.
+global $program_ver = 0.9
+; Defining the version number, and program info.
+;AutoIt3Wrapper
+#AutoIt3Wrapper_Compile_Both=y
+#AutoIt3Wrapper_Res_Description=Music YouTube Downloader
+#AutoIt3Wrapper_Res_Fileversion=0.9.0.0
+#AutoIt3Wrapper_Res_ProductName=Music YouTube Downloader
+#AutoIt3Wrapper_Res_ProductVersion=0.9.0.0
+#AutoIt3Wrapper_Res_LegalCopyright=© 2018-2021 MT Programs, All rights reserved
+#AutoIt3Wrapper_Run_AU3Check=Y
+#AutoIt3Wrapper_AU3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7 -v1 -v2 -v3
+#AutoIt3Wrapper_Run_Au3Stripper=y
+#Au3Stripper_Parameters=/so
+;pragma:
 ; #pragma compile(Icon, C:\Program Files\AutoIt3\Icons\au3.ico)
-#pragma compile(Compression, 2)
+;#pragma compile(Compression, 2)
 #pragma compile(UPX, False)
 #pragma compile(FileDescription, Music YouTube Downloader)
 #pragma compile(ProductName, Music YouTube Downloader)
@@ -10,9 +23,10 @@ global $arquitectura = "x64"
 #pragma compile(FileVersion, 0.9.0.0, 0.9.0.0)
 #pragma compile(LegalCopyright, © 2018-2021 MT Programs, All rights reserved)
 #pragma compile(CompanyName, 'MT Programs')
-;Including program scripts: Incluyendo scripts para el programa:
+;Including program scripts:
 ;#include <Array.au3>;
 #include "Include\audio.au3"
+#include "include\busqueda.au3"
 #include <ButtonConstants.au3>
 #include <ComboConstants.au3>
 #include <EditConstants.au3>
@@ -34,7 +48,7 @@ global $arquitectura = "x64"
 #include <ProgressConstants.au3>
 #include "Include\radio.au3"
 #include "Include\reader.au3"
-#include "include\RunUDF.au3"
+;#include "include\RunUDF.au3"
 #Include "Include\sapi.au3"
 #include "Include\say_UDF.au3"
 #include <StaticConstants.au3>
@@ -42,16 +56,13 @@ global $arquitectura = "x64"
 #include <TrayConstants.au3>
 #include "updater.au3"
 #include <WindowsConstants.au3>
-;#include "Include\zip.au3"
-;Extracting package of sounds: Extrayendo paquete de sonidos:
-;Creates a window wenn the program is loading: Crea una ventana mientras el programa se está cargando:
+;Extracting soundpack.
+;Creates a window wenn the program is loading:
 $l1 = GUICreate("Loading...")
 GUISetState(@SW_SHOW)
 FileChangeDir(@ScriptDir)
-Register_Run("MCY")
-sleep(100)
+;Register_Run("MCY")
 writeinlog("Initialicing...")
-sleep(100)
 if @ProcessorArch = "x64" then
 Global $sYouTube_DL = IniRead("config\config.st", 'General Settings', 'Youtube-DL', 'engines64\youtube-dl-.exe')
 EndIf
@@ -77,9 +88,9 @@ EndFunc
 func comprovarArc()
 $developermode= "1"
 if not fileExists ("config") then
-DirCreate("config")
-if @error then
-MSGBox(0, "Error", "Config folder could not be created.")
+$configfolder = DirCreate("config")
+if $configfolder = "0" then
+MSGBox(16, "Error", "Config folder could not be created. If so, please run the program as administrator.")
 exitpersonaliced()
 EndIf
 EndIf
@@ -91,7 +102,6 @@ endif
 if @ProcessorArch = "x86" and $arquitectura = "x86" then
 writeinlog("Windows 32 bit")
 endif
-
 if @ProcessorArch = "x64" and $arquitectura = "x86" then
 msgBox(48, "Warning", "You run a 64-bit pc with the 32-bit version of the program. "&@crlf &"For better performance in the program, we recommend that you download the 64-bit version at http://mateocedillo.260mb.net/programs.html")
 exitpersonaliced()
@@ -112,7 +122,7 @@ NotCompiled()
 EndSelect
 EndFunc
 func checkcopy()
-;Para saber de dónde se está ejecutando la copia:
+; To find out where the copy is running from:
 if @scriptDir ="C:\MCY" then
 IniWrite("config\config.st", "General settings", "Program Type", "Installable")
 writeinlog("Copy: Installable.")
@@ -136,7 +146,7 @@ endfunc
 func exitpersonaliced()
 _nvdaControllerClient_free()
 $delfiles = "0"
-;This custom exit function is used to delete some files when exiting the program. 0 for disabled, 1 enabled (by default it is disabled for all general users). Esta función personalizada de salir, sirve para eliminar algunos archivos cuando se sale del programa. 0 para deshavilitado, 1 havilitado (por defecto está havilitado para todos los usuarios en general)
+;This custom exit function is used to delete some files when exiting the program. 0 for disabled, 1 enabled (by default it is disabled for all general users).
 select
 case $delfiles = 1
 writeinlog("exiting...")
@@ -159,7 +169,7 @@ sleep(1200)
 exit
 endselect
 endfunc
-;La siguiente pregunta es para activar la accesibilidad mejorada, hecha exclusiba y únicamente para las personas con discapacidad. The next question is to activate the improved accessibility, made exclusively and only for people with disability.
+; The next question is to activate the enhanced accessibility, made exclusively and only for people with disability.
 func configure()
 writeinlog("Launching at first time.")
 $s_selected = $device.opensound ("sounds/soundsdata.dat/selected.ogg", true)
@@ -167,7 +177,7 @@ select
 case @OSLang = "0c0a" or @OSLang = "040a" or @OSLang = "080a" or @OSLang = "100a" or @OSLang = "140a" or @OSLang = "180a" or @OSLang = "1c0a" or @OSLang = "200a" or @OSLang = "240a" or @OSLang = "280a" or @OSLang = "2c0a" OR @OSLang = "300a" or @OSLang = "340a" or @OSLang = "380a" or @OSLang = "3c0a" or @OSLang = "400a" or @OSLang = "440a" or @OSLang = "480a" or @OSLang = "4c0a" or @OSLang = "500a"
 $quest1="Activar accesibilidad mejorada?"
 $quest2="La accesibilidad mejorada está diseñada para las personas con discapacidad visual, en lo cual la mayoría de la interfaz del programa se podrá usar mediante voz y atajos de teclas. ¿Activar?"
-;English languages: Idiomas para inglés:
+;English languages:
 case @OSLang = "0809" or @OSLang = "0c09" or @OSLang = "1009" or @OSLang = "1409" or @OSLang = "1809" or @OSLang = "1c09" or @OSLang = "2009" or @OSLang = "2409" or @OSLang = "2809" or @OSLang = "2c09" or @OSLang = "3009" or @OSLang = "3409" or @OSLang = "0425"
 $quest1="Enable enanced accessibility?"
 $quest2="This new Enhanced Accessibility functionality is designed for the visually impaired, in which most of the program interface can be used by voice and keyboard shortcuts. Activate?"
@@ -180,13 +190,11 @@ if $warning == 6 then
 IniWrite("config\config.st", "accessibility", "Enable enanced accessibility", "Yes")
 writeinlog("Enanced accesibility: Yes.")
 $s_selected.play
-sleep(100)
 checkselector()
 else
 IniWrite("config\config.st", "accessibility", "Enable enanced accessibility", "No")
 writeinlog("Enanced accesibility: No.")
 $s_selected.play
-sleep(100)
 checkselector()
 endif
 endfunc
@@ -215,7 +223,7 @@ Return "unknown"
 EndSwitch
 endfunc
 sistemlang()
-;This is the function off language selector menu, the first alternative using the main menu speech. Esta es la función de menú de selección de idioma, la primera alternativa que utiliza el menú principal de voz.
+;This is the function off language selector menu, the first alternative using the main menu speech.
 Func Selector()
 local $widthCell,$msg,$iOldOpt
 $langGUI= GUICreate("Language selector")
@@ -226,17 +234,16 @@ GUISetBkColor(0x00E0FFFF)
 GUISetState(@SW_SHOW)
 $configureaccs = iniRead ("config\config.st", "accessibility", "Enable enanced accessibility", "")
 if $configureaccs ="yes" then
-$windowslanguage= @OSLang
-;Spanish languages: Idiomas en español:
+;Spanish languages:
 select
-case $windowslanguage = "0c0a" or $windowslanguage = "040a" or $windowslanguage = "080a" or $windowslanguage = "100a" or $windowslanguage = "140a" or $windowslanguage = "180a" or $windowslanguage = "1c0a" or $windowslanguage = "200a" or $windowslanguage = "240a" or $windowslanguage = "280a" or $windowslanguage = "2c0a" or $windowslanguage = "300a" or $windowslanguage = "340a" or $windowslanguage = "380a" or $windowslanguage = "3c0a" or $windowslanguage = "400a" or $windowslanguage = "440a" or $windowslanguage = "480a" or $windowslanguage = "4c0a" or $windowslanguage = "500a"
-$menu=reader_Create_Menu("Por favor, selecciona tu idioma con las flechas arriva y abajo", "Español,Inglés,Salir", "1", $menuPos)
-;English languages: Idiomas para inglés:
-case $windowslanguage = "0809" or $windowslanguage = "0c09" or $windowslanguage = "1009" or $windowslanguage = "1409" or $windowslanguage = "1809" or $windowslanguage = "1c09" or $windowslanguage = "2009" or $windowslanguage = "2409" or $windowslanguage = "2809" or $windowslanguage = "2c09" or $windowslanguage = "3009" or $windowslanguage = "3409" or $windowslanguage = "0425" or 
-$menu=reader_Create_Menu("Please select a language with the up y down arrows", "Spanish,ENglish,Exit", "1", $menuPos)
+case @OsLang = "0c0a" or @OsLang = "040a" or @OsLang = "080a" or @OsLang = "100a" or @OsLang = "140a" or @OsLang = "180a" or @OsLang = "1c0a" or @OsLang = "200a" or @OsLang = "240a" or @OsLang = "280a" or @OsLang = "2c0a" or @OsLang = "300a" or @OsLang = "340a" or @OsLang = "380a" or @OsLang = "3c0a" or @OsLang = "400a" or @OsLang = "440a" or @OsLang = "480a" or @OsLang = "4c0a" or @OsLang = "500a"
+$menu=reader_Create_Menu("Por favor, selecciona tu idioma con las flechas arriva y abajo", "Español,Inglés,Salir", "1", "de")
+;English languages:
+case @OsLang = "0809" or @OsLang = "0c09" or @OsLang = "1009" or @OsLang = "1409" or @OsLang = "1809" or @OsLang = "1c09" or @OsLang = "2009" or @OsLang = "2409" or @OsLang = "2809" or @OsLang = "2c09" or @OsLang = "3009" or @OsLang = "3409" or @OsLang = "0425"
+$menu=reader_Create_Menu("Please select a language with the up y down arrows", "Spanish,ENglish,Exit", "1", "of")
 ;end selection off languages. Fin de selección/detección de idiomas.
 case else
-$menu=reader_Create_Menu("Please select a language with the up y down arrows", "Spanish,ENglish,Exit", "1", $menuPos)
+$menu=reader_Create_Menu("Please select a language with the up y down arrows", "Spanish,ENglish,Exit", "1", "of")
 endselect
 endif
 if $configureaccs ="no" then
@@ -253,7 +260,6 @@ MSGBox (0, "Error", "Configuration data could not be written.")
 Exitpersonaliced()
 EndIf
 $language="1"
-sleep(100)
 GUIDelete($langGUI)
 checkupd()
 case $menu = 2
@@ -263,11 +269,9 @@ MSGBox (0, "Error", "Configuration data could not be written.")
 Exitpersonaliced()
 EndIf
 $language="2"
-sleep(100)
 GUIDelete($langGUI)
 checkupd()
 case $menu = 3
-sleep(100)
 exitpersonaliced()
 EndSelect
 endif
@@ -284,7 +288,6 @@ MSGBox (0, "Error", "Configuration data could not be written.")
 Exitpersonaliced()
 EndIf
 $language="1"
-sleep(100)
 GUIDelete($langGui)
 checkupd()
 exitloop
@@ -295,7 +298,6 @@ MSGBox (0, "Error", "Configuration data could not be written.")
 Exitpersonaliced()
 EndIf
 $language="1"
-sleep(100)
 GUIDelete($langGui)
 checkuppd()
 exitloop
@@ -304,9 +306,9 @@ WEnd
 endif
 EndFunc
 func checkupd()
-$main_u = GUICreate("MCY Downloader. Checking version...")
+$main_u = GUICreate("Checking version...")
 GUISetState(@SW_SHOW)
-sleep(100)
+sleep(50)
 checkmcyversion()
 GUIDelete($main_u)
 endfunc
@@ -314,7 +316,7 @@ func checKmcyversion()
 $ReadAccs = iniRead ("config\config.st", "Accessibility", "Enable enanced accessibility", "")
 $sLanguage = iniRead ("config\config.st", "General settings", "language", "")
 writeinlog("Checking for updates...")
-Local $yourexeversion = FileGetVersion("MCY.exe")
+Local $yourexeversion = $program_Ver
 select
 case $sLanguage ="es"
 $newversion=" Tienes la "
@@ -334,11 +336,11 @@ Case $latestVer > $yourexeversion
 writeinlog("Warning! Update available. Your version:" &$yourexeversion & ". New version:" & $latestver)
 $ttsString = " Pulsa enter para continuar, espacio para repetir la información."
 TTSDialog("actualización disponible! " &$newversion &$yourexeversion &$newversion2 &$latestver& ". Presiona enter para descargar.")
-sleep(150)
-if $arquitectura = x64 then
-_Updater_update("MCY.exe", "https://www.dropbox.com/s/l19ywvrocy7vsoc/MCY_setup.exe?dl=1", "https://www.dropbox.com/s/d49pf4blsv61aoz/extract.exe?dl=1")
+sleep(50)
+if $arquitectura = "x64" then
+_Updater_update("MCY.exe", "https://www.dropbox.com/s/d49pf4blsv61aoz/extract.exe?dl=1")
 Else
-_Updater_update("MCY.exe", "https://www.dropbox.com/s/guo5n4uzro43v6e/MCY_setup_x86.exe?dl=1", "https://www.dropbox.com/s/ccp9mjaw35gzn9s/extract_x86.exe?dl=1")
+_Updater_update("MCY.exe", "https://www.dropbox.com/s/ccp9mjaw35gzn9s/extract_x86.exe?dl=1")
 EndIf
 Case else
 checkmotd()
@@ -351,9 +353,9 @@ Case $latestVer > $yourexeversion
 writeinlog("Warning! Update available. Your version:" &$yourexeversion & ". New version:" & latestver)
 TTSDialog("update available! " &$newversion &$yourexeversion &$newversion2 &$latestver& ". Press enter to download.")
 if $arquitectura = x64 then
-_Updater_update("MCY.exe", "https://www.dropbox.com/s/l19ywvrocy7vsoc/MCY_setup.exe?dl=1", "https://www.dropbox.com/s/d49pf4blsv61aoz/extract.exe?dl=1")
+_Updater_update("MCY.exe", "https://www.dropbox.com/s/d49pf4blsv61aoz/extract.exe?dl=1")
 Else
-_Updater_update("MCY.exe", "https://www.dropbox.com/s/guo5n4uzro43v6e/MCY_setup_x86.exe?dl=1", "https://www.dropbox.com/s/ccp9mjaw35gzn9s/extract_x86.exe?dl=1")
+_Updater_update("MCY.exe", "https://www.dropbox.com/s/ccp9mjaw35gzn9s/extract_x86.exe?dl=1")
 EndIf
 case else
 checkmotd()
@@ -367,9 +369,9 @@ $result= ($newversion &$yourexeversion &$newversion2 &$latestver)
 writeinlog($result)
 msgbox(0, "actualización disponible!", $result)
 if $arquitectura = x64 then
-_Updater_update("MCY.exe", "https://www.dropbox.com/s/l19ywvrocy7vsoc/MCY_setup.exe?dl=1", "https://www.dropbox.com/s/d49pf4blsv61aoz/extract.exe?dl=1")
+_Updater_update("MCY.exe", "https://www.dropbox.com/s/d49pf4blsv61aoz/extract.exe?dl=1")
 Else
-_Updater_update("MCY.exe", "https://www.dropbox.com/s/guo5n4uzro43v6e/MCY_setup_x86.exe?dl=1", "https://www.dropbox.com/s/ccp9mjaw35gzn9s/extract_x86.exe?dl=1")
+_Updater_update("MCY.exe", "https://www.dropbox.com/s/ccp9mjaw35gzn9s/extract_x86.exe?dl=1")
 EndIf
 case else
 checkmotd()
@@ -383,9 +385,9 @@ $result= ($newversion &$yourexeversion &$newversion2 &$latestver)
 writeinlog($result)
 msgbox(0, "update available!", $result)
 if $arquitectura = x64 then
-_Updater_update("MCY.exe", "https://www.dropbox.com/s/l19ywvrocy7vsoc/MCY_setup.exe?dl=1", "https://www.dropbox.com/s/d49pf4blsv61aoz/extract.exe?dl=1")
+_Updater_update("MCY.exe", "https://www.dropbox.com/s/d49pf4blsv61aoz/extract.exe?dl=1")
 Else
-_Updater_update("MCY.exe", "https://www.dropbox.com/s/guo5n4uzro43v6e/MCY_setup_x86.exe?dl=1", "https://www.dropbox.com/s/ccp9mjaw35gzn9s/extract_x86.exe?dl=1")
+_Updater_update("MCY.exe", "https://www.dropbox.com/s/ccp9mjaw35gzn9s/extract_x86.exe?dl=1")
 EndIf
 case else
 checkmotd()
@@ -423,7 +425,7 @@ GUICtrlCreateLabel("Espera, por favor.", 85, 20)
 GUISetState(@SW_SHOW)
 $bagground.play
 $bagground.repeating=1
-Sleep(100)
+Sleep(50)
 $ReadAccs = iniRead ("config\config.st", "accessibility", "Enable enanced accessibility", "")
 $grlanguage = iniRead ("config\config.st", "General settings", "language", "")
 $M_mode = iniRead (@TempDir & "\MCYWeb.dat", "motd", "Mode", "")
@@ -480,26 +482,26 @@ endselect
 GUIDelete($downloadingmotd)
 endfunc
 Func Principal()
-;Create "Temp" folder. Creando carpeta "temp"
-DirCreate("C:\Program Files (x86)\MCY\tmp")
-;Show the window. Mostrar la ventana.
-AutoItWinSetTitle("Descargador de músicas de YouTube, por Mateo Cedillo")
-;Play welcome sound. Reproducir sonido de bienvenida.
+;Create "Temp" folder.
+DirCreate("C:\MCY\tmp")
+;Show the window.
+AutoItWinSetTitle("MCY Downloader")
+;Play welcome sound.
 $welcome = $device.opensound ("sounds/soundsdata.dat/open.ogg", true)
 $welcome.play
 sleep(500)
 endfunc
 $grlanguage = iniRead ("config\config.st", "General settings", "language", "")
-;Set version number. Estableciendo el número de versión.
+;Set version number.
 select
 case $grlanguage ="es"
-$version="versión 0.8.1 beta"
+$version="versión"
 case $grlanguage ="eng"
-$version="version 0.8.1 beta"
+$version="version"
 endselect
-;Set the service. Estableciendo el servicio.
+;Set the service.
 $service="www.youtube.com"
-;greetings. Saludo/bienvenida.
+;greetings.
 select
 case $grlanguage ="es"
 $greeting="Saludos "
@@ -510,9 +512,14 @@ $greeting="Greetings "
 $yourname= @username &", "
 $welcomemessage="And welcome to MCY downloader, "
 endSelect
-Func Variables()
-$result= ($greeting &$yourname &$welcomemessage &$version)
-writeinlog("Welcome! " & $result)
+global $gresult= ($greeting &$yourname &$welcomemessage &$version &" " &$program_ver)
+writeinlog("Welcome! " & $gresult)
+;Show dialog. Mostrar el diálogo.
+$confirmation="2"
+select
+case $confirmation = 1
+Saludo()
+case $confirmation = 2
 select
 case $grlanguage ="es"
 toolTip("Bienvenido, " &$yourname)
@@ -520,57 +527,43 @@ case $grlanguage ="eng"
 toolTip("Welcome, " &$yourname)
 endselect
 ;toolTip("")
-sleep(300)
-endfunc
-;Show dialog. Mostrar el diálogo.
-$confirmation="2"
-select
-case $confirmation = 1
-Saludo()
-case $confirmation = 2
-Variables()
+sleep(200)
 endselect
 Func Saludo()
 select
 case $grlanguage ="es"
-$messagea="buenas madrugadas, te damos la bienvenida"
-$messageb="buenos días, te damos la bienvenida"
-$messagec="buenas tardes, te damos la bienvenida"
-$messaged="buenas noches, te damos la bienvenida"
-$Messagee="buenas tardísimas, te damos la bienvenida"
+$messagea="buenas madrugadas"
+$messageb="buenos días"
+$messagec="buenas tardes"
+$messaged="buenas noches"
 case $grlanguage ="eng"
-$messagea="good morning, we welcome you."
-$messageb="good morning, we welcome you."
-$messagec="good afternoon, we welcome you."
-$messaged="good night, we welcome you"
-$Messagee="good afternoon, we welcome you"
+$messagea="good morning"
+$messageb="good morning"
+$messagec="good afternoon"
+$messaged="good night"
 endselect
-$buenas=@hour
-Switch @HOUR
+Switch @hour
 Case 0 To 5
-msgbox(0, "MCY downloader...", $messagea &$result)
+msgbox(0, "MCY downloader...", $messagea &$gresult)
 Case 6 To 11
-msgbox(0, "Good morning", $messageb &$result)
-Case 12 To 14
-msgbox(0, "MCY downloader", $messagec &$result)
-Case 18 To 21
-msgbox(0, "Good night", $messaged &$result)
-Case 22 To 23
-msgbox(0, "Welcome", $messagee &$result)
+msgbox(0, "Good morning", $messageb &$gresult)
+Case 12 To 17
+msgbox(0, "MCY downloader", $messagec &$gresult)
+Case 18 To 23
+msgbox(0, "Good night", $messaged &$gresult)
 Case Else
 msgbox(0, "MCY Downloader", "welcome to MCY downloader")
 EndSwitch
 endfunc
-;orijinal 
-;Creating multimedia folders. Creando carpetas multimedia.
+;Creating multimedia folders.
 writeinlog("Creating multimedia folders:")
-DirCreate("C:\MCY\download\audio")
-DirCreate("C:\MCY\download\video")
+if NOT fileExists("C:\MCY\download\audio") then DirCreate("C:\MCY\download\audio")
+if NOT fileExists("C:\MCY\download\video") then DirCreate("C:\MCY\download\video")
 Menuprogram()
 Func Readchanges()
 $viewchanges = GUICreate("Changes:")
 GUISetState(@SW_SHOW)
-sleep(200)
+sleep(50)
 select
 case $grlanguage ="es"
 createTtsOutput("Documentation\changes1.txt", "changes")
@@ -605,7 +598,7 @@ endSelect
 Local $DocOpen = FileOpen($manualdoc, $FO_READ)
 ToolTip($editmessage3)
 speaking($editmessage3)
-sleep(200)
+sleep(50)
 If $DocOpen = -1 Then
 MsgBox($MB_SYSTEMMODAL, $editmessage5, $editmessage4)
 Return False
@@ -652,7 +645,7 @@ MsgBox(16, $upd1, $upd2)
 exitpersonaliced()
 EndIf
 $update = $device.opensound ("sounds/soundsdata.dat/update.ogg", true)
-;Plays the music wen downloading YouTubeDl updatte. Reproduce la música mientras se descarga la actualización de YouTubeDl.
+;Plays the bagground music when UPDATE.
 $update.play
 $update.repeating=1
 Global $g_hGui, $g_aGuiPos
@@ -663,7 +656,6 @@ GUISetState(@SW_SHOW, $g_hGui)
 $g_aGuiPos = WinGetPos($g_hGui)
 writeinlog("Updating Youtube Dl...")
 $updatelabel = GUICtrlCreateLabel($upd4, 25, 16)
-GUICtrlSetTip(-1, $upd4)
 ToolTip($upd3 &$upd4)
 TrayTip($upd4, $upd5, 0, $TIP_ICONASTERISK)
 Local $iPID = Run(@ComSpec & ' /C "' & $sYouTube_DL & '" --update', @ScriptDir, @SW_HIDE, 6)
@@ -688,13 +680,28 @@ case $grlanguage ="es"
 $msg1="MCY Downloader: Descargar multimedia"
 $msg2="conectando con internet..."
 $msg3="No tienes conexión a internet!"
+$tip1="Deja marcada solamente esta casilla para descargar el vídeo original, en el caso de YouTube."
+$tip2="Marca esta casilla para convertir este vídeo descargado a un formato de audio como mp3."
+$tip3="Puedes descargar subtítulos, si el vídeo los soporta."
+$tip4="La carpeta de descarga donde se guardarán tus archivos."
+$tip5="Comienza la descarga del enlace seleccionado"
+$tip6="Comparte URL a través de redes sociales."
+$tip7="Reproduce una vista prebia del enlace seleccionado."
 case $grlanguage ="eng"
 $msg1="MCY Downloader: Download multimedia"
 $msg2="connecting to internet..."
 $msg3="¡You don't have an internet connection!"
+$tip1="Check only this checkbox to download the original video, in case of YouTube."
+$tip2="Check this checkbox to convert this downloaded video to an audio format like mp3."
+$tip3="You can download subtitles, if the video supports them."
+$tip4="The download folder where your files will be saved."
+$tip5="Starts download of the selected link"
+$tip6="Share URLs through social networks."
+$tip7="Plays a preview of the selected link."
 endselect
 $dmain = GUICreate($msg1)
 $ReadAccs = iniRead ("config\config.st", "Accessibility", "Enable enanced accessibility", "")
+$showtip = iniRead ("config\config.st", "misc", "Show tips", "")
 $sayProgresses = iniRead ("config\config.st", "Accessibility", "Read download progress bar", "")
 $sayTime = iniRead ("config\config.st", "Accessibility", "Read download remaining time", "")
 $BeepProgresses = iniRead ("config\config.st", "Accessibility", "Beep for progress bars", "")
@@ -711,44 +718,43 @@ CASE $BeepProgresses = ""
 iniWrite ("config\config.st", "Accessibility", "Beep for progress bars", "Yes")
 endselect
 if @ProcessorArch = "x64" then
-Global Const $MAIN = " engines64\youtube-dl- "
-Global Const $ffmpeg = " engines64\ffmpeg.exe"
-Global Const $MSVCR100_PATH = "engines64\msvcr100.dll"
-Global Const $CMD_VIDEO = 'engines64\youtube-dl-.exe -o "'
+Global $MAIN = " engines64\youtube-dl- "
+Global $ffmpeg = " engines64\ffmpeg.exe"
+Global $MSVCR100_PATH = "engines64\msvcr100.dll"
+Global $CMD_VIDEO = 'engines64\youtube-dl-.exe -o "'
 EndIf
 if @ProcessorArch = "x86" then
-Global Const $MAIN = " engines\youtube-dl- "
-Global Const $ffmpeg = " engines\ffmpeg.exe"
-Global Const $MSVCR100_PATH = "engines\msvcr100.dll"
-Global Const $CMD_VIDEO = 'engines\youtube-dl-.exe -o "'
+Global $MAIN = " engines\youtube-dl- "
+Global $ffmpeg = " engines\ffmpeg.exe"
+Global $MSVCR100_PATH = "engines\msvcr100.dll"
+Global $CMD_VIDEO = 'engines\youtube-dl-.exe -o "'
 EndIf
-Global Const $EN_INTERRUPT_MESSAGE = "~ interrupt!"
-Global Const $EN_MISSING_URL_MESSAGE = "Missing URL!"
-;Global Const $GUI_ON_EVENT_MODE = "GUIOnEventMode"
-Global Const $EXTRACT_AUDIO = " --extract-audio "
-Global Const $AUDIO_FORMAT = " --audio-format "
+Global $EN_INTERRUPT_MESSAGE = "~ interrupt!"
+Global $EN_MISSING_URL_MESSAGE = "Missing URL!"
+Global $EXTRACT_AUDIO = " --extract-audio "
+Global $AUDIO_FORMAT = " --audio-format "
 $audioQual = iniRead ("config\config.st", "accessibility", "Audio Quality", "")
 if $audioQual ="128k" or $audioQual ="160k" or $audioQual ="192k" or $audioQual ="224k" or $audioQual ="256k" or $audioQual ="320k" or $audioQual ="384k" then
-Global Const $audioQuality = " --audio-quality " &$audio_qual &" "
+Global $audioQuality = " --audio-quality " &$audio_qual &" "
 else
-Global Const $audioQuality = " --audio-quality 320k "
+Global $audioQuality = " --audio-quality 320k "
 EndIf
-Global Const $OUTPUT = " --output "
-Global Const $OUTPUT_TEMPLATE = "%%(title)s.%%(ext)s"
-Global Const $YES_PLAYLIST = " --yes-playlist "
-Global Const $NO_PLAYLIST = " --no-playlist "
-Global Const $PLAYLIST_START = " --playlist-start "
-Global Const $PLAYLIST_END = " --playlist-end "
-Global Const $PLAYLIST_Ignore_errors = ""
-Global Const $WRITE_SUB = " --write-sub "
-Global Const $WRITE_AUTO_SUB = " --write-auto-sub "
-Global Const $SUB_FORMAT = " --sub-format "
-Global Const $SUB_LANG = " --sub-lang "
-Global Const $SKIP_VIDEO =" --skip-download "
-Global Const $NOP_MILLIS = 10000
-Global Const $EMPTY_STRING = ""
-Global Const $SPACE = " "
-Global Const $DOWNLOAD_TAG = "[download]"
+Global $OUTPUT = " --output "
+Global $OUTPUT_TEMPLATE = "%%(title)s.%%(ext)s"
+Global $YES_PLAYLIST = " --yes-playlist "
+Global $NO_PLAYLIST = " --no-playlist "
+Global $PLAYLIST_START = " --playlist-start "
+Global $PLAYLIST_END = " --playlist-end "
+Global $PLAYLIST_Ignore_errors = ""
+Global $WRITE_SUB = " --write-sub "
+Global $WRITE_AUTO_SUB = " --write-auto-sub "
+Global $SUB_FORMAT = " --sub-format "
+Global $SUB_LANG = " --sub-lang "
+Global $SKIP_VIDEO =" --skip-download "
+Global $NOP_MILLIS = 10000
+Global $EMPTY_STRING = ""
+Global $SPACE = " "
+Global $DOWNLOAD_TAG = "[download]"
 Global $iPID = -1
 local $count = 0
 global $d_folder = iniRead ("config\config.st", "General settings", "Destination folder", "")
@@ -772,30 +778,43 @@ endselect
 #EndRegion INPUT URL
 select
 case $grlanguage ="es"
-$chkbox_isSingle = GUICtrlCreateCheckbox("Descargar solo &vídeo" & @LF & "Deja marcada solamente esta casilla para descargar el vídeo original, en el caso de YouTube.", 8, 80, 145, 17)
+$chkbox_isSingle = GUICtrlCreateCheckbox("Descargar solo &vídeo", 8, 80, 145, 17)
 case $grlanguage ="eng"
-$chkbox_isSingle = GUICtrlCreateCheckbox("Download only &video" & @lf & "Check only this checkbox to download the original video, in case of YouTube.", 8, 80, 145, 17)
+$chkbox_isSingle = GUICtrlCreateCheckbox("Download only &video", 8, 80, 145, 17)
 endselect
+if $showtip = "1" then GUICtrlSetTip(-1, $tip1)
 GUICtrlSetState(-1, $GUI_CHECKED)
 select
 case $grlanguage ="es"
-$chkbox_isMP3 = GUICtrlCreateCheckbox("Descargar como &MP3 (calidad alta)" &@lf & "Marca esta casilla para convertir este vídeo descargado a mp3.", 8, 104, 145, 17)
-$chkbox_sub = GUICtrlCreateCheckbox("Descargar &subtítulos" & @lf & "Puedes descargar subtítulos, si el vídeo los soporta.", 8, 190, 145, 17)
-$input_dir = GUICtrlCreateInput($d_folder, 8, 240, 145, 17)
-$idFolder = GUICtrlCreateLabel("Carpeta de destino", 8, 300, 150, 17)
-$btn_dir = GUICtrlCreateButton("Seleccionar &carpeta de destino..."& @lf & "La carpeta de descarga donde se guardarán tus archivos.", 8, 340, 150, 17)
-$btn_generate = GUICtrlCreateButton("&Descargar" & @lf & "Comienza la descarga del enlace seleccionado", 8, 440, 145, 17)
-$btn_share = GUICtrlCreateButton("&Compartir enlace" & @lf & "Comparte URL a través de redes sociales.", 8, 480, 145, 17)
-$btn_prev = GUICtrlCreateButton("&Preview", 8, 520, 145, 17)
+$chkbox_isMP3 = GUICtrlCreateCheckbox("Descargar como &audio", 8, 104, 145, 17)
+if $showtip = "1" then GUICtrlSetTip(-1, $tip2)
+$chkbox_sub = GUICtrlCreateCheckbox("Descargar &subtítulos", 8, 190, 145, 17)
+if $showtip = "1" then GUICtrlSetTip(-1, $tip3)
+$input_dir = GUICtrlCreateInput($d_folder, 8, 240, 150, 17)
+$idFolder = GUICtrlCreateLabel("Carpeta de destino", 8, 250, 190, 17)
+$btn_dir = GUICtrlCreateButton("Seleccionar &carpeta de destino...", 8, 270, 190, 17)
+if $showtip = "1" then GUICtrlSetTip(-1, $tip4)
+$btn_generate = GUICtrlCreateButton("&Descargar", 8, 280, 145, 17)
+if $showtip = "1" then GUICtrlSetTip(-1, $tip5)
+$btn_share = GUICtrlCreateButton("&Compartir enlace", 8, 320, 145, 17)
+if $showtip = "1" then GUICtrlSetTip(-1, $tip6)
+$btn_prev = GUICtrlCreateButton("&Preview", 8, 380, 145, 17)
+if $showtip = "1" then GUICtrlSetTip(-1, $tip7)
 case $grlanguage ="eng"
-$chkbox_isMP3 = GUICtrlCreateCheckbox("Download as &MP3 (high quality)" & @lf & "Check this box to convert this downloaded video to mp3.", 8, 104, 145, 17)
-$chkbox_sub = GUICtrlCreateCheckbox("Download &subtittles" & @lf & "You can download subtitles, if the video supports them.", 8, 190, 145, 17)
-$input_dir = GUICtrlCreateInput($d_folder, 8, 240, 145, 17)
-$idFolder = GUICtrlCreateLabel("Destination folder", 8, 300, 150, 17)
-$btn_dir = GUICtrlCreateButton("Choose &Folder" & @lf & "The download folder where your files will be saved.", 8, 340, 150, 17)
-$btn_generate = GUICtrlCreateButton("&Download" & @lf & "Starts download of the selected link", 8, 440, 145, 17)
-$btn_share = GUICtrlCreateButton("&Share link" & @lf & "Share URLs through social networks.", 8, 480, 145, 17)
-$btn_prev = GUICtrlCreateButton("&Preview", 8, 520, 145, 17)
+$chkbox_isMP3 = GUICtrlCreateCheckbox("Download as &audio", 8, 104, 145, 17)
+if $showtip = "1" then GUICtrlSetTip(-1, $tip2)
+$chkbox_sub = GUICtrlCreateCheckbox("Download &subtittles", 8, 190, 145, 17)
+if $showtip = "1" then GUICtrlSetTip(-1, $tip3)
+$input_dir = GUICtrlCreateInput($d_folder, 8, 240, 150, 17)
+$idFolder = GUICtrlCreateLabel("Destination folder", 8, 250, 190, 17)
+$btn_dir = GUICtrlCreateButton("Choose &Folder", 8, 270, 190, 17)
+if $showtip = "1" then GUICtrlSetTip(-1, $tip4)
+$btn_generate = GUICtrlCreateButton("&Download", 8, 280, 145, 17)
+if $showtip = "1" then GUICtrlSetTip(-1, $tip5)
+$btn_share = GUICtrlCreateButton("&Share link", 8, 320, 145, 17)
+if $showtip = "1" then GUICtrlSetTip(-1, $tip6)
+$btn_prev = GUICtrlCreateButton("&Preview", 8, 380, 145, 17)
+if $showtip = "1" then GUICtrlSetTip(-1, $tip7)
 endselect
 select
 case $grlanguage ="es"
@@ -888,7 +907,7 @@ Local $dir = GUICtrlRead($input_dir)
 ;Local $isExec = GUICtrlRead($chkbox_exec) == $GUI_CHECKED
 $exitcmd= &@crlf "exit"
 If $isMP3 Then
-writeinlog("Downloading as Mp3")
+writeinlog("Downloading as audio")
 $command &= $EXTRACT_AUDIO & $AUDIO_FORMAT &"mp3" &$AudioQuality
 EndIf
 If $isSub Then
@@ -922,7 +941,7 @@ Local $file = FileOpen("generated.bat",$FO_OVERWRITE  + $FO_CREATEPATH)
 FileWrite($file,$command)
 FileClose($file)
 ;If $isExec Then
-GUISetState(@SW_HIDE, $main)
+GUISetState(@SW_HIDE, $dmain)
 ;Run(@ComSpec & " /K " & $command &$exitcmd)
 Select
 case $grlanguage ="es"
@@ -931,17 +950,12 @@ case $grlanguage ="eng"
 $dMSG="Downloading..."
 EndSelect
 global $downloading = guicreate($DMSG)
-$edit_out = GUICtrlCreateEdit($EMPTY_STRING, 8, 152, 325, 17, BitOR($ES_AUTOVSCROLL, $ES_AUTOHSCROLL, $ES_READONLY, $WS_HSCROLL, $WS_VSCROLL, $WS_CLIPSIBLINGS));
+$edit_out = GUICtrlCreateEdit($EMPTY_STRING, 8, 152, 325, 17, BitOR($ES_AUTOVSCROLL, $ES_AUTOHSCROLL, $ES_READONLY, $WS_HSCROLL, $WS_VSCROLL, $WS_CLIPSIBLINGS))
 Local $idProgressbar = GUICtrlCreateProgress(200, 50, 325, 17)
 GUICtrlSetColor(-1, 32250)
 GUISetState(@SW_SHOW)
 writeinlog("Starting process...")
 Local $iSavPos = 0
-;Global Const $GUI_ON_EVENT_MODE = "GUIOnEventMode"
-;Global Const $CLOSE_ON_EVENT = "close_clicked"
-;HotKeySet("alt {f4}", $CLOSE_ON_EVENT)
-;Opt($GUI_ON_EVENT_MODE, 1)
-;GUISetOnEvent($GUI_EVENT_CLOSE, $CLOSE_ON_EVENT, $downloading)
 Local $runcmd = Run(@ComSpec & " /C " & "generated.bat", @ScriptDir, @SW_HIDE, 6)
 GUICtrlSetData($edit_out, $EMPTY_STRING)
 writeinlog("downloading " & GUICtrlRead($input_url))
@@ -955,7 +969,7 @@ If ProcessExists("youTube-dl-.exe") <> 0 Then
 Dim $iMsgBoxAnswer
 $iMsgBoxAnswer = MsgBox(5244324,"question","Your download has not finished yet. Are you sure you really want to get out of here?")
 Select
-   Case $iMsgBoxAnswer = 6
+Case $iMsgBoxAnswer = 6
 ProcessClose($downloadline)
 GUICtrlSetData($edit_out, $EN_INTERRUPT_MESSAGE)
 sleep(25)
@@ -973,10 +987,10 @@ If $downloadline <> $EMPTY_STRING Then
 If StringInStr($downloadline, $DOWNLOAD_TAG) > 1 Then
 GUICtrlSetData($edit_out, $downloadline)
 ;NVDAController_SpeakText($downloadline)
-$split1 = StringRight($downloadline, 5) ;
-$split2 = StringLeft($downloadline, 18) 
-$split3 = StringRight($split2, 6) 
-$split4 = StringRight($split2, 3) 
+$split1 = StringRight($downloadline, 5)
+$split2 = StringLeft($downloadline, 18)
+$split3 = StringRight($split2, 6)
+$split4 = StringRight($split2, 3)
 $iSavPos = $split3
 GUICtrlSetData($idProgressbar, $split3)
 ;$merge = $split1 &$split2
@@ -1004,7 +1018,7 @@ Wend
 ProgressOff()
 $downloaded = $device.opensound ("sounds/soundsdata.dat/downloaded.ogg", true)
 $downloaded.play
-SLEEP(250)
+SLEEP(100)
 FileDelete("generated.bat")
 select
 case $grlanguage="es"
@@ -1026,10 +1040,22 @@ else
 writeinlog("video Downloaded. Open Folder=no")
 endIf
 GUIDelete($downloading)
-GUISetState(@SW_SHOW, $main)
+GUISetState(@SW_SHOW, $dmain)
 Case $Btn_Share
 global $URLData = ClipGet()
+select
+case $grlanguage="es"
+$msg1="Error"
+$msg2="El enlace introducido en el cuadro de edición no es correcto. Por favor, coloque un enlace en el cuadro de edición "&"introduzca una URL " &"e inténtelo de nuevo."
+case $grlanguage="eng"
+$msg1="Error"
+$msg2="The link entered in the edit box is not correct. Please put a link in the edit box "&"enter a URL " &"and try again."
+EndSelect
+If StringInStr($URLData, "http") Then
 Share()
+Else
+MsgBox(16, $msg1, $msg2)
+EndIf
 Case $Btn_Prev
 Escuchavistaprevia()
 Case $chkbox_isSingle
@@ -1050,7 +1076,7 @@ endselect
 GUICtrlSetState($input_start,$GUI_HIDE)
 GUICtrlSetState($input_end,$GUI_HIDE)
 GUICtrlSetState($Label1,$GUI_HIDE)
-                Else
+Else
 select
 case $ReadAccs ="yes"
 speaking("se marcó el enlace como lista de reproducción.")
@@ -1073,7 +1099,7 @@ Case $chkbox_sub
 If BitAND(GUICtrlRead($chkbox_sub), $BN_CLICKED) = $BN_CLICKED Then
 If _GUICtrlButton_GetCheck($chkbox_sub) Then
 If (StringLen($url)>0) Then
-_GUICtrlComboBox_InsertString($combo_sublist,GetSubLang(),0)
+_GUICtrlComboBox_InsertString($combo_sublist,GetSubLang($url),0)
 ;MsgBox(0,"",GUICtrlRead($combo_sublist))
 EndIf
 GUICtrlSetState($combo_sublist,$GUI_SHOW)
@@ -1084,15 +1110,18 @@ _GUICtrlComboBox_ResetContent($combo_sublist)
 _GUICtrlComboBox_AddString($combo_sublist,"Auto sub")
 GUICtrlSetState($combo_sublist,$GUI_HIDE)
 GUICtrlSetState($chkbox_onlysub,$GUI_HIDE)
-                EndIf
+EndIf
 EndIf
 EndSwitch
 WEnd
 endfunc
-Func GetSubLang()
+Func GetSubLang($url)
 Local $a_sublist
 Local $command = $MAIN & " --list-subs " & $url
-Local $cmdline = Run(@ComSpec & " /C " & $command,"", @SW_HIDE,$STDERR_CHILD + $STDOUT_CHILD)
+Local $cmdline = Run(@ComSpec & " /C " & $command,"", @SW_HIDE,$STDERR_CHILD + $STDOUT_CHILD, 6)
+if    @error then
+MsgBox(16, "Error", "The operation cannot be performed because the Youtube-dl.exe file cannot be found.")
+EndIf
 ProcessWaitClose($cmdline)
 Local $return = StdoutRead($cmdline)
 $a_sublist = StringSplit($return,@LF)
@@ -1101,6 +1130,7 @@ EndFunc
 func share()
 $ln = iniRead ("config\config.st", "General settings", "language", "")
 $ReadAccs = iniRead ("config\config.st", "Accessibility", "Enable enanced accessibility", "")
+$Rpositioning = iniRead ("config\config.st", "Accessibility", "Announce position", "")
 select
 case $ln ="es"
 $sh1="Compartir con..."
@@ -1108,18 +1138,20 @@ $sh2="Volver"
 $sh3="Compartir con "
 $sh4="Comparto este enlace contigo: este enlace se compartió a través de MCY Downloader. Enlace: "
 $sh5="Enlace compartido a través de MCY Downloader"
+$sayPos="De"
 case $ln ="eng"
 $sh1="Share with..."
 $sh2="Back"
 $sh3="Share on "
 $sh4="I share this link with you: This link has been shared through MCY Downloader. Link: "
 $sh5="Shared Link via MCY Downloader"
+$sayPos="Of"
 endSelect
 $shareGui = Guicreate($sh1)
 GUISetState(@SW_SHOW)
 Select
 case $ReadAccs ="yes"
-$shareMenu = Reader_Create_Menu($sh1, "Whatsapp,Facebook,Skype," &$sh2, "1", $menuPos)
+$shareMenu = Reader_Create_Menu($sh1, "Whatsapp,Facebook,Skype," &$sh2, $Rpositioning, $SayPos)
 select
 case $shareMenu = 1
 ShellExecute("https://api.whatsapp.com/send?text= " &$sh4 &$URLData)
@@ -1163,6 +1195,4 @@ WEnd
 EndSelect
 endFunc
 FileDelete("generated.bat")
-
 ;run("engines\youtube-dl-.exe $Enlace --prefer-ffmpeg ffmpeg-location PATH ffmpeg.exe --audio-quality 320K (default 5) mp3 --convert-subs srt")
-; al pulsar el botón cambios en el menú llama a la función Readchanges()
