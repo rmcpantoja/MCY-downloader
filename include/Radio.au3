@@ -1,3 +1,4 @@
+#include-once
 #include <Bass.au3>
 #include <BassConstants.au3>
 ;#include <GUIConstantsEx.au3>
@@ -5,7 +6,7 @@
 #include <menu_nvda.au3>
 func radio()
 HotKeySet("{i}", "sayinfo")
-$Window_radio = GUICreate("¡MCY Radio")
+global $Window_radio = GUICreate("¡MCY Radio")
 Global $BASS_PAUSE_POS
 $VolLevel="100"
 Example()
@@ -13,52 +14,70 @@ endfunc
 Func Example()
 $ReadAccs = iniRead ("config\config.st", "Accessibility", "Enable enanced accessibility", "")
 $grlanguage = iniRead ("config\config.st", "General settings", "language", "")
+$ultimaURLCargada = iniRead ("config\config.st", "Misc", "Last radio loaded", "")
 Select
 case $grlanguage ="es"
-$rmessage1="usa flechas izzquierda y derecha para navegar por las opciones"
-$rmessage2="Cambiar volumen"
-$rmessage3="Reproducir"
-$rmessage4="Pausar"
-$rmessage5="Detener"
-$rmessage6="Nombre de transmisión/canción"
-$rmessage7="Cerrar este menú"
-$rmessage8="Nombre de transmisión / canción: "
-$rmessage9="Cancelado"
-$rmessage10="Volumen de música establecido al "
-$rmessage11="Nose está reproduciendo ninguna canción"
-$rmessage12="Abrir el menú"
-$rmessage13="Cerrar"
-$rmessage14="Pulsa alt para abrir el menú"
-$rmessage15="Obtener versión para Android"
+global $rmessage1="usa flechas izzquierda y derecha para navegar por las opciones"
+global $rmessage1a="Selector de radios"
+global $rmessage1b="Lista de radios, usa las flechas para navegar entre las disponibles y enter para encender."
+global $rmessage2="Cambiar volumen"
+global $rmessage3="Reproducir"
+global $rmessage4="Pausar"
+global $rmessage5="Detener"
+global $rmessage6="Nombre de transmisión/canción"
+global $rmessage7="Cerrar este menú"
+global $rmessage8="Nombre de transmisión / canción: "
+global $rmessage9="Cancelado"
+global $rmessage10="Volumen de música establecido al "
+global $rmessage11="Nose está reproduciendo ninguna canción"
+global $rmessage12="Abrir el menú"
+global $rmessage13="Cerrar"
+global $rmessage14="Pulsa alt para abrir el menú"
+global $rmessage15="Obtener versión para Android"
+global $rmessage16="error"
+global $rmessage17="imposible cargar la URL. Razón: "
 case $grlanguage ="eng"
-$rmessage1="use left and right arrows to navigate through options"
-$rmessage2="change volume"
-$rmessage3="Play"
-$rmessage4="Pause"
-$rmessage5="Stop"
-$rmessage6="stream/song info"
-$rmessage7="close this menu"
-$rmessage8="stream/song name: "
-$rmessage9="cancelled"
-$rmessage10="music volume set to "
-$rmessage11="no song is playing"
-$rmessage12="Open menu"
-$rmessage13="Close"
-$rmessage14="Press alt to open the menu."
-$rmessage15="Get version for Android"
+global $rmessage1="use left and right arrows to navigate through options"
+global $rmessage1a="Radio selector"
+global $rmessage1b="List of radios, use the arrows to navigate between the available ones and enter to turn on."
+global $rmessage2="change volume"
+global $rmessage3="Play"
+global $rmessage4="Pause"
+global $rmessage5="Stop"
+global $rmessage6="stream/song info"
+global $rmessage7="close this menu"
+global $rmessage8="stream/song name: "
+global $rmessage9="cancelled"
+global $rmessage10="music volume set to "
+global $rmessage11="no song is playing"
+global $rmessage12="Open menu"
+global $rmessage13="Close"
+global $rmessage14="Press alt to open the menu."
+global $rmessage15="Get version for Android"
+global $rmessage16="error"
+global $rmessage17="The URL cannot be loaded. Reason: "
 endSelect
-Local $MusicHandle
-local $info1
+Global $MusicHandle
+Global $info1
 _Audio_init_start()
-$MusicHandle = _Set_url("")
+select 
+case $ultimaURLCargada =""
+iniWrite ("config\config.st", "Misc", "Last radio loaded", "https://stream.zeno.fm/qhpfuuaq11zuv")
+EndSelect
+$MusicHandle = _Set_url(iniRead ("config\config.st", "Misc", "Last radio loaded", ""))
+;if @error then
+;MSGBox(0, $rmessage16, $rmessage17 &@extended)
+;guiDelete($Window_radio)
+;_Audio_stop($MusicHandle)
+;_Audio_init_stop($MusicHandle)
+;EndIf
 _Audio_play($MusicHandle)
-$EMPTY_STRING = ""
 Local $idMenu = GUICtrlCreateButton($rmessage12, 90, 50, 70, 25)
 Local $idInfo = GUICtrlCreateButton($rmessage6, 110, 50, 70, 25)
 Local $idBtn_Close = GUICtrlCreateButton($rmessage13, 140, 50, 70, 25)
 $label = GUICtrlCreateLabel($rmessage14, 0,100,20,20,$WS_TABSTOP)
 GUISetState(@SW_SHOW)
-global const $info1 = _Get_streamtitle($MusicHandle)
+global $info1 = _Get_streamtitle($MusicHandle)
 ; Loop until the user exits.
 While 1
 Switch GUIGetMsg()
@@ -66,13 +85,40 @@ Case $GUI_EVENT_CLOSE, $idBtn_Close
 guiDelete($Window_radio)
 _Audio_stop($MusicHandle)
 _Audio_init_stop($MusicHandle)
+ExitLoop
 Case $idInfo
 Sleep(500)
 MsgBox(0, $rmessage8, $info1)
 Case $idMenu
-$menutab = Reader_Create_Menu($rmessage1, $rmessage2 & "," &$rmessage3 & "," &$rmessage4 & "," &$rmessage5 & "," &$rmessage6 & "," &$rmessage15 & "," &$rmessage7)
+menublind()
+EndSwitch
+WEnd
+_Audio_init_stop($MusicHandle)
+EndFunc
+func menublind()
+$menutab = Reader_Create_Menu($rmessage1, $rmessage1a & "," &$rmessage2 & "," &$rmessage3 & "," &$rmessage4 & "," &$rmessage5 & "," &$rmessage6 & "," &$rmessage15 & "," &$rmessage7)
 select
 case $menutab = 1
+$radioseleccionada = Reader_create_menu($rmessage1b, "Blaster radio,Default,back")
+select
+case $radioseleccionada = "1"
+_Audio_stop($MusicHandle)
+_Audio_init_stop($MusicHandle)
+iniWrite ("config\config.st", "Misc", "Last radio loaded", "https://blasterradio.net/blaster")
+sleep(100)
+_Audio_init_start()
+_Audio_play(iniRead ("config\config.st", "Misc", "Last radio loaded", ""))
+case $radioseleccionada = "2"
+_Audio_stop($MusicHandle)
+_Audio_init_stop($MusicHandle)
+iniWrite ("config\config.st", "Misc", "Last radio loaded", "https://stream.zeno.fm/qhpfuuaq11zuv")
+sleep(100)
+_Audio_init_start()
+_Audio_play(iniRead ("config\config.st", "Misc", "Last radio loaded", ""))
+case $radioseleccionada = "3"
+Speaking("cancelled")
+EndSelect
+case $menutab = 2
 $volumeSlider = Reader_create_menu($rmessage2 &": slider 100", "actual (100), 0, 10, 20, 30, 40, 50, 60, 70, 80, 90")
 select
 case $volumeSlider = "1"
@@ -108,24 +154,20 @@ case $volumeSlider = "11"
 _Set_volume(90)
 speaking($rmessage10 &"90%.")
 endselect
-case $menutab = 2
-_Audio_play($MusicHandle)
 case $menutab = 3
-_Audio_pause($MusicHandle)
+_Audio_play($MusicHandle)
 case $menutab = 4
-_Audio_stop($MusicHandle)
+_Audio_pause($MusicHandle)
 case $menutab = 5
-;_Audio_init_stop($MusicHandle)
+_Audio_stop($MusicHandle)
+case $menutab = 6
 speaking($rmessage8 &$info1)
 if $info1 = "0" then
 speaking($rmessage11)
 endif
-case $menutab = 6
-ShellExecute("http://mateocedillo.260mb.net/MCY_Radio.zip")
+case $menutab = 7
+ShellExecute("http://mateocedillo.260mb.net/MCY_Radio_android.zip")
 endselect
-EndSwitch
-WEnd
-_Audio_init_stop($MusicHandle)
 EndFunc
 func sayinfo()
 ;local $info2 = _Get_streamtitle($MusicHandle)

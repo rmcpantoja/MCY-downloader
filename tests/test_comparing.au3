@@ -13,28 +13,28 @@ visual()
 endselect
 func voice()
 select
-		Case $latest = 0
+Case $latest = 0
 speak("no se ha podido comprovar versión.")
-		Case $latest < $yourversion
+Case $latest < $yourversion
 speak("la versión que hemos buscado es menor a la que tienes.")
-		Case $latest > $yourversion
+Case $latest > $yourversion
 speak("actualización disponible!" & $newversion & $yourversion & $newversion2 & $latest & ". Descargando...")
-		Case $latest >= $yourversion
+Case $latest >= $yourversion
 speak("estás actualizado.")
 endselect
 endfunc
 func visual()
 select
-		Case $latest = 0
+Case $latest = 0
 msgbox(0, "Error", "no se ha podido comprovar versión.")
 exit
-		Case $latest < $yourversion
+Case $latest < $yourversion
 msgbox(0, "Error", "la versión que hemos buscado es menor a la que tienes.")
 exit
-		Case $latest > $yourversion
+Case $latest > $yourversion
 $result= ($newversion &$yourversion &$newversion2 &$latest)
 msgbox(0, "actualización disponible!", $result)
 exit
-		Case $latest >= $yourversion
+Case $latest >= $yourversion
 msgbox(0, "estás actualizado", "no hay actualización por el momento.")
 endselect

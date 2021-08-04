@@ -1,9 +1,9 @@
 #include <Crypt.au3>
 _IniWrite("opciones.ini", "general", "Test", "1")
 Func _IniWrite($file, $title, $section, $text)
-local $ini_Password = "Megustacomer1234567890"
-IniWrite($file, StringEncrypt(True, $title, $ini_password), StringEncrypt(True, $section, $ini_password), StringEncrypt(True, $text, $ini_password))
-EndFunc
+	Local $ini_Password = "Megustacomer1234567890"
+	IniWrite($file, StringEncrypt(True, $title, $ini_Password), StringEncrypt(True, $section, $ini_Password), StringEncrypt(True, $text, $ini_Password))
+EndFunc   ;==>_IniWrite
 Func StringEncrypt($bEncrypt, $sData, $sPassword)
 	_Crypt_Startup() ; Start the Crypt library.
 	Local $vReturn = ''

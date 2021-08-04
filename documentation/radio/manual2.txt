@@ -1,0 +1,25 @@
+MCY Radio manual.
+*What is it?
+MCY Radio is a small program where you can listen to our station 24 hours a day, and it contains varied content. Music, gameplays, stories, broadcasts, etc. You can add your radio too!
+*How to use:
+**For Windows computers:
+First run RadioAPI.exe. If it is the first run, as usual in my programs, it will ask you if you want to activate the improved accessibility, useful for people with disabilities.
+Then you must select your preferred language, and once chosen, the radio begins to run.
+*What can I do on the radio?
+ON the radio you can:
+• Change music volume
+• Radio stop, pause / play controls.
+• get information: This is useful if you need to know the name of a song that is playing and has interested you.
+• radio selector (useful if you want to listen to others) currently not available because no radios have been requested.
+Note: To access these functions, there is a single main menu where you can access them and choose what you want.
+** For Android phones / tablets:
+*Notes:
+Note 1: When you install the APK you may get a warning that Play Protect does not recognize this application, just press install anyway. This is because it is not hosted on the PlayStore yet.
+Note 2: At the first start of this application it asks you to complete a profile. Most of the data is optional. These profiles are for the forum and chat functions. For more, read the privacy policy.
+That said, when you install and run the app for the first time, it will send you a welcome message and a dialog where you must complete your user profile with the data that is requested.
+Once the fields are filled in, it takes you to the start of the application. This is normal when there are unlabeled buttons, but I have made labels for talkback to make it more accessible to people with disabilities.
+You can do more in the Android app than in Windows. For example, chat, view and reply to topics and threads on forums, etc.
+Important notice: ON the main screen it is normal that the radio broadcast does not play, what we must do is go to the section menu and look for the external player element.
+* I want to help with my radio. How do I put it on the show?
+You can use the means of contact found on the website. We will place it on both Windows and Android.
+End

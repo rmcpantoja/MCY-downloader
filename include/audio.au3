@@ -2,25 +2,27 @@
 ; it initializes it.
 $comaudio = ObjCreate("ComAudio.Service")
 If @Error then
-$installing = GUICreate("Installing audio")
-GUICtrlCreateLabel("Installing necessary audio libraries ...", 55, 32)
+$installing = GUICreate("Installing comaudio")
+GUICtrlCreateLabel("Installing necessary audio libraries...", 55, 32)
 GUISetState(@SW_SHOW)
 sleep(500)
-$dwncomaudio InetGet("https://www.dropbox.com/s/vqi3yi50mti9gp8/comaudio.exe?dl=1", "comaudio.exe")
+$dwncomaudio = InetGet("https://www.dropbox.com/s/vqi3yi50mti9gp8/comaudio.exe?dl=1", "comaudio.exe")
 RunWait("comaudio.exe /SILENT")
 InetClose($dwncomaudio)
 GUIDelete($installing)
 $comaudio = ObjCreate("ComAudio.Service")
 If @Error then
-if $windowslanguage = "0c0a" or $windowslanguage = "040a" or $windowslanguage = "080a" or $windowslanguage = "100a" or $windowslanguage = "140a" or $windowslanguage = "180a" or $windowslanguage = "1c0a" or $windowslanguage = "200a" or $windowslanguage = "240a" or $windowslanguage = "280a" or $windowslanguage = "2c0a" or $windowslanguage = "300a" or $windowslanguage = "340a" or $windowslanguage = "380a" or $windowslanguage = "3c0a" or $windowslanguage = "400a" or $windowslanguage = "440a" or $windowslanguage = "480a" or $windowslanguage = "4c0a" or $windowslanguage = "500a" then
-MsgBox(4096, "Error", "No fue posible instalar las librerías de audio necesarias. Saliendo...")
+select
+case @OsLang = "0c0a" or @OsLang = "040a" or @OsLang = "080a" or @OsLang = "100a" or @OsLang = "140a" or @OsLang = "180a" or @OsLang = "1c0a" or @OsLang = "200a" or @OsLang = "240a" or @OsLang = "280a" or @OsLang = "2c0a" or @OsLang = "300a" or @OsLang = "340a" or @OsLang = "380a" or @OsLang = "3c0a" or @OsLang = "400a" or @OsLang = "440a" or @OsLang = "480a" or @OsLang = "4c0a" or @OsLang = "500a"
+MsgBox(4096, "Error", "No fue posible instalar las librerías de audio necesarias. Por favor, ejecuta este programa como administrador.")
 Exit
-endif
-;English languages:
-if $windowslanguage = "0809" or $windowslanguage = "0c09" or $windowslanguage = "1009" or $windowslanguage = "1409" or $windowslanguage = "1809" or $windowslanguage = "1c09" or $windowslanguage = "2009" or $windowslanguage = "2409" or $windowslanguage = "2809" or $windowslanguage = "2c09" or $windowslanguage = "3009" or $windowslanguage = "3409" or $windowslanguage = "0425" then
-MsgBox(4096,"Error","The audio library could not be initialized.")
+case @OsLang = "0809" or @OsLang = "0c09" or @OsLang = "1009" or @OsLang = "1409" or @OsLang = "1809" or @OsLang = "1c09" or @OsLang = "2009" or @OsLang = "2409" or @OsLang = "2809" or @OsLang = "2c09" or @OsLang = "3009" or @OsLang = "3409" or @OsLang = "0425"
+MsgBox(4096,"Error","The audio library could not be initialized. Please run this program as an administrator.")
 Exit
-endIf
+Case else
+MsgBox(4096,"Error","The audio library could not be initialized. Please run this program as an administrator.")
+Exit
+EndSelect
 EndIf
 endif
 ;$comaudio.archiveExtension = "sounds.dat"

@@ -1,0 +1,240 @@
+Cambios:
+0.9 beta pública, 14 de mayo de 2021 en proceso, (03 de agosto de 2021 lanzada)
+Esta es una actualización que corrige errores, con nuevas características como la búsqueda desde Youtube, actualizaciones DE COMPONENTES y más.
+*Cambios de usuario:
+1. Actualizado YouTube-Dl a la versión 2021.6.6.0
+1.1. Actualizado ffmpeg a la versión 4.3.2
+1.2. Actualizado el plug-in BASS a la versión 2.4.16.1.
+1.3. Actualizado MCY Radio a la versión 0.4.
+1.4. Actualizada la plantilla de instalación de inno setup a 6.2.
+1.5. Agregado el botón de abrir el menú, cambios, manual de usuario y GitHub ampliando así aún más la pantalla aburrida principal del programa.
+1.6. agregadas nuevas opciones:
+1.6.1. Accesibilidad mejorada: Anunciar posición de elementos en menús y en listas.
+1.6.2. Borrar configuración.
+1.6.3. Cantidad de resultados.
+1.6.4. Mostrar tips.
+1.7. Debido a una solicitud popular, ¡se agregó nuevo cuadro de búsqueda! más información en el manual de usuario.
+1.8. Nuevos sonidos.
+1.9. Renombrado "descargar como mp3" a "descargar como audio" y agregados nuevos formatos de audio a elegir como WAV, Ogg, flac, etcétera.
+1.10. En la interfaz de descarga, se agregaron los consejos o  tips que te indican qué es lo que hace cada elemento o control, puedes desactivar esto en el panel de opciones.
+1.11. El repositorio en GitHub ha vuelto, dando como resultado la eliminación del reportero de errores, correcciones y limpieza de código.
+*Correcciones de errores:
+2. Se han solucionado unos cuantos problemas y errores con la MCY Radio integrada en el programa.
+2.1. Corregido un pequeño error en la descarga de subtítulos en el que el idioma de éstos no se mostraban correctamente.
+2.2. Corregidos errores visuales con la interfaz y ventanas (para personas videntes).
+2.3. Corregido un error con las barras de progreso en audio (accesibilidad mejorada).
+2.4. Corregido un grave error con el actualizador que lanzaba un mensaje de autoIt.
+2.5. En la versión código fuente, para evitarnos dolores de cabeza, ya no es estrictamente necesario compilar si se quiere probar algo, ya que lanzaba un mensaje de nueva versión.
+2.6. Corregido un grave error con el UDF "audio" al iniciar el programa, gracias a la pc de pruebas.
+2.7. Corregido error al iniciar la versión del programa en inglés.
+* Desarrollo:
+3. Desafortunadamente, se ha eliminado la opción "reportero de errores" ya que a veces solía no enviar estos reportes, y se ha sustituido por errores y sugerencias, que abre una página de Google Forms con los datos que se debían introducir en el antiguo reportero de las versiones anteriores.
+3.1. Actualizados los siguientes UDFS:
+• Say_UDF-20210727
+• reader-20210714
+• NVDAControllerClient-20210714
+• menu_reader-20210714
+• JFW-20210714
+• audio-20210729
+• Audio_Progress-20210725
+3.2. Ahora ya no se necesita extraer los sonidos al ejecutar el programa, los reproduce en el mismo zip y se han eliminado las alertas de error.
+3.3. Removido zip UDF.
+3.4. Para desarrolladores, la clase $windowsLanguage se ha eliminado y ha reemplazado por la macro @osLang.
+3.5. Para desarrolladores, reemplazada función GetSubLang a secas por GetSubLang($url) para obtener idioma de subtítulos de una URL.
+0.8.1 beta pública.
+Corregidos errores grabes con las versiones instalables debido a privilegios de administrador y con los sonidos.
+0.8 beta pública, 5 de marzo de 2021 en proceso, (11 de mayo de 2021 lanzada)
+*Cambios de usuario:
+1. Actualizado YouTubeDl a la versión 2021.4.26.0
+1.1. Agregada opción manual del usuario en el menú ayuda.
+1.2. El menú de opciones y los cambios ya están hechos en controles gui para quienes no dispongan de accesibilidad mejorada.
+1.3. Debido a varias solicitudes, buelve la multi-arquitectura.
+1.4. Mini Reproductor de audio integrado, que sustituye a la función abrir carpeta al terminar la descarga. Más info. En el manual.
+1.5. Al descargar multimedia, ya no aparece la ventana del símbolo del sistema en negro, si no que se ha hecho una ventana GUI (graphic User Interface) para esto. En ella puedes consultar el porcentaje de la descarga, su tiempo restante, etc. Característica terminada con éxito.
+1.6. Nueva barra de progreso donde te informa mediante el mismo programa los avances de descarga de YouTubeDl. Característica realizada y habilitada exitosamente.
+1.7. Ahora puedes compartir tu enlace multimedia a distintos medios.
+1.8. Por fin, se agregó la MCY Radio, aunque todavía está disponible como aplicación independiente. Si deseas añadir tu radio, por favor, manda un mensaje en el reportero de errores. Más info. En el manual.
+1.9. Nuevo submenú "Herramientas" en la ventana principal
+1.9.1. Nueva herramienta extra. Conversor de archivos.
+1.9.2. Nueva herramienta extra. Reproducir URL Directa.
+1.10. Accesibilidad mejorada: Agregada la compativilidad con JAWS For Windows (beta) y el soporte braille para NVDA.
+1.10.1. Agregadas más opciones para verbalizar, pitar para progresos de descarga o vajar el volumen multimedia mientras el lector de pantalla esté hablando, etc.
+1.11. Se mejoró el soporte para descargar canales o usuarios completos en YouTube.
+*Correcciones
+2. Se optimizó el código para una mayor fluidez, así mismo se eliminaron muchas líneas.
+2.1. Corregido el cuadro de edición de carpeta de destino donde se descargarán los archivos, ya que esto parecía descargarse desde la carpeta del programa.
+2.2. Cuando presiones escape o quieras salir de una ventana, por ejemplo "descargar en mp3", te lleva a la ventana principal en lugar de salir del programa.
+2.3. Cuando busques actualizaciones de Youtube-dl ya no mostrará la ventana negra de la consola de Windows, sino actualiza directamente desde esta aplicación.
+2.4. Corregido error con la UDF de JAWS For Windows.
+*Desarrollo del programa:
+3. Removidas UDFS innecesarias.
+3.1. Removidos los manuales en versión audio y sus ficheros. Ahora el f1 abre el manual en texto.
+3.2. Removidos algunos sonidos innecesarios.
+3.3. Removida la detección de conexión a internet y los mensajes de errores de desconexión, para equipos más antiguos. Esto no parecía no funcionar correctamente con ellos.
+3.4. Se han actualizado algunas UDF.
+0.7 beta pública, 22 de noviembre de 2020 en proceso, (2 de marzo de 2021 lanzada)
+Esta actualización trae muchas mejoras, tales como el nuevo menú de opciones, mejorada la descarga de subtítulos y vídeo, elegir calidad de audio y más.
+*Cambios de usuario:
+1. Actualizado YouTubeDl a la versión 2021.3.02.0
+1.1. Se agregaron accesos directos de teclas en la interfaz del programa.
+1.2. Nueva opción: Ahora puedes seleccionar la carpeta de destino donde se alojarán los archivos multimedia descargados. Por defecto se guarda en "C:\MCY\Download\audio"
+1.3. Nuevo menú de opciones (para accesibilidad mejorada solamente) En él puedes configurar distintas opciones como la calidad de audio, el idioma, la carpeta de descargas y más.
+1.4. Actualizado el manual de usuario, escribiendo y explicando la nueva interfaz de descarga, cual ha reemplazado a la antigua en la cual te aparecía únicamente un cuadro de edición para introducir URL. Esta nueva interfaz se hizo para ampliar al programa.
+1.5. Se reduce el espacio del programa. Se borró el pack_estracter, la herramienta de reportes y sugerencias y se reducen el tamaño de los sonidos. Dichas herramientas están incluidas en el único .exe, para así disminuir espacio.
+1.6. Se está trabajando para una posible versión a los usuarios que ejecutan equipos de 32 bits.
+1.7. Se han etiquetado algunos cuadros combinados, tales como la selección del modo de descarga de subtítulos y en las listas de reproducción.
+1.8. Nueva barra de progreso (beta) donde te informa mediante el mismo programa los avances de descarga de YouTubeDl. (característica en desarrollo)
+1.9. Al completar una descarga, el programa te pregunta si quieres abrir la carpeta donde se alojan los archivos multimedia descargados.
+*Correcciones:
+2. Corregida la función para descargar listas de reproducción, donde los archivos se guardaban en la ubicación del programa y con nombres de archivo incorrectos.
+2.1. Corregida la herramienta de reporte de errores.
+2.2. Se ha corregido un error en el cual, si descargabas un vídeo y querías descargar otro nuevamente, lanzaba un mensaje de error de AutoIt.
+2.3. Corregida instalación de la librería comaudio por primera vez. Ahora debes ejecutar como administrador, si es la primera vez que lo ejecutas en tu máquina.
+2.4. Corregido error con el actualizador donde impedía ejecutarse en algunas ocasiones.
+2.5. Corregido error cuando el programa siempre se ejecuta como administrador, esto llegó a ser molesto en algunos casos.
+2.6. Corregidos problemas con los antivirus, que en algunas ocasiones detectaban el programa como amenaza, (cosas técnicas) esto porque incluía un script bgt únicamente para los sonidos. Ahora se ha quitado y se ha reemplazado por uno nuevo hecho en autoIt.
+2.7. Optimizaciones y correcciones en el código.
+2.8. Corregido error visual en la interfaz, en lo cual era imposible cliquear en el botón descargar ya que no se encontraba en la pantalla.
+2.9. Corregido error con el instalador del programa donde lanzaba un mansaje en cual no podía lanzar el ejecutable al finalizar la instalación.
+*Desarrollo del programa:
+3. Se actualizaron algunos UDFS
+3.1. Cambio importante: Todos los programas de MT Programs ahora se alojan en un sitio web. Así mismo, se agregó un elemento de menú en ayuda si deseas visitarlo.
+3.2. Cambio de formato de sonidos, que ahora están en .Ogg en alta calidad, ya que el formato WAV ocupaba mucho espacio.
+3.3. Creado sistema de logs. Útil si encuentras un error y necesites comprobar o enviar como reporte.
+3.4. ¡Novedad! Agregado MCY Radio, por ahora está disponible como aplicación independiente. Consíguela en http://mateocedillo.260mb.net/programs.html
+• Notas: El programa está en fase beta, pero aun así, no deja de ser funcional para los usuarios.
+• si deseas agregar tu radio (a parte de la nuestra) Puedes comentarnos. La radio debe tener como único requisito un formato de reproducción compatible y un enlace directo donde se transmite.
+• Si es posible, añadiremos este accesorio a MCY Downloader, ya que puede ser una buena alternativa por si deseas escuchar música. Por ahora, la aplicación independiente no soporta actualizaciones desde el mismo programa, ya que este es un tipo de experimento pero que resultó ser un éxito.
+3.4.1. Agregada aplicación para  android.
+3.5. Agregado ZipUDF para desencriptar los sonidos y otros datos. Cabe aclarar que está estrictamente prohibido cualquier copia de éstos.
+3.6. Reemplazando la ventana de descarga del símbolo del sistema para que se muestre solamente en esta aplicación. (Característica en desarrollo)
+0.6.4 beta pública, 28 de noviembre de 2020 en proceso, (28 de noviembre de 2020 lanzada)
+Esta actualización trae pequeñas correcciones de errores en cuanto a la descarga de multimedia y sobre el diálogo acerca del programa, donde al pulsar en el botón aceptar el cuadro de diálogo no dejaba de mostrarse.
+0.6.3 beta pública, 16 de noviembre de 2020 en proceso, (16 de noviembre de 2020 lanzada)
+Esta actualización de MCY corrige un error importante al descargar desde YouTube si no contabas con las librerías de microsoft visual c++ redistributable. Es decir, agrega sus librerías respectivas.
+Gracias a los usuarios por reportar o comentar el error sucedido en la 0.6.2.
+0.6.2 beta pública, 02 de noviembre de 2020 en proceso, (13 de noviembre de 2020 lanzada)
+Esta es otra mini actualización de MCY en cual mejora ciertas características tales como el descargado de multimedia (el objetivo principal de este programa)).  Y lo más importante es que MCY Downloader ya es un programa público a partir de ahora. Esperemos que lo disfrutes. Cualquier crítica, duda, sugerencia o mensaje concerniente a este programa son bien recibidos.
+*Información:
+Desde el 30 de otcubre al 1 de noviembre me había enterado que ocasionó una demanda contra YouTubeDl Library, en lo cual esta librería es usada por el programa para que cumpla su objetivo principal. Por lo tanto, no se sabe qué pasará exactamente. Si la popular librería fuese a desaparecer, el programa continuará, eso sí, estaremos buscando otras alternativas a parte de la librería ya mencionada, que cumpla con este objetivo, si esto fuese a ocurrir.
+*Cambios de usuario:
+1. Actualizado YouTubeDl a la versión 2020.11.1.1.
+*Correcciones:
+2. Corregido error con la erramienta de reporte de errores.
+2.1. Al descargar multimedia desde Youtube, MCY ahora solamente muestra el nombre del vídeo sin el código del mismo al final.
+2.2. Corregidas ciertas secciones de la interfaz de descarga.
+0.6.1 beta privada, 29 de octubre de 2020 en proceso, (31 de octubre de 2020 lanzada)
+Esta actualización menor trae sobre todo algunas correcciones, mejoras en algunas características, etc.
+*Informaciones: Antes de lanzar la versión 0.6.1 al público, nos habíamos percatado de que habían bugs entre el selector de idiomas, el reportero de errores y más. Detallaremos todas las correcciones que se están haciendo. Sin embargo, esta es una versión menor en la que se corrigen errores. Por lo tanto la 0.6.2 está disponible y lista para el público.
+*Cambios de usuario:
+1. Agregado mensaje del día.
+1.1. Se ha ampliado la accesibilidad mejorada.
+1.2. Si tienes desactivada la accesibilidad mejorada, ahora para escoger un idioma te vales de una ventana que contiene botones, en lo cual reemplaza al menú contextual. Esto es porque con el menú tenía serios problemas con la ejecución.
+1.3. Se creó una nueva interfaz dentro de la opción "Descargar en mp3..." Donde ahora te vales de distintas opciones. Esto reemplazó al único cuadro de edición para colocar el enlace y descargar. Más info. en el manual.
+1.4. Añadida posibilidad de descargar subtítulos. (en desarrollo).
+1.5. Ahora puedes descargar listas de reproducción.
+*Correcciones:
+2. Corregido grabe error en el que si no tenías activada la accesibilidad mejorada, después de seleccionar tu idioma, el programa no continuaba con la ejecución y se cerraba la ventana inesperadamente, pero aun así dejaba el rastro del ejecutable en los procesos del administrador de tareas.
+2.1. Corregido error de enviando el mensaje en el reportero de errores.
+2.2. Corregida función para descargar multimedia (mp3 y vídeo)
+2.3. Corregidos fallos en algunas alertas de diálogo que brindan información del programa.
+0.6 beta privada, 14 de agosto de 2020 en proceso, (28 de octubre de 2020 lanzada)
+Esta actualización tiene muchas características y correcciones de errores. Entre ellas, mejorado el soporte de multiidioma y la nueva interfaz.
+*Desarrollo del programa:
+1. Actualizado ffmpeg a la última versión.
+1.1. También se actualizó YouTube dl a la versión 2020.10.2.0
+1.2. Ahora MCY ya no usa el script de AutoIt para desencriptar el archivo de paquete de sonidos ya que realmente era un conflicto y me causaba muchos dolores de cabeza.
+1.3. Creada versión instalable para el programa.
+1.4. Las librerías de descarga ahora se incluyen en una carpeta aparte, tal y como lo hacíamos en las versiones anteriores de MCY downloader a la 0.5.
+*Cambios de usuario:
+2. Se está implementando el sistema de actualizaciones.
+2.1. agregado en el menú de MCY la opción de buscar actualizaciones de la librería de YouTube.
+2.2. Mejorado el soporte de multiidioma. Ahora cuando seleccionas tu idioma ya tiene sentido, eh?
+2.2.1. Cambio técnico: Se ha mejorado la detección del idioma del sistema operativo. Esto es para que MCY detecte el idioma del sistema y a través del idioma reproducir el menú principal de voz de acuerdo a los idiomas Inglés y Español.
+2.2.2. Se ha agregado la opción de salir en el menú del selector.
+2.3. Se agregaron nuevos sonidos y otros se actualizaron.
+2.4. Cuando ejecutas el programa por primera vez, ahora MCY muestra una ventana para que se instalen los componentes de audio necesarios.
+2.5. ¡Mejorada la interfaz de MCY Downloader!
+2.6. Para una mejor organización y comodidad al usar el programa, se ha creado una nueva función llamada "accesibilidad mejorada".
+La accesibilidad mejorada te permite usar el programa mediante comandos te teclado y voz. Esta fue hecha para las personas con discapacidad visual, para que así también las personas que ven tengan su lugar. Si no eres una persona con algún tipo de discapacidad, te recomendamos no la actives.
+*Correcciones:
+3. Esta versión corrige un error muy grabe con los sonidos en el cual se ha tratado de solucionar.
+3.1. Mejoras de estabilidad en el programa y reorganizado el código.
+3.2. Ahora MCY no presenta problemas al detectar la arquitectura.
+3.3. Solucionado un pequeño problema con los sonidos en los que hacía que se creara una carpeta vacía con el nombre "source codesounds" para la versión en código fuente y "compsounds" en la versión compilada para el público en general, cosa que estas carpetas no son nada necesarias.
+3.4. Se están solucionando problemas en los cuales, los botones y algunas ventanas de diálogo se visualizan con un tamaño de letra muy pequeño. Este cambio es notorio, específicamente en las personas con visión.
+3.5. Solucionados pequeños problemas con accesibilidad.
+3.6. Ahora MCY Downloader ya no lanza el mensaje de error "The audio library could not be initialized." que tenía que ver con la instalación de las librerías de audio.
+4. Se ha reescrito el manual con las nuevas características. Agregados los créditos a los betatesters y colaboradores quienes me ayudaron con el programa, así como agradeciéndolos por su colaboración.
+4.1. Se añadió la traducción del manual en inglés.
+5. En la ventana principal de MCY, ahora puedes escuchar la ayuda del programa pulsando f1.
+6. Terminando las características de desarrollo de la versión anterior (0.5)
+0.5 beta privada, 27 de mayo de 2020 en proceso, (10 de Agosto de 2020 lanzada)
+En primer lugar queremos disculparnos por la demora en lanzar la actualización privada ya que tuve serios problemas con Windows y por las demás actividades que tuve que realizar. Además, esta versión trae muchas novedades, que son las siguientes:
+*Desarrollo del programa:
+1. Actualizado ffmpeg a la versión 64 bit.
+1.1. El programa ahora se puede ejecutar solamente si ejecutas un pc de 64 bits.
+1.1.1. Si no estás ejecutando un pc de 64 bit, MCY ahora muestra una alerta sonora y se cierra.
+1.1.2. Actualizado YouTubeDl a la versión 2020.6.16.0
+1.2. En el caso del código fuente, para ejecutar el programa obligatoriamente debe primero compilarse o si no es así, muestra un mensage de error junto con un sonido indicándote que el software necesita ser compilado.
+1.2.1. Se agregó un pequeño modo de desarrollador. En caso del código fuente, si activas este modo, el programa no te dará el mensage de error indicándote que debes compilar el programa. Por defecto está desactivado para todos los usuarios.
+1.3. Agregada versión del programa, información del producto, organización, etc. cuando el script se compila
+1.4. Las librerías ahora se incluyen en el archivo compilado MCY.exe
+1.4.1. Cuando abras el programa, te pedirá que esperes un momento para que se copien los archivos necesarios. No tarda mucho.
+1.5. Ahora el programa crea una carpeta MCY\tmp en archivos de programa (en la versión instalable para futuras versiones) En donde se almacena todo lo descargado con MCY y al completar una acción o al cerrar el programa, la carpeta "tmp" se elimina automáticamente.
+1.6. Se ha agregado la librería ComAudio para algunas características del programa, tales como el menú principal de voz.
+*Cambios de usuario:
+2. Ahora el programa muestra una notificación, un texto y una etiqueta mientras YouTubeDl está actualizándose o buscando actualizaciones indicándote que tienes que esperar.
+2.1. El programa ya no se cuelga al reproducir el sonido de espera a la actualización.
+2.1.1. Ya se cambió la música de fondo de las actualizaciones tanto de la librería de YouTube como otros componentes. Tal vez podamos agregar en futuras versiones el soporte para actualizaciones del mismo programa.
+3. Corregidos saludos.
+4. Ahora al pulsar el botón aceptar en el primer cuadro de bienvenida, MCY descargará y te mostrará en un cuadro de texto los cambios más recientes online. El documento se actualiza a diario cada vez que haya algún cambio en el programa, ya sea en la versión actual o si se está trabajando en una nueva. (característica todavía en desarrollo)
+5. Ahora ya es posible descargar videos y se solucionó el problema de que, aun así si insertabas la URL correcta mostraba una alerta de que el enlace fuese incorrecto.
+6. Se ha mejorado la interfaz de MCY downloader.
+6.1. Después de abrir el programa, ahora MCY downloader mostrará una ventana en lugar de mostrar el cuadro para introducir la URL.
+6.2. Por fin ya funciona la barra de menú de MCY, que se encuentra en la nueva interfaz.
+7. Estamos agregando el soporte multiidioma. Esta característica puede tomar un buen tiempo de realización. (en desarrollo)
+7.1. Se ha agregado un menú principal en audio para seleccionar un idioma. Por ahora están disponibles inglés y español.
+7.2. Para las personas con visión, ahora ya pueden seleccionar el idioma a través de un menú de contexto, debes clicar sobre él. (característica todavía en desarrollo)
+8. Ahora los sonidos están encriptados
+9. Desafortunadamente, hemos quitado el código fuente del programa por medidas personales tomadas.
+10. Ahora se guarda en el directorio del programa un fichero encriptado .st con algunas configuraciones del programa, por ejemplo: el idioma seleccionado por el usuario.
+11. Se ha mejorado la organización de los sonidos, ahora se ubican en una carpeta por separado en lugar de estar sueltos en la carpeta del script.
+• En el caso del código fuente, MCY carga los sonidos desde esa carpeta.
+• EN cambio, en el caso del programa compilado lo carga con el dat de los sonidos desencriptándolos antes.
+12. Se ha agregado un nuevo sistema de reporte de errores o sugerencias para el programa.
+
+0.4 beta privada, 15 de mayo de 2020 en proceso, (24 de mayo de 2020 lanzada)
+En esta versión ha habido muchos cambios insignificantes en el programa. Los detallaremos a continuación
+1. Se ha cambiado todo el código desde el lenguaje de la consola de Windows a AutoIt. ya que programar en el lenguaje de Windows no me ha parecido muy seguro ni tampoco muy familiar.
+1.1. También se actualizaron las librerías YouTubeDl y Ffmpeg a sus últimas versiones
+1.1.1. Si hay una actualización de YouTube dl disponible se reproduce una música de fondo mientras la actualización se descarga.
+1.2. El script ahora ya se puede compilar
+1.3. Definidas las variables de la versión del programa y el servicio de descarga (youtube.com) para futuro uso en versiones posteriores.
+1.4. Se ha liberado el código fuente, en GitHub. Por ahora no hay enlace disponible. Las sugerencias y las solicitudes son todas bienvenidas para mejorar el programa:
+1.5. Cabe aclarar que esta será la última versión del programa en soportar la multiarquitectura, es decir, 32 y 64. A partir de las siguientes versiones solamente será compatible con 64 bits.
+2. Ahora el programa reproduce un sonido y una alerta de bienvenida
+3. Creada una versión portable, solamente es una beta para probar. Probablemente esta sea la última beta privada del programa, en las próximas versiones se hará pública.
+4. Por obvias razones, en las versiones anteriores para descargar el vídeo tenías que editar el script y en una línea colocar la URL a descargar. EN esta versión ahora te aparecerá un cuadro de edición para colocar el link o la URL de YouTube a descargar y solamente presiona aceptar.
+•Esto es porque el programa ahora es compilado para evitar plagios u otro tipo de copias y además, es una experiencia algo más fácil.
+4.1. Tras actualizar YouTube dl,  ya no debes presionar una tecla para reanudar el programa. El mismo se reanudará en cuanto termine la actualización.
+5. Se han hecho y agregado otros nuevos sonidos al programa. Descúbrelo por ti mismo.
+6. Ahora cuando intentas insertar una URL no válida, el programa te mostrará una alerta con un aviso junto con un sonido indicándotela.
+7. Se ha creado un menú de contexto en donde hay un submenú ayuda y un menú acerca de... Para consultar acerca del programa. Nota: Por ahora esta característica aún está todavía en desarrollo.
+8. Estamos teniendo un pequeño pero a la vez un problema un poco grave al ejecutar el comando para descargar el video con los datos introducidos de la variable por el usuario. Vamos a intentar solucionar este grave problema lo más que podamos.
+9. Se ha quitado el antiguo manual del usuario del año pasado, que se había escrito en la beta privada inicial de MCY 0.1. Ahora el nuevo manual incluyen las nuevas características y el uso y una guía de ellas.
+0.3 beta privada, 8 de mayo de 2020
+
+Durante mucho tiempo hemos decidido continuar con el desarrollo del programa. Estos son los cambios que hemos podido realizar por el momento:
+1. Ahora, si estás ejecutando el programa por primera vez, el mismo crea una carpeta en el disco local, con el nombre MCY. Dentro de ella hay una subcarpeta llamada download, y dentro de ella, 2 subcarpetas:
+•Audio: Carpeta donde se almacenarán los audios convertidos o descargados
+•Video: Los archivos originales de video que descargas desde YouTube
+2. Ahora el programa busca automáticamente si hay alguna actualización de la librería de YouTube. Si es así, la descarga automáticamente. Por el momento la ventana del actualizador se pone en segundo plano y cuando haya terminado, el programa se reanuda. Cabe aclarar que tienes que pulsar una tecla para continuar cuando la actualización de la librería haya terminado.
+3. Actualizada librería de YouTube al mismo día del lanzamiento de esta beta
+Versión 0.2 beta privada
+
+Corrige algunos pequeños bugs, entre ellos, el título de ventana no se mostraba correctamente y en algunas ocasiones al descargar videos marcaba un mensage de error. También se actualizó la librería de YouTube.
+En esta versión ahora se está intentando trabajar con ffmpeg, este proceso todavía está en mantenimiento y en desarrollo, así que por el momento solo puede descargar en vídeo.
+Corregido error cuando en algunas ocasiones el video se descarga corruptamente
+Versión 0.1 beta pública, abril de 2019
+Esta es la versión inicial. Sin embargo puedes encontrar errores en el programa, en esta versión solamente es un pequeño script echo con el lenguaje de consola de Windows.

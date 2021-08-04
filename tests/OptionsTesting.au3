@@ -1,4 +1,4 @@
-#Include<file.au3>
+#include <file.au3>
 #include <new\functions.au3>
 #include <GUIConstantsEx.au3>
 #include <GuiButton.au3>
