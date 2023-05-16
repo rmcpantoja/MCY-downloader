@@ -1,0 +1,7 @@
+renueva el reproductor en línea de una vez, no seas tan aburrido, ¿quieres?.
+Corregir de una vez la separación de los links tan largos en la búsqueda, vaya que hay que hacer muchísimos arreglos en los strings.
+Renovar la MCY radio con los controles gui. Al parecer hay problemas con el menú.
+arregla el sonido de la barra de progreso en audio. Pos toma, ya está.
+corregir el "no se está reproduciendo ninguna canción" con la MCY Radio.
+arregla la información del nombre de canción, esta se muestra al cambiar de emisora pero al consultar la información de canción se mostraba de la emisora equivocada.
+Analizar, compatibilizar y construir el código con el paquete completo de SciTE. Hecho, ¡más de cuarenta malditos errores solucionados! ¡yay!

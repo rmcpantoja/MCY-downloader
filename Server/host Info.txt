@@ -1,0 +1,36 @@
+Tome nota de sus detalles de conexion abajo y considere imprimirlos.
+
+
+
+---------------------------------------------------
+
+Username de Cpanel: n260m_27330965
+Password de Cpanel: mrcp123
+Su URL: http://mateocedillo.260mb.net o tambien con las www. delante
+Ftp server: ftp.260mb.net
+Username del ftp: n260m_27330965
+Password del ftp: mrcp123
+Nombre de la base de datos de MySQL: DEBE CREARSE EN CPANEL
+Username de MySQL: n260m_27330965
+Password de MySQL: mrcp123
+Servidor de MySQL: VER EL CPANEL
+
+URL de Cpanel: http://cpanel.260mb.net
+---------------------------------------------------
+
+
+
+Una vez que haya ingresado a su VistaPanel, puede cambiar su password si procede.
+
+Tambien puede ingresar a nuestros foros en http://www.260mb.com/foro, donde puede obtener ayuda e intercambiar ideas con otros webmasters.
+
+
+Para la ayuda tecnica, utilizar por favor el sistema de soporte situado en su cpanel.
+
+Le agradecemos por elegir a 260MB - SERVICIOS DE HOSTING y disfrute de su cuenta de hosting gratuita!
+
+
+
+260MB - SERVICIOS DE HOSTING
+http://www.260mb.com
+http://www.260mb.net

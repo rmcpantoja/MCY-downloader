@@ -1,0 +1,21 @@
+2022-09-26 22:53: Initialicing...
+2022-09-26 22:53: Checking architecture
+2022-09-26 22:53: Windows 64 bit
+2022-09-26 22:53: Checking program copy...
+2022-09-26 22:53: Copy: Portable.
+2022-09-26 22:53: Checking for updates...
+2022-09-26 22:53: Website motd: 8
+2022-09-26 22:53: actual motd: 8
+2022-09-26 22:53: Checking multimedia folders:
+2022-09-26 22:53: Function: download from link...
+2022-09-26 22:53: Downloading Multimedia.
+2022-09-26 22:53: Downloading as audio
+2022-09-26 22:53: Starting process...
+2022-09-26 22:53: downloading https://www.youtube.com/watch?v=Sl_K6WIhIU4
+2022-09-26 22:54: [download]   7.9% of 3.16MiB at    4.42MiB/s ETA 00:00
+2022-09-26 22:54: [download]  15.8% of 3.16MiB at    4.72MiB/s ETA 00:00[download]  31.6% of 3.16MiB at    5.28MiB/s ETA 00:00
+2022-09-26 22:54: [download]  63.3% of 3.16MiB at    5.60MiB/s ETA 00:00
+2022-09-26 22:54: [download] 100.0% of 3.16MiB at    5.52MiB/s ETA 00:00[download] 100% of 3.16MiB in 00:20 at 156.43KiB/s    
+
+2022-09-26 22:54: video Downloaded. Open Folder=no
+2022-09-26 22:54: exiting...

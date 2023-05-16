@@ -1,0 +1,34 @@
+MCY Radio manual.
+What is it?
+MCY Radio is an accessory where you can listen to stations, and they contain a variety of content. Music, gameplays, stories, transmissions, locutions, etc. You can add your radio too!
+How to use:
+For Windows computers:
+First, open MCY Downloader. Make sure you have the latest version.
+Then, go to the menu, either by pressing the "open menu" button, pressing alt or clicking it. In the MCY menu, select the "radio" item and the execution will start.
+What can I do on the radio?
+ON the radio you can:
+• Change music volume
+• Radio stop, pause / play controls.
+• get information: This is useful if you need to know the name of a song that is playing and has interested you.
+• radio selector (useful if you want to listen to other stations).
+• installation or uninstallation independently.
+For Android phones / tablets:
+Notes:
+Note 1: When you install the APK you may get a warning that Play Protect does not recognize this application, just press install anyway. This is because it is not hosted on the PlayStore yet.
+Note 2: At the first start of this application it asks you to complete a profile. Most of the data is optional. These profiles are for the forum and chat functions. For more, read the privacy policy.
+That said, when you install and run the app for the first time, it will send you a welcome message and a dialog where you must complete your user profile with the data that is requested.
+Once the fields are filled in, it takes you to the start of the application. This is normal when there are unlabeled buttons, but I have made labels for talkback to make it more accessible to people with disabilities.
+You can do more in the Android app than in Windows. For example, chat, view and reply to topics and threads on forums, etc.
+Important notice: On the main screen it is normal that the radio broadcast does not play, what we must do is go to the sections menu, select the radio list menu and look for the external player element.
+I want to help with my radio. How do I put it on the show?
+For now, you can use the means of contact found on the website. We will place it on both Windows and Android.
+Installing MCY radio (Windows)
+As of MCY Downloader 1.0 together with its accessory MCY radio 0.5, you can install and run it independently. This is just in case you want just the MCY Radio and nothing else.
+Steps:
+1. In the main window, expand the help button by pressing it. By default it is collapsed.
+2. While it is already expanded, new options will appear. Press "install MCY Radio".
+3. From now on, the accessory will be installed on the desktop. The installation process is quick, so when it is installed the button text will change to uninstall.
+4. If you want to check, please close all windows of MCY suite and run MCY Radio in the desktop shortcut. You will notice that the accessory is executed directly. Ready!
+Thanks:
+It is an honor that there are people who collaborate and who are comfortable with any program. Thank you for everything, that which has purposes to help improve is always welcome.
+End

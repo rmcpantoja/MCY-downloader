@@ -4,7 +4,7 @@ Example()
 
 Func Example()
 ; Display a progress bar window.
-ProgressOn("Progress Meter", "Increments every second", "0%", -1, -1, BitOR($DLG_NOTONTOP, $DLG_MOVEABLE))
+ProgressOn("Progress Meter", "Increments every second", "0%", -1, -1, 18)
 
 ; Update the progress value of the progress bar window every second.
 For $i = 1 To 100 Step 1

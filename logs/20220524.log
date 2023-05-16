@@ -1,0 +1,32 @@
+2022-05-24 05:42: Initialicing...
+2022-05-24 05:42: Checking architecture
+2022-05-24 05:42: Windows 64 bit
+2022-05-24 05:42: Checking program copy...
+2022-05-24 05:42: Copy: Portable.
+2022-05-24 05:42: Checking for updates...
+2022-05-24 05:42: Website motd: 8
+2022-05-24 05:42: actual motd: 8
+2022-05-24 05:42: Checking multimedia folders:
+2022-05-24 05:43: Function: download from link...
+2022-05-24 05:43: Downloading Multimedia.
+2022-05-24 05:43: Downloading as audio
+2022-05-24 05:43: Starting process...
+2022-05-24 05:43: downloading https://www.youtube.com/watch?v=S3anqA_NzuY
+2022-05-24 05:44: [download]   2.2% of 11.24MiB at  2.34MiB/s ETA 00:04
+2022-05-24 05:44: [download]   4.4% of 11.24MiB at  2.47MiB/s ETA 00:04
+2022-05-24 05:44: [download]   8.9% of 11.24MiB at  2.50MiB/s ETA 00:04
+2022-05-24 05:44: [download]  17.8% of 11.24MiB at  2.87MiB/s ETA 00:03
+2022-05-24 05:44: [download]  35.6% of 11.24MiB at  3.09MiB/s ETA 00:02
+2022-05-24 05:44: [download]  65.3% of 11.24MiB at  3.16MiB/s ETA 00:01
+2022-05-24 05:44: [download]  87.2% of 11.24MiB at  3.37MiB/s ETA 00:00
+2022-05-24 05:44: [download]  87.2% of 11.24MiB at 109.80KiB/s ETA 00:13[download]  87.2% of 11.24MiB at 296.86KiB/s ETA 00:04[download]  87.3% of 11.24MiB at 692.67KiB/s ETA 00:02[download]  87.3% of 11.24MiB at  1.32MiB/s ETA 00:01 
+2022-05-24 05:44: [download]  87.5% of 11.24MiB at  1.17MiB/s ETA 00:01[download]  87.7% of 11.24MiB at  1.87MiB/s ETA 00:00
+2022-05-24 05:44: [download]  88.3% of 11.24MiB at  1.74MiB/s ETA 00:00
+2022-05-24 05:44: [download]  89.4% of 11.24MiB at  1.99MiB/s ETA 00:00
+2022-05-24 05:44: [download]  91.6% of 11.24MiB at  2.65MiB/s ETA 00:00
+2022-05-24 05:44: [download]  96.1% of 11.24MiB at  3.01MiB/s ETA 00:00
+2022-05-24 05:44: [download] 100% of 11.24MiB at  3.10MiB/s ETA 00:00  
+2022-05-24 05:44: [download] 100% of 11.24MiB in 00:03               
+
+2022-05-24 05:44: video Downloaded. Open Folder=no
+2022-05-24 05:44: exiting...

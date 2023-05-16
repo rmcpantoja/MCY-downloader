@@ -2,17 +2,17 @@
 ;Created by Mateo Cedillo.
 ;Script:
 ;Including scripts
-#include <Include\audio.au3>
 #include <AutoItConstants.au3>
 #include <MsgBoxConstants.au3>
 # Include <StringConstants.au3>
+#include-once
 func checkupdate($S_Program, $s_executable, $s_DatURL, $s_Window)
 $main = GUICreate($s_window)
 GUISetState(@SW_SHOW)
 sleep(100)
 $sLanguage = iniRead ("config\config.st", "General settings", "language", "")
 $ReadAccs = iniRead ("config\config.st", "Accessibility", "Enable enanced accessibility", "")
-Local $yourexeversion = FileGetVersion($s_exexutable)
+Local $yourexeversion = FileGetVersion($s_executable)
 select
 case $sLanguage ="es"
 $newversion=" Tienes la "
@@ -21,7 +21,7 @@ case $sLanguage ="eng"
 $newversion=" You have the version "
 $newversion2=", And is available the "
 endselect
-$fileinfo = InetGet($s_URL, $S_Program &"Web.dat")
+$fileinfo = InetGet($s_DatURL, $S_Program &"Web.dat")
 FileCopy($s_Program &"Web.dat", @TempDir & "\" &$S_Program &"Web.dat")
 $latestver = iniRead (@TempDir & "\" &$S_program &"Web.dat", "updater", "LatestVersion", "")
 if $sLanguage ="Es" then
@@ -101,16 +101,18 @@ If (Int($iTotalDownloaded) = 0) Then Return Round($iTotalDownloaded * 1024, $iPl
 Next
 EndFunc
 func _Updater_Update($S_executable, $S_URLPortable)
-$bagground = $device.opensound ("sounds/soundsdata.dat/update.ogg", true)
+$bagground = $device.opensound ("sounds/update.ogg", true)
 $sLanguage = iniRead ("config\config.st", "General settings", "language", "")
 $ReadAccs = iniRead ("config\config.st", "Accessibility", "Enable enanced accessibility", "")
 $bagground.play
 $bagground.repeating=1
 select
 case $sLanguage ="Es"
-ProgressOn("Descargando actualización.", "espera...", "0%", 100, 100, 16)
+ProgressOn("Descargando actualización.", "espera...", "0%", 100, 100, 18)
+WinActivate("Descargando actualización.")
 case $sLanguage ="Eng"
 ProgressOn("Downloading update.", "Please wait...", "0%", 100, 100, 16)
+WinActivate("Downloading update.")
 endselect
 $iPlaces = 2
 $AppUrl = $S_URLPortable

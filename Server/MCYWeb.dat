@@ -1,0 +1,8 @@
+[updater]
+LatestVersion=1.0b1
+soundsversion=1.0
+[motd]
+Latest=9
+mode=text
+text1=¡me complace presentar la versión final de MCY Downloader 1.0! Actualización obligatoria que corrige más de cincuenta errores en todo el programa y mejora las funciones existentes. Aviso importante: La forma en que MCY Downloader mira la carpeta de destino donde se descargan los archivos multimedia ha cambiado debido a la nueva función de reorganización. Para evitar problemas, si tu carpeta de destino en la configuración es "C:\MCY\Download\Audio", se recomienda cambiar a la ruta "C:\MCY\Download". En cualquier caso, si no dispones de esta configuración, se te asignará la nueva ruta.
+text2=I am pleased to present final version of MCY Downloader 1.0! Mandatory update that fixes over fifty bugs throughout the program and improves existing features. Important Notice: The way MCY Downloader looks at the destination folder where media files are downloaded has changed due to the new reorganization feature. To avoid problems, if your destination folder in the settings is "C:\MCY\Download\Audio", it is recommended to change to the path "C:\MCY\Download". In any case, if you do not have this configuration, the new route will be assigned to you.

@@ -1,0 +1,22 @@
+2022-08-24 20:38: Initialicing...
+2022-08-24 20:38: Checking architecture
+2022-08-24 20:38: Windows 64 bit
+2022-08-24 20:38: Checking program copy...
+2022-08-24 20:38: Copy: Portable.
+2022-08-24 20:38: Checking for updates...
+2022-08-24 20:38: Website motd: 8
+2022-08-24 20:38: actual motd: 8
+2022-08-24 20:38: Checking multimedia folders:
+2022-08-24 20:38: Checking components...
+2022-08-24 20:38: Updating Yt-Dlp...
+2022-08-24 20:39: 
+2022-08-24 20:39: Function: download from link...
+2022-08-24 20:39: Downloading Multimedia.
+2022-08-24 20:39: Downloading as audio
+2022-08-24 20:39: Starting process...
+2022-08-24 20:39: downloading https://www.youtube.com/watch?v=re8KjVxZLzo&ab_channel=GABRIELORLANDOKARAOKE
+2022-08-24 20:39: [download]   0.1% of 1.10MiB at    5.61KiB/s ETA 03:20
+2022-08-24 20:39: [download]   0.3% of 1.10MiB at   14.61KiB/s ETA 01:16[download]   0.6% of 1.10MiB at   33.76KiB/s ETA 00:33[download]   1.3% of 1.10MiB at   71.60KiB/s ETA 00:15[download]   2.8% of 1.10MiB at  145.89KiB/s ETA 00:07[download]   5.6% of 1.10MiB at  293.71KiB/s ETA 00:03[download]  11.3% of 1.10MiB at  584.89KiB/s ETA 00:01[download]  22.7% of 1.10MiB at    1.03MiB/s ETA 00:00[download]  45.5% of 1.10MiB at    1.71MiB/s ETA 00:00[download]  91.1% of 1.10MiB at    2.42MiB/s ETA 00:00[download] 100.0% of 1.10MiB at    2.54MiB/s ETA 00:00[download] 100% of 1.10MiB in 00:00 at 1.78MiB/s      
+
+2022-08-24 20:40: video Downloaded. Open Folder=yes. Opening: C:\MCY\Download
+2022-08-24 20:40: exiting...

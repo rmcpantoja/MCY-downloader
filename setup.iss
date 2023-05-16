@@ -1,8 +1,8 @@
-; Installer script for MCY Downloader, program to download multimedia from YouTube.
+; Installer script for MCY Downloader, Software to download multimedia from YouTube and more sites.
 ; Created by Mateo Cedillo (from MT programs)
 ;Defining variables and attributes of the application.
 #define MyAppName "MCY Downloader"
-#define MyAppVersion "0.9 beta"
+#define MyAppVersion "1.0"
 #define MyAppPublisher "Mt Programs"
 #define MyAppURL "http://mateocedillo.260mb.net"
 #define MyAppExeName "MCY.exe"
@@ -22,7 +22,7 @@ DefaultDirName=C:\MCY
 DefaultGroupName={#MyAppName}
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
-OutputDir=C:\Users\angel\Documents\My Swite\Programs\MCY downloader0.9\Source code
+OutputDir=C:\Users\angel\Documents\My Swite\Programs\MCY downloader\Source code
 OutputBaseFilename=MCY_setup
 Compression=lzma
 SolidCompression=yes
@@ -37,8 +37,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 ;Name: quicklaunchicon; Description: "Create a &Quick Launch icon"; GroupDescription: "Additional icons:"; Components: main; Flags: unchecked
 
 [Files]
-Source: "C:\Users\angel\Documents\My Swite\Programs\MCY downloader0.9\Comp\MCY.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\angel\Documents\My Swite\Programs\MCY downloader0.9\Comp\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\angel\Documents\My Swite\Programs\MCY downloader\Comp\MCY.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\angel\Documents\My Swite\Programs\MCY downloader\Comp\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

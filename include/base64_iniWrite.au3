@@ -1,15 +1,27 @@
 #include <base64.au3>
-IniEncode()
-func IniEncode()
-$Category = _Base64Encode("general")
-$Section = _Base64Encode("Section")
-$Value = _Base64Encode("Value")
-IniWrite("config\config.st", $category, $section, $value)
-MsgBox(0, "Done", "Test 1 completed correctly!.")
+func _IniEncript($sFile, $sSection, $sKey, $sValue)
+if $sFile = "" then
+msgBox(16, "Error", "you need to enter a file name.")
+return -1
+elseif $sSection = "" then
+msgBox(16, "Error", "You need to enter a section name.")
+return -2
+elseif $sKey = "" then
+MSGBox(16, "Error", "You need to enter a key name")
+return -3
+elseif $sValue = "" then
+MSGBox(16, "Error", "you need to enter a value")
+return -4
+endIf
+$result = IniWrite($sFile, _Base64Encode($sSection), _Base64Encode($sKey), _Base64Encode($sValue))
+return $result
 ;endfunc
-;IniDecode()
-;func IniDecode()
-$decode = IniRead("config\config.st", $Category, $section, $value)
-$final = _Base64Decode($decode)
-MsgBox(0, "Test 2 completed correctly!", $final)
+;func _IniDecript($sFile, $sSection, $sKey, $sDefault)
+$decode = IniRead($sFile, $sSection, $sKey, $sDefault)
+if $decode = "" then
+msgBox(16, "Error", "This value is blank")
+return -1
+EndIf
+$final = BinaryToString(_Base64Decode($decode))
+return $final
 endfunc

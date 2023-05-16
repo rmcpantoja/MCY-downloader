@@ -41,30 +41,24 @@ Func mp3Converter()
 				GUIDelete($mp3window)
 				ExitLoop
 			Case $id128
-				GUIDelete($main)
 				Sleep(100)
-				NVDAController_SpeakText("OK")
-				If $arquitectura = x86 Then
+				If @OSArch = "x86" Then
 					_encode("Encoder: Lame - 128 kBit/s", @ScriptDir & '\engines\lame.exe -mj -q0 --cbr -b128 "' & $sfile & '" "' & @ScriptDir & '\128_converted.mp3"')
 				Else
 					_encode("Encoder: Lame - 128 kBit/s", @ScriptDir & '\engines64\lame.exe -mj -q0 --cbr -b128 "' & $sfile & '" "' & @ScriptDir & '\128_converted.mp3"')
 				EndIf
 				ExitLoop
 			Case $id192
-				GUIDelete($main)
 				Sleep(100)
-				NVDAController_SpeakText("OK")
-				If $arquitectura = x86 Then
+				If @OSArch = "x86" Then
 					_encode("Encoder: Lame - 192 kBit/s", @ScriptDir & '\Engines\lame.exe -mj -q0 --cbr -b192 "' & $sfile & '" "' & @ScriptDir & '\192_converted.mp3"')
 				Else
 					_encode("Encoder: Lame - 192 kBit/s", @ScriptDir & '\Engines64\lame.exe -mj -q0 --cbr -b192 "' & $sfile & '" "' & @ScriptDir & '\192_converted.mp3"')
 				EndIf
 				ExitLoop
 			Case $id320
-				GUIDelete($main)
 				Sleep(100)
-				NVDAController_SpeakText("OK")
-				If $arquitectura = x86 Then
+				If @OSArch = "x86" Then
 					_encode("Encoder: Lame - 320 kBit/s", @ScriptDir & '\Engines\lame.exe -mj -q0 --cbr -b320 "' & $sfile & '" "' & @ScriptDir & '\320_converted.mp3"')
 				Else
 					_encode("Encoder: Lame - 320 kBit/s", @ScriptDir & '\Engines64\lame.exe -mj -q0 --cbr -b320 "' & $sfile & '" "' & @ScriptDir & '\320_converted.mp3"')
@@ -93,7 +87,7 @@ Func _encode($stitle, $scmd)
 		If @error Then ExitLoop
 		$aregexp = StringRegExp($line, "([0-9.]+)\h*%", 3)
 		If IsArray($aregexp) Then GUICtrlSetData($idProgressbar, $aregexp[UBound($aregexp) - 1])
-		NVDAController_SpeakText($aregexp)
+		speaking($aregexp)
 	WEnd
 	Speaking($stitle & " Time: " & Round(TimerDiff($itimer), 1) & "ms" & @LF)
 	Sleep(200)

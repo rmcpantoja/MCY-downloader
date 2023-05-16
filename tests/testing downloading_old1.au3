@@ -1,9 +1,10 @@
 #include <AutoItConstants.au3>
 	; Display a progress bar window.
-	ProgressOn("Descargando archivo", "Downloading", "0%", 100, 100, 16)
+	ProgressOn("Descargando archivo", "Downloading", "0%", 100, 100, 1)
+WinActivate("Descargando archivo", "")
 $iPlaces = 2
-$url = 'https://contenidoaccesible.droppages.com/motd_es.ogg'
-$fldr = 'tmp_motd_es.ogg'
+$url = 'https://test.com/test.html'
+$fldr = 'downloaded.dat'
 $hInet = InetGet($url, $fldr, 1, 1)
 $URLSize = InetGetSize($url)
 While Not InetGetInfo($hInet, 2)

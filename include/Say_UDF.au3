@@ -297,7 +297,7 @@ Func say()
 					Case $Lang = "es"
 						speaking("Se ha cortado " & $Clipdata1 & " desde el portapapeles.")
 					Case $Lang = "eng"
-						speaking(&$Clipdata1 & "it has been cut trom clipboard.")
+						speaking($Clipdata1 & "it has been cut trom clipboard.")
 				EndSelect
 			Case "^c"
 				Sleep(100)
@@ -334,6 +334,8 @@ Func say()
 					Case $Lang = "eng"
 						speaking("Redo")
 				EndSelect
+case else
+speaking(@HotKeyPressed)
 		EndSwitch
 	EndIf
 EndFunc   ;==>say

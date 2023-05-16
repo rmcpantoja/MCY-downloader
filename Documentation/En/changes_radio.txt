@@ -1,0 +1,34 @@
+Changes.
+0.5.3 (stable patch)
+This patch fixes two important bugs at the start of the application:
+1. When there is an error loading the URL, it was wrongly creating the GUI controls.
+2. Now the program does not freeze in case something has gone wrong. If we wanted to disable freezing, you would press the close command (esc/alt+f4/close button in the corner of the screen).
+0.5.2 stable, 06 March 2022
+There is a small change in the Windows app where a more realistic player screen is now displayed thanks to emogis. Luckily, screen readers that are updated to the present day do read them.
+0.5 stable, Feb 25, 2022.
+This version is fully included in MCY Downloader, a total renovation has been made to the entire interface and many corrections in the functions. It includes novelties such as the installation of MCY Radio separately, "this is my consolation for those who wanted to have it independently in Windows".
+Notice: The standalone application for Windows has been marked as deprecated and will no longer be supported; however, MCY radio is still maintained, within MCY downloader and the Android application. If you want to do this independently, you can do so by including the necessary libraries and making the required tweaks to the code.
+Another of the most notable novelties is that a balance was made in the interface with some options that the Android version had that Windows did not.
+Also, the radio selector has been renewed where these stations will now be more organized.
+0.4 public beta, August 2021.
+1. redesigned the web version.
+1.1. Added radio selector, or also known as radio list.
+1.1.1. radio blaster.
+1.2. Android version: help items such as visit youtube channel, manual, etc. are now grouped in a single submenu.
+1.3. Windows: Now included in MCY Downloader, but bugs may be encountered.
+0.3 private beta, February 6, 2021 in process, (February 18, 2021 released)
+1. the program is more accessible with gui controls, that is, for sighted people.
+2. Fixed bugs in the code.
+3. Added new sections:
+• Visit Web (Windows only) In android it was already implemented in previous versions.
+• YouTube channel
+• about the program.
+4. Added more labels for talkback in regards to this app.
+Changes in 0.2, February 5, 2021.
+1. Added language, accessibility, etc. settings.
+2. Fixed the radio menu.
+3. Added Announcements and Off-topic forums (on android only)
+4. The error with the command that gives information about the name of the song/streaming has been corrected.
+0.1 private beta, November 24, 2020 in process, (January 31, 2021 released)
+This is the initial version of the accessory. At the beginning it was an experiment, but it has not ceased to amaze me and I decided to take it partly as an accessory to MCY Downloader, which in the future I will add it to that program.
+Note: MCY Radio is now available for android from January 29! more info and download on my website where you can also find the labels with talkback.
