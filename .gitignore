@@ -1,0 +1,9 @@
+BackUp/
+config/
+config/*
+engines/
+engines64/
+include/BackUp/
+BackUp/*
+*.exe
+*.cmd
