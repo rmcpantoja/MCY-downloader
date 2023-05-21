@@ -1,3 +1,5 @@
+#include "..\bass.au3"
+#include "..\BassConstants.au3"
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: PlayDirectAudioURL
 ; Description ...: reproductor URL
@@ -5,10 +7,10 @@
 ; Parameters ....: $url                 - An unknown value.
 ; Return values .: None
 ; Author ........: Mateo Cedillo
-; Modified ......: 
-; Remarks .......: 
-; Related .......: 
-; Link ..........: 
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
 Func PlayDirectAudioURL($url)
@@ -25,10 +27,10 @@ EndFunc   ;==>PlayDirectAudioURL
 ; Parameters ....: None
 ; Return values .: None
 ; Author ........: Mateo Cedillo
-; Modified ......: 
-; Remarks .......: 
-; Related .......: 
-; Link ..........: 
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
 Func StartAudio()
@@ -60,43 +62,43 @@ Func StartAudio()
 							Case $volumeSlider = "2"
 								_Set_volume(0)
 								$Volume = "0"
-								speaking(translate($lng, "Sample volume set to") &" " &"0%.")
+								speaking(translate($lng, "Sample volume set to") & " " & "0%.")
 							Case $volumeSlider = "3"
 								_Set_volume(10)
 								$Volume = "10"
-								speaking(translate($lng, "Sample volume set to") &" " &"10%.")
+								speaking(translate($lng, "Sample volume set to") & " " & "10%.")
 							Case $volumeSlider = "4"
 								_Set_volume(20)
 								$Volume = "20"
-								speaking(translate($lng, "Sample volume set to") &" " &"20%.")
+								speaking(translate($lng, "Sample volume set to") & " " & "20%.")
 							Case $volumeSlider = "5"
 								_Set_volume(30)
 								$Volume = "30"
-								speaking(translate($lng, "Sample volume set to") &" " &"30%.")
+								speaking(translate($lng, "Sample volume set to") & " " & "30%.")
 							Case $volumeSlider = "6"
 								_Set_volume(40)
 								$Volume = "40"
-								speaking(translate($lng, "Sample volume set to") &" " &"40%.")
+								speaking(translate($lng, "Sample volume set to") & " " & "40%.")
 							Case $volumeSlider = "7"
 								_Set_volume(50)
 								$Volume = "50"
-								speaking(translate($lng, "Sample volume set to") &" " &"50%.")
+								speaking(translate($lng, "Sample volume set to") & " " & "50%.")
 							Case $volumeSlider = "8"
 								_Set_volume(60)
 								$Volume = "60"
-								speaking(translate($lng, "Sample volume set to") &" " &"60%.")
+								speaking(translate($lng, "Sample volume set to") & " " & "60%.")
 							Case $volumeSlider = "9"
 								_Set_volume(70)
 								$Volume = "70"
-								speaking(translate($lng, "Sample volume set to") &" " &"70%.")
+								speaking(translate($lng, "Sample volume set to") & " " & "70%.")
 							Case $volumeSlider = "10"
 								_Set_volume(80)
 								$Volume = "80"
-								speaking(translate($lng, "Sample volume set to") &" " &"80%.")
+								speaking(translate($lng, "Sample volume set to") & " " & "80%.")
 							Case $volumeSlider = "11"
 								_Set_volume(90)
 								$Volume = "90"
-								speaking(translate($lng, "Sample volume set to") &" " &"90%.")
+								speaking(translate($lng, "Sample volume set to") & " " & "90%.")
 						EndSelect
 					Case $menutab = 2
 						_Audio_play($MusicHandle)
@@ -123,10 +125,10 @@ EndFunc   ;==>StartAudio
 ; Parameters ....: None
 ; Return values .: None
 ; Author ........: Mateo Cedillo
-; Modified ......: 
-; Remarks .......: 
-; Related .......: 
-; Link ..........: 
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
 Func info()

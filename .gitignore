@@ -1,8 +1,8 @@
 BackUp/
 config/
 config/*
-engines/
-engines64/
+engines/*.exe
+engines64/*.exe
 include/BackUp/
 BackUp/*
 *.exe
