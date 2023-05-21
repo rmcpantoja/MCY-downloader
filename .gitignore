@@ -4,6 +4,7 @@ config/*
 engines/*.exe
 engines64/*.exe
 include/BackUp/
+logs/*
 BackUp/*
 *.exe
 *.cmd

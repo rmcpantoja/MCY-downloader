@@ -1,76 +1,0 @@
-2022-07-13 15:53: Initialicing...
-2022-07-13 15:53: Checking architecture
-2022-07-13 15:53: Windows 64 bit
-2022-07-13 15:53: Checking program copy...
-2022-07-13 15:53: Copy: Portable.
-2022-07-13 15:53: Checking for updates...
-2022-07-13 15:53: Website motd: 8
-2022-07-13 15:53: actual motd: 8
-2022-07-13 15:53: Checking multimedia folders:
-2022-07-13 15:53: Function: download from link...
-2022-07-13 15:54: Downloading Multimedia.
-2022-07-13 15:54: Downloading as audio
-2022-07-13 15:54: Starting process...
-2022-07-13 15:54: downloading https://youtu.be/MvU_LFyzAGM
-2022-07-13 15:54: [download]   0.0% of 12.68MiB at  1.56KiB/s ETA 02:18:21
-2022-07-13 15:54: [download]   0.0% of 12.68MiB at  3.72KiB/s ETA 58:12   [download]   0.0% of 12.68MiB at  7.93KiB/s ETA 27:15[download]   0.1% of 12.68MiB at 16.09KiB/s ETA 13:25[download]   0.2% of 12.68MiB at 32.02KiB/s ETA 06:44[download]   0.4% of 12.68MiB at 63.12KiB/s ETA 03:24
-2022-07-13 15:54: [download]   0.8% of 12.68MiB at 123.55KiB/s ETA 01:44
-2022-07-13 15:54: [download]   1.5% of 12.68MiB at 236.08KiB/s ETA 00:54
-2022-07-13 15:54: [download]   3.1% of 12.68MiB at 461.89KiB/s ETA 00:27
-2022-07-13 15:54: [download]   6.2% of 12.68MiB at 803.60KiB/s ETA 00:15
-2022-07-13 15:54: [download]  12.3% of 12.68MiB at  1.31MiB/s ETA 00:08 
-2022-07-13 15:54: [download]  24.6% of 12.68MiB at  1.94MiB/s ETA 00:04
-2022-07-13 15:54: [download]  49.3% of 12.68MiB at  1.67MiB/s ETA 00:03
-2022-07-13 15:54: [download]  61.6% of 12.68MiB at  1.62MiB/s ETA 00:02
-2022-07-13 15:54: [download]  73.0% of 12.68MiB at  1.71MiB/s ETA 00:02
-2022-07-13 15:54: [download]  78.8% of 12.68MiB at  1.80MiB/s ETA 00:01
-2022-07-13 15:54: [download]  78.8% of 12.68MiB at Unknown speed ETA Unknown
-2022-07-13 15:54: [download]  78.9% of 12.68MiB at 59.58KiB/s ETA 00:46     
-2022-07-13 15:54: [download]  78.9% of 12.68MiB at 99.50KiB/s ETA 00:27[download]  79.0% of 12.68MiB at 175.75KiB/s ETA 00:15
-2022-07-13 15:54: [download]  79.1% of 12.68MiB at 294.27KiB/s ETA 00:09[download]  79.3% of 12.68MiB at 523.44KiB/s ETA 00:05
-2022-07-13 15:54: [download]  79.8% of 12.68MiB at 818.14KiB/s ETA 00:03
-2022-07-13 15:54: [download]  80.8% of 12.68MiB at  1.34MiB/s ETA 00:01 
-2022-07-13 15:54: [download]  82.8% of 12.68MiB at  2.15MiB/s ETA 00:01
-2022-07-13 15:54: [download]  86.7% of 12.68MiB at  3.07MiB/s ETA 00:00
-2022-07-13 15:54: [download]  94.6% of 12.68MiB at  3.55MiB/s ETA 00:00
-2022-07-13 15:54: [download] 100% of 12.68MiB at  3.86MiB/s ETA 00:00  
-2022-07-13 15:54: [download] 100% of 12.68MiB in 00:06               
-2022-07-13 15:55: video Downloaded. Open Folder=no
-2022-07-13 15:55: Downloading Multimedia.
-2022-07-13 15:55: Downloading as audio
-2022-07-13 15:55: Starting process...
-2022-07-13 15:55: downloading https://youtu.be/xHiT4GQ_jAc
-2022-07-13 15:55: [download]   0.0% of 10.95MiB at  4.96KiB/s ETA 37:42
-2022-07-13 15:55: [download]   0.0% of 10.95MiB at 13.04KiB/s ETA 14:19[download]   0.1% of 10.95MiB at 29.00KiB/s ETA 06:26
-2022-07-13 15:55: [download]   0.1% of 10.95MiB at 57.39KiB/s ETA 03:15[download]   0.3% of 10.95MiB at 112.17KiB/s ETA 01:39
-2022-07-13 15:55: [download]   0.6% of 10.95MiB at 216.22KiB/s ETA 00:51[download]   1.1% of 10.95MiB at 407.88KiB/s ETA 00:27
-2022-07-13 15:55: [download]   2.3% of 10.95MiB at 781.32KiB/s ETA 00:14
-2022-07-13 15:55: [download]   4.6% of 10.95MiB at  1.25MiB/s ETA 00:08 
-2022-07-13 15:55: [download]   9.1% of 10.95MiB at  1.91MiB/s ETA 00:05
-2022-07-13 15:55: [download]  18.3% of 10.95MiB at  2.20MiB/s ETA 00:04
-2022-07-13 15:55: [download]  36.5% of 10.95MiB at  2.85MiB/s ETA 00:02
-2022-07-13 15:55: [download]  73.0% of 10.95MiB at  2.17MiB/s ETA 00:01
-2022-07-13 15:55: [download]  86.8% of 10.95MiB at  2.27MiB/s ETA 00:00
-2022-07-13 15:56: [download]  86.8% of 10.95MiB at Unknown speed ETA Unknown
-2022-07-13 15:56: [download]  86.8% of 10.95MiB at 120.01KiB/s ETA 00:12    
-2022-07-13 15:56: [download]  86.8% of 10.95MiB at 139.98KiB/s ETA 00:10[download]  86.9% of 10.95MiB at 214.28KiB/s ETA 00:06
-2022-07-13 15:56: [download]  87.0% of 10.95MiB at 364.71KiB/s ETA 00:03[download]  87.3% of 10.95MiB at 572.74KiB/s ETA 00:02
-2022-07-13 15:56: [download]  87.9% of 10.95MiB at 1016.01KiB/s ETA 00:01
-2022-07-13 15:56: [download]  89.0% of 10.95MiB at  1.71MiB/s ETA 00:00  
-2022-07-13 15:56: [download]  91.3% of 10.95MiB at  2.62MiB/s ETA 00:00
-2022-07-13 15:56: [download]  95.9% of 10.95MiB at  3.38MiB/s ETA 00:00
-2022-07-13 15:56: [download] 100% of 10.95MiB at  3.85MiB/s ETA 00:00  
-2022-07-13 15:56: [download] 100% of 10.95MiB in 00:24               
-2022-07-13 15:56: video Downloaded. Open Folder=no
-2022-07-13 15:56: exiting...
-2022-07-13 21:35: Initialicing...
-2022-07-13 21:35: Checking architecture
-2022-07-13 21:35: Windows 64 bit
-2022-07-13 21:35: Checking program copy...
-2022-07-13 21:35: Copy: Portable.
-2022-07-13 21:35: Checking for updates...
-2022-07-13 21:35: Website motd: 8
-2022-07-13 21:35: actual motd: 8
-2022-07-13 21:35: Checking multimedia folders:
-2022-07-13 21:35: Function: Radio.
-2022-07-13 21:53: exiting...

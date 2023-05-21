@@ -1,100 +1,0 @@
-2022-09-27 00:21: Initialicing...
-2022-09-27 00:21: Checking architecture
-2022-09-27 00:21: Windows 64 bit
-2022-09-27 00:21: Checking program copy...
-2022-09-27 00:21: Copy: Portable.
-2022-09-27 00:21: Checking for updates...
-2022-09-27 00:21: Website motd: 8
-2022-09-27 00:21: actual motd: 8
-2022-09-27 00:21: Checking multimedia folders:
-2022-09-27 00:21: Function: download from link...
-2022-09-27 00:21: Downloading Multimedia.
-2022-09-27 00:21: Downloading as audio
-2022-09-27 00:21: Starting process...
-2022-09-27 00:21: downloading https://www.youtube.com/watch?v=V8g-Vg65wzM&ab_channel=Tuichmicasita%F0%9F%8F%A0
-2022-09-27 00:21: [download]   1.2% of 5.02MiB at    2.57MiB/s ETA 00:01
-2022-09-27 00:21: [download]   2.5% of 5.02MiB at    2.41MiB/s ETA 00:02[download]   5.0% of 5.02MiB at    2.45MiB/s ETA 00:01
-2022-09-27 00:21: [download]   9.9% of 5.02MiB at    2.29MiB/s ETA 00:01
-2022-09-27 00:21: [download]  19.9% of 5.02MiB at    2.29MiB/s ETA 00:01
-2022-09-27 00:21: [download]  39.8% of 5.02MiB at    2.12MiB/s ETA 00:01
-2022-09-27 00:21: [download]  79.1% of 5.02MiB at    2.02MiB/s ETA 00:00
-2022-09-27 00:21: [download] 100.0% of 5.02MiB at    2.00MiB/s ETA 00:00
-2022-09-27 00:21: [download] 100% of 5.02MiB in 00:02 at 1.88MiB/s      
-
-2022-09-27 00:22: video Downloaded. Open Folder=no
-2022-09-27 00:22: Checking components...
-2022-09-27 00:22: Updating Yt-Dlp...
-2022-09-27 00:22: 
-2022-09-27 00:24: Function: download from link...
-2022-09-27 00:24: Downloading Multimedia.
-2022-09-27 00:24: Downloading as audio
-2022-09-27 00:24: Starting process...
-2022-09-27 00:24: downloading https://www.youtube.com/watch?v=ufbqYcMzvq0&ab_channel=Ibai-AuronLive
-2022-09-27 00:25: [download]   0.3% of 10.72MiB at    1.17MiB/s ETA 00:09
-2022-09-27 00:25: [download]   0.6% of 10.72MiB at    1.02MiB/s ETA 00:10
-2022-09-27 00:25: [download]   1.2% of 10.72MiB at  963.95KiB/s ETA 00:11
-2022-09-27 00:25: [download]   2.3% of 10.72MiB at    1.03MiB/s ETA 00:10
-2022-09-27 00:25: [download]   4.7% of 10.72MiB at  891.17KiB/s ETA 00:11
-2022-09-27 00:25: [download]   9.3% of 10.72MiB at    1.01MiB/s ETA 00:09
-2022-09-27 00:25: [download]  18.6% of 10.72MiB at    1.13MiB/s ETA 00:07
-2022-09-27 00:25: [download]  30.7% of 10.72MiB at    1.15MiB/s ETA 00:06
-2022-09-27 00:25: [download]  41.7% of 10.72MiB at    1.26MiB/s ETA 00:04
-2022-09-27 00:25: [download]  57.8% of 10.72MiB at  908.36KiB/s ETA 00:05
-2022-09-27 00:25: [download]  65.8% of 10.72MiB at  935.45KiB/s ETA 00:04
-2022-09-27 00:25: [download]  76.7% of 10.72MiB at 1009.50KiB/s ETA 00:02
-2022-09-27 00:25: [download]  91.8% of 10.72MiB at  993.72KiB/s ETA 00:00
-2022-09-27 00:25: [download]  91.8% of 10.72MiB at   83.50KiB/s ETA 00:10[download]  91.9% of 10.72MiB at  240.47KiB/s ETA 00:03[download]  91.9% of 10.72MiB at  519.54KiB/s ETA 00:01[download]  92.0% of 10.72MiB at    1.05MiB/s ETA 00:00
-2022-09-27 00:25: [download]  92.1% of 10.72MiB at  500.96KiB/s ETA 00:01
-2022-09-27 00:25: [download]  92.4% of 10.72MiB at  288.22KiB/s ETA 00:02
-2022-09-27 00:25: [download]  93.0% of 10.72MiB at  514.11KiB/s ETA 00:01
-2022-09-27 00:25: [download]  94.1% of 10.72MiB at  781.30KiB/s ETA 00:00
-2022-09-27 00:25: [download]  96.5% of 10.72MiB at 1022.93KiB/s ETA 00:00
-2022-09-27 00:25: [download] 100.0% of 10.72MiB at    1.16MiB/s ETA 00:00[download] 100% of 10.72MiB in 00:11 at 996.55KiB/s    
-
-2022-09-27 00:26: video Downloaded. Open Folder=no
-2022-09-27 00:26: exiting...
-2022-09-27 09:49: Initialicing...
-2022-09-27 09:49: Checking architecture
-2022-09-27 09:49: Windows 64 bit
-2022-09-27 09:49: Checking program copy...
-2022-09-27 09:49: Copy: Portable.
-2022-09-27 09:49: Checking for updates...
-2022-09-27 09:49: Website motd: 8
-2022-09-27 09:49: actual motd: 8
-2022-09-27 09:49: Checking multimedia folders:
-2022-09-27 09:49: Function: download from link...
-2022-09-27 09:49: Downloading Multimedia.
-2022-09-27 09:49: Downloading as audio
-2022-09-27 09:49: Starting process...
-2022-09-27 09:49: downloading https://www.youtube.com/watch?v=xVktSCeyp-k&ab_channel=m%C3%BAsica%2Caccesibilidadym%C3%A1scongissella
-2022-09-27 09:49: [download]   0.6% of 9.70MiB at  340.58KiB/s ETA 00:28[download]   1.3% of 9.70MiB at  673.88KiB/s ETA 00:14
-2022-09-27 09:49: [download]   2.6% of 9.70MiB at  967.67KiB/s ETA 00:09[download]   5.1% of 9.70MiB at    1.23MiB/s ETA 00:07
-2022-09-27 09:49: [download]  10.3% of 9.70MiB at    1.21MiB/s ETA 00:07
-2022-09-27 09:49: [download]  20.6% of 9.70MiB at    1.37MiB/s ETA 00:05
-2022-09-27 09:50: [download]  36.9% of 9.70MiB at    1.35MiB/s ETA 00:04
-2022-09-27 09:50: [download]  50.6% of 9.70MiB at    1.38MiB/s ETA 00:03
-2022-09-27 09:50: [download]  65.5% of 9.70MiB at    1.42MiB/s ETA 00:02
-2022-09-27 09:50: [download]  81.6% of 9.70MiB at    1.43MiB/s ETA 00:01
-2022-09-27 09:50: [download]  97.1% of 9.70MiB at    1.41MiB/s ETA 00:00
-2022-09-27 09:50: [download] 100.0% of 9.70MiB at    1.42MiB/s ETA 00:00
-2022-09-27 09:50: [download] 100% of 9.70MiB in 00:06 at 1.40MiB/s      
-
-2022-09-27 09:50: video Downloaded. Open Folder=no
-2022-09-27 09:50: Downloading Multimedia.
-2022-09-27 09:50: Downloading as audio
-2022-09-27 09:50: Starting process...
-2022-09-27 09:50: downloading https://www.youtube.com/watch?v=P6krJCUTpN4
-2022-09-27 09:50: [download]   0.4% of 7.21MiB at    1.55MiB/s ETA 00:04
-2022-09-27 09:50: [download]   0.9% of 7.21MiB at    1.59MiB/s ETA 00:04
-2022-09-27 09:50: [download]   1.7% of 7.21MiB at    1.25MiB/s ETA 00:05
-2022-09-27 09:50: [download]   3.5% of 7.21MiB at    1.15MiB/s ETA 00:06
-2022-09-27 09:50: [download]   6.9% of 7.21MiB at    1.20MiB/s ETA 00:05
-2022-09-27 09:50: [download]  13.9% of 7.21MiB at    1.26MiB/s ETA 00:04
-2022-09-27 09:50: [download]  27.7% of 7.21MiB at    1.31MiB/s ETA 00:03
-2022-09-27 09:50: [download]  46.6% of 7.21MiB at    1.40MiB/s ETA 00:02
-2022-09-27 09:50: [download]  68.2% of 7.21MiB at    1.45MiB/s ETA 00:01
-2022-09-27 09:50: [download]  90.0% of 7.21MiB at    1.46MiB/s ETA 00:00
-2022-09-27 09:51: [download] 100.0% of 7.21MiB at    1.45MiB/s ETA 00:00[download] 100% of 7.21MiB in 00:05 at 1.38MiB/s      
-
-2022-09-27 09:51: video Downloaded. Open Folder=no
-2022-09-27 09:51: exiting...

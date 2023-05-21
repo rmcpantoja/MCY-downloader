@@ -1,23 +1,0 @@
-2022-08-31 12:07: Initialicing...
-2022-08-31 12:07: Checking architecture
-2022-08-31 12:07: Windows 64 bit
-2022-08-31 12:07: Checking program copy...
-2022-08-31 12:07: Copy: Portable.
-2022-08-31 12:07: Checking for updates...
-2022-08-31 12:07: Website motd: 8
-2022-08-31 12:07: actual motd: 8
-2022-08-31 12:07: Checking multimedia folders:
-2022-08-31 12:07: Function: download from link...
-2022-08-31 12:07: Downloading Multimedia.
-2022-08-31 12:07: Downloading as audio
-2022-08-31 12:07: Starting process...
-2022-08-31 12:07: downloading https://www.youtube.com/watch?v=0Cy27y27lqI
-2022-08-31 12:08: [download]   0.0% of 7.50MiB at   13.33KiB/s ETA 09:36[download]   0.0% of 7.50MiB at   33.49KiB/s ETA 03:49[download]   0.1% of 7.50MiB at   78.14KiB/s ETA 01:38[download]   0.2% of 7.50MiB at  167.45KiB/s ETA 00:45[download]   0.4% of 7.50MiB at  346.06KiB/s ETA 00:22[download]   0.8% of 7.50MiB at  703.27KiB/s ETA 00:10[download]   1.7% of 7.50MiB at    1.31MiB/s ETA 00:05[download]   3.3% of 7.50MiB at    2.38MiB/s ETA 00:03
-2022-08-31 12:08: [download]   6.7% of 7.50MiB at    3.03MiB/s ETA 00:02
-2022-08-31 12:08: [download]  13.3% of 7.50MiB at    3.45MiB/s ETA 00:01
-2022-08-31 12:08: [download]  26.7% of 7.50MiB at    3.57MiB/s ETA 00:01
-2022-08-31 12:08: [download]  53.3% of 7.50MiB at    3.70MiB/s ETA 00:00
-2022-08-31 12:08: [download] 100.0% of 7.50MiB at    3.28MiB/s ETA 00:00[download] 100% of 7.50MiB in 00:22 at 343.53KiB/s    
-
-2022-08-31 12:08: video Downloaded. Open Folder=no
-2022-08-31 12:08: exiting...
