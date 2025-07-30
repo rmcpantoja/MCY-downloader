@@ -1,3 +1,7 @@
+#include "ButtonConstants.au3"
+#include "globals.au3"
+#include "TrayConstants.au3"
+
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: Imputdownload
 ; Description ...: the main function of the program
@@ -12,7 +16,7 @@
 ; Example .......: No
 ; ===============================================================================================================================
 Func Imputdownload()
-	$dmain = GUICreate(translate($lng, "MCY Downloader: Download multimedia"), 500, 500)
+	$dmain = GUICreate(translate($sLang, "MCY Downloader: Download multimedia"), 500, 500)
 	$ReadAccs = IniRead($sConfigPath, "Accessibility", "Enable enanced accessibility", "")
 	$showtip = IniRead($sConfigPath, "misc", "Show tips", "")
 	$sayProgresses = IniRead($sConfigPath, "Accessibility", "Read download progress bar", "")
@@ -70,37 +74,37 @@ Func Imputdownload()
 	Global $DOWNLOAD_TAG = "[download]"
 	Global $iPID = -1
 	Local $count = 0
-	$idLabel1 = GUICtrlCreateLabel(translate($lng, "Enter a &URL, Insert here the link, playlist or channel of the video to download:"), 10, 10, 200, 20)
+	$idLabel1 = GUICtrlCreateLabel(translate($sLang, "Enter a &URL, Insert here the link, playlist or channel of the video to download:"), 10, 10, 200, 20)
 	Local $sData = ClipGet()
 	$input_url = GUICtrlCreateInput($sData, 18, 30, 497, 20)
-	$chkbox_isSingle = GUICtrlCreateCheckbox(translate($lng, "Download only &video"), 8, 80, 145, 17)
-	If $showtip = "1" Then GUICtrlSetTip(-1, translate($lng, "Check only this checkbox to download the original video, in case of YouTube."))
+	$chkbox_isSingle = GUICtrlCreateCheckbox(translate($sLang, "Download only &video"), 8, 80, 145, 17)
+	If $showtip = "1" Then GUICtrlSetTip(-1, translate($sLang, "Check only this checkbox to download the original video, in case of YouTube."))
 	GUICtrlSetState(-1, $GUI_CHECKED)
-	$chkbox_isMP3 = GUICtrlCreateCheckbox(translate($lng, "Download as &audio"), 8, 104, 145, 17)
-	If $showtip = "1" Then GUICtrlSetTip(-1, translate($lng, "Check this checkbox to convert this downloaded video to an audio format like mp3."))
-	$chkbox_sub = GUICtrlCreateCheckbox(translate($lng, "Download &subtittles"), 8, 190, 145, 17)
-	If $showtip = "1" Then GUICtrlSetTip(-1, translate($lng, "You can download subtitles, if the video supports them."))
-	$idFolder = GUICtrlCreateLabel(Translate($lng, "Destination folder"), 8, 240, 150, 17)
-	$input_dir = GUICtrlCreateInput($d_folder, 8, 250, 190, 17)
-	$btn_dir = GUICtrlCreateButton(translate($lng, "Choose &Folder"), 8, 270, 190, 17)
-	If $showtip = "1" Then GUICtrlSetTip(-1, translate($lng, "The download folder where your files will be saved."))
-	$btn_generate = GUICtrlCreateButton(translate($lng, "&Download"), 8, 280, 145, 17)
-	If $showtip = "1" Then GUICtrlSetTip(-1, translate($lng, "Starts download of the selected link"))
-	$btn_share = GUICtrlCreateButton(translate($lng, "&Share link"), 8, 320, 145, 17)
-	If $showtip = "1" Then GUICtrlSetTip(-1, translate($lng, "Share URLs through social networks."))
-	$btn_prev = GUICtrlCreateButton(translate($lng, "&Preview"), 8, 380, 145, 17)
-	If $showtip = "1" Then GUICtrlSetTip(-1, translate($lng, "Plays a preview of the selected link."))
-	$idLabel1 = GUICtrlCreateLabel(translate($lng, "Download video from:"), 100, 100, 200, 21)
+	$chkbox_isMP3 = GUICtrlCreateCheckbox(translate($sLang, "Download as &audio"), 8, 104, 145, 17)
+	If $showtip = "1" Then GUICtrlSetTip(-1, translate($sLang, "Check this checkbox to convert this downloaded video to an audio format like mp3."))
+	$chkbox_sub = GUICtrlCreateCheckbox(translate($sLang, "Download &subtittles"), 8, 190, 145, 17)
+	If $showtip = "1" Then GUICtrlSetTip(-1, translate($sLang, "You can download subtitles, if the video supports them."))
+	$idFolder = GUICtrlCreateLabel(Translate($sLang, "Destination folder"), 8, 240, 150, 17)
+	$input_dir = GUICtrlCreateInput($sDest_folder, 8, 250, 190, 17)
+	$btn_dir = GUICtrlCreateButton(translate($sLang, "Choose &Folder"), 8, 270, 190, 17)
+	If $showtip = "1" Then GUICtrlSetTip(-1, translate($sLang, "The download folder where your files will be saved."))
+	$btn_generate = GUICtrlCreateButton(translate($sLang, "&Download"), 8, 280, 145, 17)
+	If $showtip = "1" Then GUICtrlSetTip(-1, translate($sLang, "Starts download of the selected link"))
+	$btn_share = GUICtrlCreateButton(translate($sLang, "&Share link"), 8, 320, 145, 17)
+	If $showtip = "1" Then GUICtrlSetTip(-1, translate($sLang, "Share URLs through social networks."))
+	$btn_prev = GUICtrlCreateButton(translate($sLang, "&Preview"), 8, 380, 145, 17)
+	If $showtip = "1" Then GUICtrlSetTip(-1, translate($sLang, "Plays a preview of the selected link."))
+	$idLabel1 = GUICtrlCreateLabel(translate($sLang, "Download video from:"), 100, 100, 200, 21)
 	$input_start = GUICtrlCreateInput("", 160, 80, 41, 21)
 	GUICtrlSetState(-1, $GUI_HIDE)
-	$idLabel1 = GUICtrlCreateLabel(translate($lng, "Download to:"), 130, 115, 200, 21)
+	$idLabel1 = GUICtrlCreateLabel(translate($sLang, "Download to:"), 130, 115, 200, 21)
 	$input_end = GUICtrlCreateInput("", 224, 80, 41, 21)
 	GUICtrlSetState(-1, $GUI_HIDE)
-	$Label1 = GUICtrlCreateLabel(translate($lng, "Select subtitle download method:"), 208, 83, 16, 17)
+	$Label1 = GUICtrlCreateLabel(translate($sLang, "Select subtitle download method:"), 208, 83, 16, 17)
 	GUICtrlSetState(-1, $GUI_HIDE)
 	$combo_sublist = GUICtrlCreateCombo("Auto sub", 160, 152, 145, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 	GUICtrlSetState(-1, $GUI_HIDE)
-	$chkbox_onlysub = GUICtrlCreateCheckbox(translate($lng, "Only down sub"), 312, 152, 97, 17)
+	$chkbox_onlysub = GUICtrlCreateCheckbox(translate($sLang, "Only down sub"), 312, 152, 97, 17)
 	GUICtrlSetState(-1, $GUI_HIDE)
 	GUISetState(@SW_SHOW)
 	Global $isSingle = False
@@ -116,9 +120,9 @@ Func Imputdownload()
 			GUICtrlSetState($chkbox_isSingle, $GUI_CHECKED)
 			Select
 				Case $ReadAccs = "yes"
-					speaking(translate($lng, "The link was marked as a playlist."))
+					speaking(translate($sLang, "The link was marked as a playlist."))
 				Case $ReadAccs = "no"
-					ToolTip(translate($lng, "The link was marked as a playlist."))
+					ToolTip(translate($sLang, "The link was marked as a playlist."))
 					ToolTip("")
 			EndSelect
 		EndIf
@@ -127,16 +131,16 @@ Func Imputdownload()
 			Case $GUI_EVENT_CLOSE
 				Menuprogram()
 			Case $btn_dir
-				Local $path = FileSelectFolder(translate($lng, "Choose Folder..."), $input_dir)
+				Local $path = FileSelectFolder(translate($sLang, "Choose Folder..."), $input_dir)
 				GUICtrlSetData($input_dir, $path)
 				writeinlog("Folder selected: " & $path)
-				$d_folder = $path
-				IniWrite($sConfigPath, "General settings", "Destination folder", $d_folder)
+				$sDest_folder = $path
+				IniWrite($sConfigPath, "General settings", "Destination folder", $sDest_folder)
 				multimediafolders()
 			Case $btn_generate
 				$sound_downloading = $device.opensound("sounds/update_downloading.ogg", 0)
 				$sound_downloading.play
-				MsgBox(0, translate($lng, "Downloading"), translate($lng, "Wait a moment, we're looking for the video. Press OK to start."))
+				MsgBox(0, translate($sLang, "Downloading"), translate($sLang, "Wait a moment, we're looking for the video. Press OK to start."))
 				$say = "0"
 				writeinlog("Downloading Multimedia.")
 				Local $command = $MAIN
@@ -181,7 +185,7 @@ Func Imputdownload()
 				FileWrite($file, $command)
 				FileClose($file)
 				GUISetState(@SW_HIDE, $dmain)
-				Global $downloading = GUICreate(translate($lng, "Downloading"))
+				Global $downloading = GUICreate(translate($sLang, "Downloading"))
 				$edit_out = GUICtrlCreateEdit($EMPTY_STRING, 8, 152, 325, 17, BitOR($ES_AUTOVSCROLL, $ES_AUTOHSCROLL, $ES_READONLY))
 				Local $idProgressbar = GUICtrlCreateProgress(200, 50, 325, 17)
 				GUICtrlSetColor(-1, 32250)
@@ -191,7 +195,7 @@ Func Imputdownload()
 				Local $runcmd = Run(@ComSpec & " /C" & "generated.bat", @ScriptDir, @SW_HIDE, 6)
 				GUICtrlSetData($edit_out, $EMPTY_STRING)
 				writeinlog("downloading " & GUICtrlRead($input_url))
-				ProgressOn(translate($lng, "Downloading"), translate($lng, "Please wait."), "0%", 100, 20)
+				ProgressOn(translate($sLang, "Downloading"), translate($sLang, "Please wait."), "0%", 100, 20)
 				Local $DOWNLOADLINE
 				While 1
 					Switch GUIGetMsg()
@@ -199,7 +203,7 @@ Func Imputdownload()
 							If BitAND(WinGetState($downloading), $WIN_STATE_ACTIVE) Then
 								If ProcessExists("yt-dlp.exe") Or ProcessExists("yt-dlp_x86.exe") <> 0 Then
 									Dim $iMsgBoxAnswer
-									$iMsgBoxAnswer = MsgBox(5244324, translate($lng, "question"), translate($lng, "Your download has not finished yet. Are you sure you really want to get out of here?"))
+									$iMsgBoxAnswer = MsgBox(5244324, translate($sLang, "question"), translate($sLang, "Your download has not finished yet. Are you sure you really want to get out of here?"))
 									Select
 										Case $iMsgBoxAnswer = 6
 											ProcessClose($DOWNLOADLINE)
@@ -232,7 +236,7 @@ Func Imputdownload()
 										CreateAudioProgress($split3)
 									EndIf
 									If $sayTime = "yes" Then
-										Speaking(translate($lng, "Estimated time remaining:") & $split1)
+										Speaking(translate($sLang, "Estimated time remaining:") & $split1)
 									EndIf
 							EndSelect
 							writeinlog($DOWNLOADLINE)
@@ -249,15 +253,15 @@ Func Imputdownload()
 				$downloaded.play
 				Sleep(100)
 				FileDelete("generated.bat")
-				TrayTip(translate($lng, "Download complete"), translate($lng, "Your link") & $url & translate($lng, "Has been processed and uploaded correctly!"), 0, $TIP_ICONASTERISK)
-				$Dialog_Complete = MsgBox(4, translate($lng, "Download complete"), translate($lng, "Do you want to open the download folder currently in use?"))
+				TrayTip(translate($sLang, "Download complete"), translate($sLang, "Your link") & $url & translate($sLang, "Has been processed and uploaded correctly!"), 0, $TIP_ICONASTERISK)
+				$Dialog_Complete = MsgBox(4, translate($sLang, "Download complete"), translate($sLang, "Do you want to open the download folder currently in use?"))
 				If $Dialog_Complete = 6 Then
-					ShellExecute($d_folder)
+					ShellExecute($sDest_folder)
 					If @error Then
-						MsgBox(16, translate($lng, "Error"), translate($lng, 'Unable to open folder') & '"' & $d_folder & '".' & @CRLF & @CRLF & @extended)
-						writeinlog("Unable to open folder " & $d_folder & '".' & @CRLF & @CRLF & @extended)
+						MsgBox(16, translate($sLang, "Error"), translate($sLang, 'Unable to open folder') & '"' & $sDest_folder & '".' & @CRLF & @CRLF & @extended)
+						writeinlog("Unable to open folder " & $sDest_folder & '".' & @CRLF & @CRLF & @extended)
 					Else
-						writeinlog("video Downloaded. Open Folder=yes. Opening: " & $d_folder)
+						writeinlog("video Downloaded. Open Folder=yes. Opening: " & $sDest_folder)
 					EndIf
 				Else
 					writeinlog("video Downloaded. Open Folder=no")
@@ -269,7 +273,7 @@ Func Imputdownload()
 				If StringInStr($URLData, "http") Then
 					shareLink()
 				Else
-					MsgBox(16, translate($lng, "Error"), translate($lng, 'The link entered in the edit box is not correct. Please put a link in the edit box "enter a URL" and try again.'))
+					MsgBox(16, translate($sLang, "Error"), translate($sLang, 'The link entered in the edit box is not correct. Please put a link in the edit box "enter a URL" and try again.'))
 				EndIf
 			Case $btn_prev
 				;Escuchavistaprevia()
@@ -278,21 +282,21 @@ Func Imputdownload()
 					If _GUICtrlButton_GetCheck($chkbox_isSingle) Then
 						Select
 							Case $ReadAccs = "yes"
-								speaking(translate($lng, "The link was marked as video."))
+								speaking(translate($sLang, "The link was marked as video."))
 							Case $ReadAccs = "no"
-								ToolTip(translate($lng, "The link was marked as video."))
+								ToolTip(translate($sLang, "The link was marked as video."))
 								ToolTip("")
 						EndSelect
-						GUICtrlSetData($chkbox_isSingle, translate($lng, "Download &video"))
+						GUICtrlSetData($chkbox_isSingle, translate($sLang, "Download &video"))
 						GUICtrlSetState($input_start, $GUI_HIDE)
 						GUICtrlSetState($input_end, $GUI_HIDE)
 						GUICtrlSetState($Label1, $GUI_HIDE)
 					Else
 						Select
 							Case $ReadAccs = "yes"
-								speaking(translate($lng, "link was marked as playlist."))
+								speaking(translate($sLang, "link was marked as playlist."))
 							Case $ReadAccs = "no"
-								ToolTip(translate($lng, "link was marked as playlist"))
+								ToolTip(translate($sLang, "link was marked as playlist"))
 						EndSelect
 						ToolTip("")
 						GUICtrlSetData($chkbox_isSingle, "Download &playlist")
@@ -340,7 +344,7 @@ Func GetSubLang($url)
 	Local $command = $MAIN & " --list-subs " & $url
 	Local $cmdline = Run(@ComSpec & " /C " & $command, "", @SW_HIDE, $STDERR_CHILD + $STDOUT_CHILD)
 	If @error Then
-		MsgBox(16, translate($lng, "Error"), translate($lng, "The operation cannot be performed because the Yt-dlp.exe file cannot be found."))
+		MsgBox(16, translate($sLang, "Error"), translate($sLang, "The operation cannot be performed because the Yt-dlp.exe file cannot be found."))
 	EndIf
 	ProcessWaitClose($cmdline)
 	Local $return = StdoutRead($cmdline)
@@ -363,32 +367,32 @@ EndFunc   ;==>GetSubLang
 Func shareLink()
 	$ReadAccs = IniRead($sConfigPath, "Accessibility", "Enable enanced accessibility", "")
 	$Rpositioning = IniRead($sConfigPath, "Accessibility", "Announce position", "")
-	$shareGui = GUICreate(translate($lng, "Share with..."))
+	$shareGui = GUICreate(translate($sLang, "Share with..."))
 	GUISetState(@SW_SHOW)
 	Select
 		Case $ReadAccs = "yes"
-			$shareMenu = Reader_Create_Menu(translate($lng, "Share with..."), "Whatsapp|Facebook|Skype|" & translate($lng, "Back"), $Rpositioning, translate($lng, "Of"))
+			$shareMenu = Reader_Create_Menu(translate($sLang, "Share with..."), "Whatsapp|Facebook|Skype|" & translate($sLang, "Back"), $Rpositioning, translate($sLang, "Of"))
 			Select
 				Case $shareMenu = 1
-					ShellExecute("https://api.whatsapp.com/send?text= " & translate($lng, "I share this link with you: This link has been shared through MCY Downloader. Link:") & @CRLF & $URLData)
-					If @error Then MsgBox(16, translate($lng, "Error"), translate($lng, "Cannot run browser. It is likely that you have to add an association."))
+					ShellExecute("https://api.whatsapp.com/send?text= " & translate($sLang, "I share this link with you: This link has been shared through MCY Downloader. Link:") & @CRLF & $URLData)
+					If @error Then MsgBox(16, translate($sLang, "Error"), translate($sLang, "Cannot run browser. It is likely that you have to add an association."))
 					GUIDelete($shareGui)
 				Case $shareMenu = 2
-					ShellExecute("https://www.facebook.com/sharer.php?u=" & $URLData & "&t=" & translate($lng, "I share this link with you: This link has been shared through MCY Downloader. Link: ") & @CRLF & $URLData & @CRLF & translate($lng, "Shared Link via MCY Downloader"))
-					If @error Then MsgBox(16, translate($lng, "Error"), translate($lng, "Cannot run browser. It is likely that you have to add an association."))
+					ShellExecute("https://www.facebook.com/sharer.php?u=" & $URLData & "&t=" & translate($sLang, "I share this link with you: This link has been shared through MCY Downloader. Link: ") & @CRLF & $URLData & @CRLF & translate($sLang, "Shared Link via MCY Downloader"))
+					If @error Then MsgBox(16, translate($sLang, "Error"), translate($sLang, "Cannot run browser. It is likely that you have to add an association."))
 					GUIDelete($shareGui)
 				Case $shareMenu = 3
 					ShellExecute("https://web.skype.com/share?url=" & $URLData & "&lang=en-US=&source=jetpack")
-					If @error Then MsgBox(16, translate($lng, "Error"), translate($lng, "Cannot run browser. It is likely that you have to add an association."))
+					If @error Then MsgBox(16, translate($sLang, "Error"), translate($sLang, "Cannot run browser. It is likely that you have to add an association."))
 					GUIDelete($shareGui)
 				Case $shareMenu = 4
 					GUIDelete($shareGui)
 			EndSelect
 		Case $ReadAccs = "No"
-			$idWhatsapp = GUICtrlCreateButton(translate($lng, "Share on") & " WhatsApp", 90, 50, 70, 25)
-			$idFacebook = GUICtrlCreateButton(translate($lng, "Share on") & "Facebook", 130, 50, 70, 25)
-			$idSkype = GUICtrlCreateButton(translate($lng, "Share on") & "Skype", 180, 50, 70, 25)
-			$idBack = GUICtrlCreateButton(translate($lng, "Back"), 250, 50, 70, 25)
+			$idWhatsapp = GUICtrlCreateButton(translate($sLang, "Share on") & " WhatsApp", 90, 50, 70, 25)
+			$idFacebook = GUICtrlCreateButton(translate($sLang, "Share on") & "Facebook", 130, 50, 70, 25)
+			$idSkype = GUICtrlCreateButton(translate($sLang, "Share on") & "Skype", 180, 50, 70, 25)
+			$idBack = GUICtrlCreateButton(translate($sLang, "Back"), 250, 50, 70, 25)
 			; Loop until the user exits.
 			While 1
 				$idMsg = GUIGetMsg()
@@ -398,18 +402,18 @@ Func shareLink()
 						;GUISetState(@SW_SHOW, $dmain)
 						ExitLoop
 					Case $idWhatsapp
-						ShellExecute("https://api.whatsapp.com/send?text= " & translate($lng, "I share this link with you: This link has been shared through MCY Downloader. Link:") & @CRLF & $URLData)
-						If @error Then MsgBox(16, translate($lng, "Error"), translate($lng, "Cannot run browser. It is likely that you have to add an association."))
+						ShellExecute("https://api.whatsapp.com/send?text= " & translate($sLang, "I share this link with you: This link has been shared through MCY Downloader. Link:") & @CRLF & $URLData)
+						If @error Then MsgBox(16, translate($sLang, "Error"), translate($sLang, "Cannot run browser. It is likely that you have to add an association."))
 						GUIDelete($shareGui)
 						ExitLoop
 					Case $idFacebook
-						ShellExecute("https://www.facebook.com/sharer.php?u=" & $URLData & "&t=" & translate($lng, "I share this link with you: This link has been shared through MCY Downloader. Link: ") & @CRLF & $URLData & @CRLF & translate($lng, "Shared Link via MCY Downloader"))
-						If @error Then MsgBox(16, translate($lng, "Error"), translate($lng, "Cannot run browser. It is likely that you have to add an association."))
+						ShellExecute("https://www.facebook.com/sharer.php?u=" & $URLData & "&t=" & translate($sLang, "I share this link with you: This link has been shared through MCY Downloader. Link: ") & @CRLF & $URLData & @CRLF & translate($sLang, "Shared Link via MCY Downloader"))
+						If @error Then MsgBox(16, translate($sLang, "Error"), translate($sLang, "Cannot run browser. It is likely that you have to add an association."))
 						GUIDelete($shareGui)
 						ExitLoop
 					Case $idSkype
 						ShellExecute("https://web.skype.com/share?url=" & $URLData & "&lang=en-US=&source=jetpack")
-						If @error Then MsgBox(16, translate($lng, "Error"), translate($lng, "Cannot run browser. It is likely that you have to add an association."))
+						If @error Then MsgBox(16, translate($sLang, "Error"), translate($sLang, "Cannot run browser. It is likely that you have to add an association."))
 						GUIDelete($shareGui)
 						ExitLoop
 				EndSwitch

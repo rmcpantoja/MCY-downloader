@@ -44,6 +44,12 @@ Func _config_start($sConfigFolder, $sConfigPath)
 	ElseIf @OSArch = "x86" Then
 		$sYouTube_DL = IniRead($sConfigPath, 'General Settings', 'Youtube-DL', 'engines\yt-dlp_x86.exe')
 	EndIf
+	$sDest_folder = IniRead($sConfigPath, "General settings", "Destination folder", "")
+	if $sDest_folder = "" then
+		$sDest_folder = "C:\MCY\Download"
+		IniWrite($sConfigPath, "General settings", "Destination folder", $sDest_folder)
+		_create_folders($sDest_folder)
+	EndIf
 	$sWantUpdates = IniRead($sConfigPath, "General settings", "Check updates", "")
 	if $sWantUpdates = "" and @compiled then
 		IniWrite($sConfigPath, "General settings", "Check updates", "Yes")
@@ -52,11 +58,11 @@ Func _config_start($sConfigFolder, $sConfigPath)
 	$sLocalMOTD = IniRead($sConfigPath, "misc", "motdversion", "")
 	$sLatestMotd = IniRead(@TempDir & "\MCYWeb.dat", "motd", "Latest", "")
 	$sLatestMotdMode = IniRead(@TempDir & "\MCYWeb.dat", "motd", "Mode", "")
-	writeinlog("Website motd: " & $LatestMotd & "actual motd: " & $LMotd)
+	writeinlog("Website motd: " & $sLatestMotd & "actual motd: " & $sLocalMOTD)
 	if $sLatestMotd > $sLocalMOTD then
 		$downloading = $device.opensound("sounds/update_downloading.ogg", 0)
 		$downloading.play
-		download_motd($sLatest, $sEnhancedAccessibility, $sLatestMotdMode)
+		download_motd($sLatestMotd, $sEnhancedAccessibility, $sLatestMotdMode)
 	EndIf
 	; Finally:
 	if $sWantUpdates = "yes" then
@@ -64,6 +70,11 @@ Func _config_start($sConfigFolder, $sConfigPath)
 	else
 		writeinlog("the user does not want updates")
 	EndIf
+EndFunc
+
+func _create_folders($d_folder)
+	If Not FileExists($d_folder & "\audio") Then DirCreate($d_folder & "\audio")
+	If Not FileExists($d_folder & "\video") Then DirCreate($d_folder & "\video")
 EndFunc
 
 ; #FUNCTION# ====================================================================================================================

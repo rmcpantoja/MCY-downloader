@@ -1,4 +1,8 @@
 ; MCY Downloader globals
+
+#include "Functions.au3"
+#include "..\reader.au3"
+
 #include-once
 
 ; Program:
@@ -8,6 +12,10 @@ Global $sProgram_ver = "1.0B1"
 ; Paths:
 global $sConfigFolder = @ScriptDir &"\config"
 global $sConfigPath = $sConfigFolder &"\config.st"
+global $sDest_folder
+;configs:
+global $sEnableProgresses, $sEnhancedAccessibility, $sShowTips, $sCheckForUpdate, $sLang = "en"
+
 ;register:
 ;New command line options! Incredible as it may seem, it is.
 If _StringInArray($cmdline, '/radio') Then

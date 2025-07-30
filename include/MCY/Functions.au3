@@ -1,8 +1,10 @@
 #include <EditConstants.au3>
+#include "MsgboxConstants.au3"
 #include "reorder.au3"
 #include "..\share.au3"
 #include <WindowsConstants.au3>
-;This is the functions of MCY downloader.
+#include-once
+
 ;**please do not touch this file in case you do not have knowledge about programming or technical things.
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _StringInArray
