@@ -16,7 +16,6 @@
 #Au3Stripper_Parameters=/so
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 ;Begining off script.
-; Defining the version number, and program info.
 ;AutoIt3Wrapper
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
 #Autoit3Wrapper_Testing=n
@@ -35,9 +34,6 @@
 #pragma compile(InternalName, "mateocedillo.MCY")
 #pragma compile(LegalCopyright, © 2018-2022 MT Programs, All rights reserved)
 #pragma compile(CompanyName, 'MT Programs')
-Global $programname = "MCY Downloader"
-Global $arquitectura = "x64"
-Global $program_ver = "1.0B1"
 Global $ifitisupdate = IniRead(@ScriptDir & "\Config\config.st", "General settings", "Check updates", "")
 If $ifitisupdate = "" Then
 	IniWrite(@ScriptDir & "\Config\config.st", "General settings", "Check updates", "Yes")
@@ -54,6 +50,7 @@ Global $lng = IniRead("config\config.st", "General settings", "language", "")
 #include <EditConstants.au3>
 #include <fileConstants.au3>
 #include "Include\MCY\functions.au3"
+#include "Include\MCY\globals.au3"
 #include <GUIConstantsEx.au3>
 #include <GuiButton.au3>
 #include <GuiComboBox.au3>
@@ -61,6 +58,7 @@ Global $lng = IniRead("config\config.st", "General settings", "language", "")
 ;#include "Include\mergefiles_utf16le_v2.au3"
 #include "Include\MCY\Mp3_converter.au3"
 #include "Include\kbc.au3"
+#include "include/MCY/language_manager.au3"
 #include "Include\log.au3"
 #include "Include\menu_nvda.au3"
 #include <MsgBoxConstants.au3>
@@ -116,17 +114,17 @@ Func comprovarArc()
 		EndIf
 	EndIf
 	writeinlog("Checking architecture")
-	If @OSArch = "x64" And $arquitectura = "x64" Then
+	If @OSArch = "x64" And $sArchitecture = "x64" Then
 		writeinlog("Windows 64 bit")
 	EndIf
-	If @OSArch = "x86" And $arquitectura = "x86" Then
+	If @OSArch = "x86" And $sArchitecture = "x86" Then
 		writeinlog("Windows 32 bit")
 	EndIf
-	If @OSArch = "x64" And $arquitectura = "x86" Then
+	If @OSArch = "x64" And $sArchitecture = "x86" Then
 		MsgBox(48, Translate($lng, "Warning"), Translate($lng, "You run a 64-bit pc with the 32-bit version of the program. For better performance in the program, we recommend that you download the 64-bit version at http://mateocedillo.260mb.net/programs.html"))
 		exitpersonaliced()
 	EndIf
-	If @OSArch = "x86" And $arquitectura = "x64" Then
+	If @OSArch = "x86" And $sArchitecture = "x64" Then
 		MsgBox(48, Translate($lng, "Warning"), Translate($lng, "You run a 32-bit pc with the 64-bit version of the program. For better performance in the program, we recommend that you download the 32-bit version at http://mateocedillo.260mb.net/programs.html"))
 		exitpersonaliced()
 	EndIf
@@ -256,122 +254,6 @@ Func checkselector()
 			checkupd()
 	EndSelect
 EndFunc   ;==>checkselector
-;This is the function off language selector menu, the first alternative using the main menu speech.
-; #FUNCTION# ====================================================================================================================
-; Name ..........: Selector
-; Description ...: Language selector, new version! yay!
-; Syntax ........: Selector()
-; Parameters ....: None
-; Return values .: None
-; Author ........: Mateo Cedillo
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func Selector()
-	Opt("GUIOnEventMode", 1)
-	Local $widthCell, $msg, $iOldOpt
-	Global $langGUI = GUICreate("Language Selection")
-	Global $seleccionado = "0"
-	$widthCell = 70
-	$iOldOpt = Opt("GUICoordMode", $iOldOpt)
-	$beep = "0"
-	$busqueda = "0"
-	Dim $langcodes[50]
-	GUICtrlCreateLabel("Select language:", -1, 0)
-	GUISetBkColor(0x00E0FFFF)
-	$recolectalosidiomasporfavor = FileFindFirstFile(@ScriptDir & "\lng\*.lang")
-	If $recolectalosidiomasporfavor = -1 Then MsgBox(16, "Fatal error", "We cannot find the language files. Please download the program again...")
-	Local $Recoleccion = "", $obteniendo = ""
-	While 1
-		$beep = $beep + 1
-		$busqueda = $busqueda + 1
-		$Recoleccion = FileFindNextFile($recolectalosidiomasporfavor)
-		If @error Then
-			;MsgBox(16, "Error", "We cannot find the language files or they are corrupted.")
-			CreateAudioProgress("100")
-			ExitLoop
-		EndIf
-		$splitCode = StringLeft($Recoleccion, 2)
-		$obteniendo &= GetLanguageName($splitCode) & ", " & GetLanguageCode($splitCode) & "|"
-		$langcodes[$busqueda] = GetLanguageCode($splitCode)
-		CreateAudioProgress($beep)
-		Sleep(100)
-	WEnd
-	GUISetState(@SW_SHOW)
-	$langcount = StringSplit($obteniendo, "|")
-	$fix_audiomenu = StringTrimRight($obteniendo, 1)
-	$configureaccs = IniRead("config\config.st", "accessibility", "Enable enanced accessibility", "")
-	If $configureaccs = "yes" Then
-		$menu = Reader_create_menu("Please select a language with the up and down arrows and press enter to continue", $fix_audiomenu)
-	EndIf
-	If $configureaccs = "no" Then
-		Global $Choose = GUICtrlCreateCombo("", 100, 50, 200, 30, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-		GUICtrlSetOnEvent(-1, "seleccionar")
-		GUICtrlSetData($Choose, $obteniendo)
-		Global $idBtn_OK = GUICtrlCreateButton("OK", 155, 50, 70, 30)
-		GUICtrlSetOnEvent(-1, "save")
-		Global $idBtn_Close = GUICtrlCreateButton("Close", 180, 50, 70, 30)
-		GUICtrlSetOnEvent(-1, "exitpersonaliced")
-		Global $LEER = ""
-		While 1
-			If $seleccionado = "1" Then
-				Opt("GUIOnEventMode", 0)
-				;msgbox(0, "Correct", "We should close this.")
-				ExitLoop
-			EndIf
-		WEnd
-		GUIDelete($langGUI)
-		checkupd()
-	EndIf
-	If $configureaccs = "yes" Then
-		IniWrite("config\config.st", "General settings", "language", $langcodes[$menu])
-		If @error Then
-			MsgBox(0, "Error", "Configuration data could not be written.")
-			exitpersonaliced()
-		EndIf
-		GUIDelete($langGUI)
-		checkupd()
-	EndIf
-	Opt("GUIOnEventMode", 0)
-EndFunc   ;==>Selector
-; #FUNCTION# ====================================================================================================================
-; Name ..........: seleccionar
-; Description ...: Select language
-; Syntax ........: seleccionar()
-; Parameters ....: None
-; Return values .: None
-; Author ........: Mateo Cedillo
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func seleccionar()
-	Global $LEER = GUICtrlRead($Choose)
-	Global $queidiomaes = StringSplit($LEER, ",")
-	;speaking("Has seleccionado " &StringStripWS($queidiomaes[2], $STR_STRIPLEADING))
-EndFunc   ;==>seleccionar
-; #FUNCTION# ====================================================================================================================
-; Name ..........: save
-; Description ...: Save language settings
-; Syntax ........: save()
-; Parameters ....: None
-; Return values .: None
-; Author ........: Mateo Cedillo
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func save()
-	IniWrite("config\config.st", "General settings", "language", StringStripWS($queidiomaes[2], $STR_STRIPLEADING))
-	$seleccionado = "1"
-EndFunc   ;==>save
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: checkupd
 ; Description ...: Function to check for updates
@@ -417,7 +299,7 @@ EndFunc   ;==>checkupd
 Func checKmcyversion()
 	$ReadAccs = IniRead("config\config.st", "Accessibility", "Enable enanced accessibility", "")
 	writeinlog("Checking for updates...")
-	Local $yourexeversion = $program_ver
+	Local $yourexeversion = $sProgram_ver
 	$fileinfo = InetGet("https://www.dropbox.com/s/hcx20lgvjem0wz1/MCYWeb.dat?dl=1", @TempDir & "\MCYWeb.dat")
 	$latestver = IniRead(@TempDir & "\MCYWeb.dat", "updater", "LatestVersion", "")
 	If $ReadAccs = "Yes" Then
@@ -426,7 +308,7 @@ Func checKmcyversion()
 				writeinlog("Warning! Update available. Your version:" & $yourexeversion & ". New version:" & $latestver)
 				CreateTTSDialog(translate($lng, "Update available!"), translate($lng, "You have the version") & " " & $yourexeversion & " " & translate($lng, "and is available the") & " " & $latestver, translate($lng, " press enter to continue, space to repeat information."))
 				GUIDelete($main_u)
-				If $arquitectura = "x64" Then
+				If $sArchitecture = "x64" Then
 					_Updater_update("MCY.exe", "https://www.dropbox.com/s/d49pf4blsv61aoz/extract.exe?dl=1")
 				Else
 					_Updater_update("MCY.exe", "https://www.dropbox.com/s/ccp9mjaw35gzn9s/extract_x86.exe?dl=1")
@@ -439,9 +321,9 @@ Func checKmcyversion()
 	If $ReadAccs = "No" Then
 		Select
 			Case $latestver <> $yourexeversion
-				writeinlog(translate($lng, "You have the version") & " " & $program_ver & " " & translate($lng, "and is available the") & " " & $latestver)
-				MsgBox(0, translate($lng, "Update available!"), translate($lng, "You have the version") & " " & $program_ver & " " & translate($lng, "and is available the") & " " & $latestver)
-				If $arquitectura = "x64" Then
+				writeinlog(translate($lng, "You have the version") & " " & $sProgram_ver & " " & translate($lng, "and is available the") & " " & $latestver)
+				MsgBox(0, translate($lng, "Update available!"), translate($lng, "You have the version") & " " & $sProgram_ver & " " & translate($lng, "and is available the") & " " & $latestver)
+				If $sArchitecture = "x64" Then
 					_Updater_update("MCY.exe", "https://www.dropbox.com/s/d49pf4blsv61aoz/extract.exe?dl=1")
 				Else
 					_Updater_update("MCY.exe", "https://www.dropbox.com/s/ccp9mjaw35gzn9s/extract_x86.exe?dl=1")
