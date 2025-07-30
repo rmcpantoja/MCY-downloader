@@ -1,8 +1,9 @@
 ;UDF to translate your applications into different languages.
 ;This UDF was created by Mateo Cedillo
 #include-once
-Global $trslt_Ver = "1.1.2"
-global $lngPath = @ScriptDir & "\lng"
+Global $trslt_Ver = "1.2.1"
+Global $lngPath = @ScriptDir & "\lng"
+Global $sBase_Language = "en"
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: GetLanguageName
 ; Description ...: Get the name of a specific language and returns in a string
@@ -17,7 +18,17 @@ global $lngPath = @ScriptDir & "\lng"
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func GetLanguageName($sFile)
-	$nlgname = IniRead($lngPath &"\" & $sFile & ".lang", "Language info", "Name", "")
+	if not FileExists($lngPath & "\" & $sFile & ".lang") then
+		switch $sBase_Language
+			case "en"
+				return "English"
+			case "es"
+				return "Español"
+			case else
+				return SetError(1, 0, "")
+		EndSwitch
+	EndIf
+	$nlgname = IniRead($lngPath & "\" & $sFile & ".lang", "Language info", "Name", "")
 	If $nlgname = "" Then
 		MsgBox(16, "language engine error", "The language name is not valid")
 		Return 0
@@ -39,9 +50,19 @@ EndFunc   ;==>GetLanguageName
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func GetLanguageCode($sFile)
-	$nlgcode = IniRead($lngPath &"\" & $sFile & ".lang", "Language info", "Code", "")
+	if not FileExists($lngPath & "\" & $sFile & ".lang") then
+		switch $sBase_Language
+			case "en"
+				return "en"
+			case "es"
+				return "es"
+			case else
+				return SetError(1, 0, "")
+		EndSwitch
+	EndIf
+	$nlgcode = IniRead($lngPath & "\" & $sFile & ".lang", "Language info", "Code", "")
 	If $nlgcode = "" Then
-		msgBox(16, "Language engine error", "can't get language code")
+		MsgBox(16, "Language engine error", "can't get language code")
 		Return 0
 	Else
 		Return $nlgcode
@@ -61,9 +82,10 @@ EndFunc   ;==>GetLanguageCode
 ; Example .......: No
 ; ===============================================================================================================================
 Func GetLanguageAuthors($sFile)
-	$nlgauthors = IniRead($lngPath &"\" & $sFile & ".lang", "Language info", "Author", "")
+	if not FileExists($lngPath & "\" & $sFile & ".lang") then return "unknown"
+	$nlgauthors = IniRead($lngPath & "\" & $sFile & ".lang", "Language info", "Author", "")
 	If $nlgauthors = "" Then
-		msgBox(16, "Language engine error", "can't get language AUTHORS.")
+		MsgBox(16, "Language engine error", "can't get language AUTHORS.")
 		Return 0
 	Else
 		Return $nlgauthors
@@ -83,9 +105,10 @@ EndFunc   ;==>GetLanguageAuthors
 ; Example .......: No
 ; ===============================================================================================================================
 Func GetLanguageCopyright($sFile)
-	$nlgcpr = IniRead($lngPath &"\" & $sFile & ".lang", "Language info", "Copyright", "")
+	if not FileExists($lngPath & "\" & $sFile & ".lang") then return "None"
+	$nlgcpr = IniRead($lngPath & "\" & $sFile & ".lang", "Language info", "Copyright", "")
 	If $nlgcpr = "" Then
-		msgBox(16, "Language engine error", "can't get language Copyright")
+		MsgBox(16, "Language engine error", "can't get language Copyright")
 		Return 0
 	Else
 		Return $nlgcpr
@@ -105,17 +128,36 @@ EndFunc   ;==>GetLanguageCopyright
 ; Example .......: No
 ; ===============================================================================================================================
 Func GetLanguageVersion($sFile)
-	$nlgversion = IniRead($lngPath &"\" & $sFile & ".lang", "Language info", "Version", "")
+	if not FileExists($lngPath & "\" & $sFile & ".lang") then return 0.0
+	$nlgversion = IniRead($lngPath & "\" & $sFile & ".lang", "Language info", "Version", "")
 	If $nlgversion = "" Then
 		MsgBox(16, "language engine error", "can't get language version")
 		Return 0
-	ElseIf NOT IsNumber($nlgversion) Then
+	ElseIf Not IsNumber($nlgversion) Then
 		MsgBox(16, "language engine error", "The language version is not valid")
 		Return -1
 	Else
 		Return $nlgversion
 	EndIf
 EndFunc   ;==>GetLanguageVersion
+; #FUNCTION# ====================================================================================================================
+; Name ..........: set_base_language
+; Description ...:
+; Syntax ........: set_base_language($sValue)
+; Parameters ....: $sValue              - a string value.
+; Return values .: None
+; Author ........: Your Name
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func set_base_language($sValue)
+	If FileExists($lngPath & "\" & $sValue & ".lang") Then Return SetError(1, 0, "")
+	$sBase_Language = $sValue
+	Return True
+EndFunc   ;==>set_base_language
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: translate
 ; Description ...: this is the base function that allows you to translate strings, this is stored in lng\language.lang following the structure.
@@ -131,7 +173,12 @@ EndFunc   ;==>GetLanguageVersion
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func translate($sLanguageName, $sString)
-	$strings = IniRead($lngPath &"\" & $sLanguageName & ".lang", "Strings", $sString, "")
+	If $sLanguageName = $sBase_Language And FileExists($lngPath & "\" & $sLanguageName & ".lang") Then
+		MsgBox(16, "Language engine Error", "There must not be a language file with the base language.")
+		Return -1
+	EndIf
+	If $sLanguageName = $sBase_Language Then Return $sString
+	$strings = IniRead($lngPath & "\" & $sLanguageName & ".lang", "Strings", $sString, "")
 	If $strings = "" Then
 		If Not $sString = "" Then
 			Return $sString
