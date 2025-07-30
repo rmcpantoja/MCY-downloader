@@ -20,7 +20,7 @@ Func Menuprogram()
 	Global $PROGRAMGUI = GUICreate("MCY Downloader " & $program_ver, 500, 500)
 	; We set the keyboard shortcut to view to the help document.
 	HotKeySet("{F1}", "playhelp")
-	$ReadAccs = IniRead("config\config.st", "Accessibility", "Enable enanced accessibility", "")
+	$ReadAccs = IniRead($sConfigPath, "Accessibility", "Enable enanced accessibility", "")
 	; Now we will create the menus along with their respective options.
 	; We add multi-language support.
 	Local $idDownload = GUICtrlCreateMenu("&MCY")
@@ -137,12 +137,44 @@ Func Menuprogram()
 	WEnd
 	GUIDelete()
 EndFunc   ;==>Menuprogram
+Func _ReadDoc($sLang, $sTipe)
+	Local $hGui
+	Local $sContent, $sDocumentationPath = @ScriptDir & "\documentation\" & $sLang, $sGuiName
+	If $sTipe = "Changes" Then
+		$sDoc = $sDocumentationPath & "\changes.txt"
+		$sGuiName = Translate($sLang, "Changes")
+	ElseIf $sTipe = "Manual" Then
+		$sGuiName = Translate($sLang, "User manual")
+		$sDoc = $sDocumentationPath & "\manual.txt"
+	Else
+		Return SetError(1, 0, "")
+	EndIf
+	Local $hFile = FileOpen($sDoc, $FO_READ)
+	If $hFile = -1 Then
+		MsgBox(16, translate($sLang, "error"), translate($sLang, "An error occurred when reading the file."))
+		Return SetError(2, 0, "")
+	EndIf
+	$sContent = FileRead($hFile)
+	$hChangesGui = GUICreate($sGuiName)
+	$idEdit = GUICtrlCreateEdit($sContent, 5, 5, 390, 360, BitOR($WS_VSCROLL, $WS_HSCROLL, $WS_TABSTOP, $ES_READONLY))
+	$idExit = GUICtrlCreateButton(translate($sLang, "&Close"), 100, 370, 150, 30)
+	GUISetState(@SW_SHOW)
+	While 1
+		Switch GUIGetMsg()
+			Case $GUI_EVENT_CLOSE, $idExit
+				FileClose($hFile)
+				ExitLoop
+		EndSwitch
+	WEnd
+	GUIDelete($hChangesGui)
+EndFunc   ;==>_ReadDoc
+
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: playhelp
-; Description ...: User manual
-; Syntax ........: playhelp()
-; Parameters ....: None
-; Return values .: None
+; Name ..........: run_browser
+; Description ...: opens a given URL using the system's association for http entries. If not, shows the error message.
+; Syntax ........: run_browser($sURL)
+; Parameters ....: $sURL                - a string value containing the URL to open.
+; Return values .: The handler of ShellExecute
 ; Author ........: Mateo Cedillo
 ; Modified ......:
 ; Remarks .......:
@@ -150,31 +182,12 @@ EndFunc   ;==>Menuprogram
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func playhelp()
-	Opt("GUIOnEventMode", 0)
-	Local $manualdoc = "documentation\" & $lng & "\manual.txt"
-	Global $DocOpen = FileOpen($manualdoc, $FO_READ)
-	If $accessibility = "yes" Then
-		speaking(translate($lng, "opening..."))
-	Else
-		ToolTip(translate($lng, "opening..."))
-	EndIf
-	If $DocOpen = -1 Then MsgBox($MB_SYSTEMMODAL, translate($lng, "Error"), translate($lng, "An error occurred while reading the file."))
-	Local $openned = FileRead($DocOpen)
-	If $accessibility = "no" Then ToolTip("")
-	Global $manualwindow = GUICreate(translate($lng, "User manual"))
-	Local $idMyedit = GUICtrlCreateEdit($openned, 5, 5, 390, 360, BitOR($WS_VSCROLL, $WS_HSCROLL, $ES_READONLY))
-	Local $idExitBtn2 = GUICtrlCreateButton(translate($lng, "Close"), 100, 370, 150, 30)
-	GUISetState(@SW_SHOW)
-	While 1
-		Switch GUIGetMsg()
-			Case $GUI_EVENT_CLOSE, $idExitBtn2
-				FileClose($DocOpen)
-				ExitLoop
-		EndSwitch
-	WEnd
-	GUIDelete()
-EndFunc   ;==>playhelp
+Func run_browser($sURL)
+	If Not _String_startsWith($sURL, "http") Then Return SetError(1, 0, "")
+	$xRet = ShellExecute($sURL)
+	If @error Then MsgBox(16, translate($sLang, "Error"), translate($sLang, "Cannot run browser. It is likely that you have to add an association."))
+	Return $xRet
+EndFunc   ;==>run_browser
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: ReproducirURL
 ; Description ...: url player

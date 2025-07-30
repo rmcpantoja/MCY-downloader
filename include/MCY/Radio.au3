@@ -41,8 +41,8 @@ EndFunc   ;==>radio
 ; Example .......: No
 ; ===============================================================================================================================
 Func Mcyradio()
-	$ReadAccs = IniRead("config\config.st", "Accessibility", "Enable enanced accessibility", "")
-	$ultimaURLCargada = IniRead("config\config.st", "Misc", "Last radio loaded", "")
+	$ReadAccs = IniRead($sConfigPath, "Accessibility", "Enable enanced accessibility", "")
+	$ultimaURLCargada = IniRead($sConfigPath, "Misc", "Last radio loaded", "")
 	Global $radios[] = ["https://stream.zeno.fm/qhpfuuaq11zuv", "https://blasterradio.net/blaster", "http://stream.zeno.fm/1d6tptefguhvv"]
 	Global $radionames[] = ["Default", "Blaster Radio", "ALD prod radio"]
 	Dim $helpbuttons[7]
@@ -51,7 +51,7 @@ Func Mcyradio()
 	_Audio_init_start()
 	Select
 		Case $ultimaURLCargada = ""
-			IniWrite("config\config.st", "Misc", "Last radio loaded", $radios[0])
+			IniWrite($sConfigPath, "Misc", "Last radio loaded", $radios[0])
 	EndSelect
 	$label = GUICtrlCreateLabel(translate($lng, "Welcome!"), 0, 50, 100, 20)
 	Local $idpause = GUICtrlCreateButton(ChrW(9208), 90, 50, 70, 25)
@@ -79,7 +79,7 @@ Func Mcyradio()
 	Local $radioPausePressed = False
 	Local $ShowHelpPressed = False
 	Local $instPressed = False
-	$MusicHandle = _Set_url(IniRead("config\config.st", "Misc", "Last radio loaded", ""))
+	$MusicHandle = _Set_url(IniRead($sConfigPath, "Misc", "Last radio loaded", ""))
 	If @error Then
 		MsgBox(0, translate($lng, "Error"), translate($lng, "The URL cannot be loaded. Reason:") & " " & @extended)
 		GUIDelete($Window_radio)
@@ -242,7 +242,7 @@ Func RadioSelector()
 	$listlabel = GUICtrlCreateLabel(translate($lng, "radio list"), 85, 10, 50, 20)
 	$radioList = GUICtrlCreateListView(translate($lng, "Radio") & "|" & translate($lng, "URL"), 85, 90, 300, 20)
 	For $I = 0 To UBound($radios, $UBOUND_ROWS) - 1
-		If IniRead("config\config.st", "Misc", "Last radio loaded", "") = $radios[$I] Then $ifitisdefault &= $radionames[$I] & " " & translate($lng, "is set as default") & "."
+		If IniRead($sConfigPath, "Misc", "Last radio loaded", "") = $radios[$I] Then $ifitisdefault &= $radionames[$I] & " " & translate($lng, "is set as default") & "."
 		GUICtrlCreateListViewItem($radionames[$I] & "|" & $radios[$I], $radioList)
 	Next
 	GUICtrlSetData($rslabel, translate($lng, "Status:") & " " & $ifitisdefault)
@@ -266,10 +266,10 @@ Func RadioSelector()
 				$OnlyTheRadioPlease = StringSplit(GUICtrlRead(GUICtrlRead($radioList)), "|")
 				_Audio_stop($MusicHandle)
 				_Audio_init_stop($MusicHandle)
-				IniWrite("config\config.st", "Misc", "Last radio loaded", $OnlyTheRadioPlease[2])
+				IniWrite($sConfigPath, "Misc", "Last radio loaded", $OnlyTheRadioPlease[2])
 				Sleep(100)
 				_Audio_init_start()
-				$MusicHandle = _Set_url(IniRead("config\config.st", "Misc", "Last radio loaded", ""))
+				$MusicHandle = _Set_url(IniRead($sConfigPath, "Misc", "Last radio loaded", ""))
 				_Audio_play($MusicHandle)
 				GUIDelete($rsdialog)
 				GUISetState(@SW_SHOW, $Window_radio)
@@ -291,7 +291,7 @@ EndFunc   ;==>RadioSelector
 ; Example .......: No
 ; ===============================================================================================================================
 Func sayinfo()
-	$MusicHandle = _Set_url(IniRead("config\config.st", "Misc", "Last radio loaded", ""))
+	$MusicHandle = _Set_url(IniRead($sConfigPath, "Misc", "Last radio loaded", ""))
 	Local $info2 = _Get_streamtitle($MusicHandle)
 	Sleep(300)
 	speaking(translate($lng, "stream/song name:") & " " & $info2)

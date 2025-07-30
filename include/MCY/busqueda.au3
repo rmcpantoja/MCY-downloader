@@ -16,27 +16,27 @@
 ; ===============================================================================================================================
 Func search()
 	Global $searchgui = GUICreate(translate($lng, "Search"))
-	$ReadAccs = IniRead("config\config.st", "Accessibility", "Enable enanced accessibility", "")
-	$showtip = IniRead("config\config.st", "misc", "Show tips", "")
-	$sayProgresses = IniRead("config\config.st", "Accessibility", "Read download progress bar", "")
-	$sayTime = IniRead("config\config.st", "Accessibility", "Read download remaining time", "")
-	$BeepProgresses = IniRead("config\config.st", "Accessibility", "Beep for progress bars", "")
-	Global $cantidad = IniRead("config\config.st", "search", "Number of results", "")
+	$ReadAccs = IniRead($sConfigPath, "Accessibility", "Enable enanced accessibility", "")
+	$showtip = IniRead($sConfigPath, "misc", "Show tips", "")
+	$sayProgresses = IniRead($sConfigPath, "Accessibility", "Read download progress bar", "")
+	$sayTime = IniRead($sConfigPath, "Accessibility", "Read download remaining time", "")
+	$BeepProgresses = IniRead($sConfigPath, "Accessibility", "Beep for progress bars", "")
+	Global $cantidad = IniRead($sConfigPath, "search", "Number of results", "")
 	Select
 		Case $sayProgresses = ""
-			IniWrite("config\config.st", "Accessibility", "Read download progress bar", "Yes")
+			IniWrite($sConfigPath, "Accessibility", "Read download progress bar", "Yes")
 	EndSelect
 	Select
 		Case $sayTime = ""
-			IniWrite("config\config.st", "Accessibility", "Read download remaining time", "No")
+			IniWrite($sConfigPath, "Accessibility", "Read download remaining time", "No")
 	EndSelect
 	Select
 		Case $BeepProgresses = ""
-			IniWrite("config\config.st", "Accessibility", "Beep for progress bars", "Yes")
+			IniWrite($sConfigPath, "Accessibility", "Beep for progress bars", "Yes")
 	EndSelect
 	Select
 		Case $cantidad = ""
-			IniWrite("config\config.st", "search", "Number of results", "25")
+			IniWrite($sConfigPath, "search", "Number of results", "25")
 	EndSelect
 	$idSearchlabel = GUICtrlCreateLabel(translate($lng, "Write what you want to search for:"), 10, 30, 20, 20)
 	Global $inputsearch = GUICtrlCreateInput("", 10, 50, 20, 30)

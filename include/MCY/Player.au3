@@ -34,7 +34,7 @@ EndFunc   ;==>PlayDirectAudioURL
 ; Example .......: No
 ; ===============================================================================================================================
 Func StartAudio()
-	$ReadAccs = IniRead("config\config.st", "Accessibility", "Enable enanced accessibility", "")
+	$ReadAccs = IniRead($sConfigPath, "Accessibility", "Enable enanced accessibility", "")
 	Local $MusicHandle
 	Local $infox
 	_Audio_init_start()
