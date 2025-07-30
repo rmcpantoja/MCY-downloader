@@ -86,9 +86,6 @@ ElseIf _StringInArray($cmdline, '/help') Then
 	MsgBox(0, "command line instructions", "/radio: open MCY Radio" & @CRLF & "/help: query this help.")
 	exitpersonaliced()
 EndIf
-;Creates a window wenn the program is loading:
-$l1 = GUICreate(translate($lng, "Loading..."))
-GUISetState(@SW_SHOW)
 writeinlog("Initialicing...")
 If @OSArch = "x64" Then
 	Global $sYouTube_DL = IniRead("config\config.st", 'General Settings', 'Youtube-DL', 'engines64\yt-dlp.exe')
@@ -119,7 +116,6 @@ Func comprovarArc()
 		EndIf
 	EndIf
 	writeinlog("Checking architecture")
-	GUIDelete($l1)
 	If @OSArch = "x64" And $arquitectura = "x64" Then
 		writeinlog("Windows 64 bit")
 	EndIf
