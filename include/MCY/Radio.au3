@@ -531,8 +531,8 @@ EndFunc   ;==>_Get_volume
 ; Example .......: No
 ; ===============================================================================================================================
 Func _Get_bitrate($MusicHandle)
-	$a = Round(_Bass_ChannelBytes2Seconds($MusicHandle, _BASS_ChannelGetLength($MusicHandle, $BASS_POS_BYTE)))
-	$return = Round(_BASS_StreamGetFilePosition($MusicHandle, $BASS_FILEPOS_END) * 8 / $a / 1000)
+	$iAudioLen = Round(_Bass_ChannelBytes2Seconds($MusicHandle, _BASS_ChannelGetLength($MusicHandle, $BASS_POS_BYTE)))
+	$return = Round(_BASS_StreamGetFilePosition($MusicHandle, $BASS_FILEPOS_END) * 8 / $iAudioLen / 1000)
 	If StringInStr($return, "-") Then
 		$return = _BASS_StreamGetFilePosition($MusicHandle, $BASS_FILEPOS_END) * 8 / _BASS_GetConfig($BASS_CONFIG_NET_BUFFER)
 	EndIf

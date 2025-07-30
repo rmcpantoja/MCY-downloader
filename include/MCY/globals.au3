@@ -14,7 +14,7 @@ global $sConfigFolder = @ScriptDir &"\config"
 global $sConfigPath = $sConfigFolder &"\config.st"
 global $sDest_folder
 ;configs:
-global $sEnableProgresses, $sEnhancedAccessibility, $sShowTips, $sCheckForUpdate, $sLang = "en"
+global $sEnableProgresses, $sEnhancedAccessibility, $sShowTips, $sCheckForUpdate, $sYouTube_DL, $sLang = "en"
 
 ;register:
 ;New command line options! Incredible as it may seem, it is.

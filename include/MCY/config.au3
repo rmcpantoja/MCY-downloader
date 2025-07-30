@@ -1,8 +1,9 @@
 ; MCY Downloader config
-#include <ComboConstants.au3>
+#include "checkupdate.au3"
 #include "globals.au3"
 #include "language_manager.au3"
 #include "..\log.au3"
+#include "motd.au3"
 #include "..\translator.au3"
 #include "..\updater.au3"
 #include-once

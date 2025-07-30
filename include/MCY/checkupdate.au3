@@ -1,3 +1,7 @@
+#include "globals.au3"
+#include "TrayConstants.au3"
+#include-once
+
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: checKmcyversion
 ; Description ...: Check MCY version
@@ -21,34 +25,27 @@ Func checKmcyversion()
 		Select
 			Case $latestver <> $yourexeversion
 				writeinlog("Warning! Update available. Your version:" & $yourexeversion & ". New version:" & $latestver)
-				CreateTTSDialog(translate($lng, "Update available!"), translate($lng, "You have the version") & " " & $yourexeversion & " " & translate($lng, "and is available the") & " " & $latestver, translate($lng, " press enter to continue, space to repeat information."))
-				GUIDelete($main_u)
+				CreateTTSDialog(translate($sLang, "Update available!"), translate($sLang, "You have the version") & " " & $yourexeversion & " " & translate($sLang, "and is available the") & " " & $latestver, translate($sLang, " press enter to continue, space to repeat information."))
 				If $sArchitecture = "x64" Then
 					_Updater_update("MCY.exe", "https://www.dropbox.com/s/d49pf4blsv61aoz/extract.exe?dl=1")
 				Else
 					_Updater_update("MCY.exe", "https://www.dropbox.com/s/ccp9mjaw35gzn9s/extract_x86.exe?dl=1")
 				EndIf
-			Case Else
-				GUIDelete($main_u)
-				checkmotd()
 		EndSelect
 	EndIf
 	If $ReadAccs = "No" Then
 		Select
 			Case $latestver <> $yourexeversion
-				writeinlog(translate($lng, "You have the version") & " " & $sProgram_ver & " " & translate($lng, "and is available the") & " " & $latestver)
-				MsgBox(0, translate($lng, "Update available!"), translate($lng, "You have the version") & " " & $sProgram_ver & " " & translate($lng, "and is available the") & " " & $latestver)
+				writeinlog(translate($sLang, "You have the version") & " " & $sProgram_ver & " " & translate($sLang, "and is available the") & " " & $latestver)
+				MsgBox(0, translate($sLang, "Update available!"), translate($sLang, "You have the version") & " " & $sProgram_ver & " " & translate($sLang, "and is available the") & " " & $latestver)
 				If $sArchitecture = "x64" Then
 					_Updater_update("MCY.exe", "https://www.dropbox.com/s/d49pf4blsv61aoz/extract.exe?dl=1")
 				Else
 					_Updater_update("MCY.exe", "https://www.dropbox.com/s/ccp9mjaw35gzn9s/extract_x86.exe?dl=1")
 				EndIf
-			Case Else
-				checkmotd()
 		EndSelect
 	EndIf
 	InetClose($fileinfo)
-	GUIDelete($main_u)
 EndFunc   ;==>checKmcyversion
 
 ; #FUNCTION# ====================================================================================================================
@@ -64,29 +61,29 @@ EndFunc   ;==>checKmcyversion
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func updcomponents()
+Func updcomponents($hMainGui)
 	writeinlog("Updating Yt-Dlp...")
 	If Not FileExists($sYouTube_DL) Then
-		MsgBox(16, translate($lng, "Error"), translate($lng, "YT-dlp not found."))
+		MsgBox(16, translate($sLang, "Error"), translate($sLang, "YT-dlp not found."))
 		exitpersonaliced()
 	EndIf
 	$update = $device.opensound("sounds/update.ogg", 0)
 	;Plays bagground music when UPDATE.
 	$update.play
 	$update.repeating = 1
-	$g_hGui = GUICreate(translate($lng, "Looking for YT-DLP update"))
+	$g_hGui = GUICreate(translate($sLang, "Looking for YT-DLP update"))
 	GUISetState(@SW_SHOW)
-	$updatelabel = GUICtrlCreateLabel(translate($lng, "Please wait."), 25, 16)
-	TrayTip(translate($lng, "Please wait."), translate($lng, "Please wait while the YouTube library update is being searched."), 0, $TIP_ICONASTERISK)
+	$updatelabel = GUICtrlCreateLabel(translate($sLang, "Please wait."), 25, 16)
+	TrayTip(translate($sLang, "Please wait."), translate($sLang, "Please wait while the YouTube library update is being searched."), 0, $TIP_ICONASTERISK)
 	Local $iPID = Run(@ComSpec & ' /C "' & $sYouTube_DL & '" --update', @ScriptDir, @SW_HIDE, 6)
 	ProcessWaitClose($iPID)
 	$update.stop
 	If Not StringInStr(StdoutRead($iPID), 'yt-dlp is up to date') Then
 		writeinlog(StdoutRead($iPID))
-		MsgBox(48, translate($lng, "Done"), translate($lng, "Yt-dlp should be updated. Enjoin!"))
+		MsgBox(48, translate($sLang, "Done"), translate($sLang, "Yt-dlp should be updated. Enjoin!"))
 	Else
-		MsgBox(48, translate($lng, "Everything is up to date"), translate($lng, "There is no update at the moment."))
+		MsgBox(48, translate($sLang, "Everything is up to date"), translate($sLang, "There is no update at the moment."))
 	EndIf
 	GUIDelete($g_hGui)
-	GUISetState(@SW_SHOW, $PROGRAMGUI)
+	GUISetState(@SW_SHOW, $hMainGui)
 EndFunc   ;==>updcomponents

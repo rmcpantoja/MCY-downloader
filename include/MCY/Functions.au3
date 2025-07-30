@@ -1,3 +1,4 @@
+#include "../audio.au3"
 #include <EditConstants.au3>
 #include "MsgboxConstants.au3"
 #include "reorder.au3"

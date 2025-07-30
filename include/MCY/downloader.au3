@@ -1,5 +1,9 @@
 #include "ButtonConstants.au3"
+#include "config.au3"
 #include "globals.au3"
+#include "GuiButton.au3"
+#include "GuiComboBox.au3"
+#include "../Progress.au3"
 #include "TrayConstants.au3"
 
 ; #FUNCTION# ====================================================================================================================
@@ -136,7 +140,7 @@ Func Imputdownload()
 				writeinlog("Folder selected: " & $path)
 				$sDest_folder = $path
 				IniWrite($sConfigPath, "General settings", "Destination folder", $sDest_folder)
-				multimediafolders()
+				_create_folders($sDest_folder)
 			Case $btn_generate
 				$sound_downloading = $device.opensound("sounds/update_downloading.ogg", 0)
 				$sound_downloading.play

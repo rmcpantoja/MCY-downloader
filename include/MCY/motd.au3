@@ -1,3 +1,5 @@
+#include-once
+
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: motdprincipal
 ; Description ...: Download MOTD
@@ -11,15 +13,15 @@
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func motdprincipal($sMotd, $sAccess, $sMode)
+Func download_motd($sMotd, $sAccess, $sMode)
 	$sound = $device.opensound("sounds/selected.ogg", 0)
-	$bagground = $device.opensound("sounds/update.ogg", 0)
+	$background = $device.opensound("sounds/update.ogg", 0)
 	$downloadingmotd = GUICreate(translate($lng, "Downloading message of the day..."))
 	GUICtrlCreateLabel(translate($lng, "Please wait."), 85, 20)
 	GUISetState(@SW_SHOW)
-	$bagground.play
-	$bagground.repeating = 1
-	$ok = IniWrite($sConfigPath, "misc", "motdversion", $LatestMotd)
+	$background.play
+	$background.repeating = 1
+	$ok = IniWrite($sConfigPath, "misc", "motdversion", $sMotd)
 	writeinlog("Downloading MOTD.")
 	Select
 		Case $sMode = "audio"
@@ -30,18 +32,18 @@ Func motdprincipal($sMotd, $sAccess, $sMode)
 			InetClose($audio)
 			$motd = $device.opensound("tmp_motd_es.ogg", 0)
 			GUICtrlCreateLabel(translate($lng, "Reproduciendo audio..."), 85, 20)
-			If $bagground.playing = "1" Then
-				$bagground.stop
+			If $background.playing = "1" Then
+				$background.stop
 			EndIf
 			$motd.play
 			While $motd.playing = 1
 				Sleep(10)
 			WEnd
-		Case $M_mode = "text"
-			If $bagground.playing = "1" Then $bagground.stop
+		Case $sMode = "text"
+			If $background.playing = "1" Then $background.stop
 			$M_text = IniRead(@TempDir & "\MCYWeb.dat", "motd", "Text_" & $sLang, "")
 			$sound.play
-			If $ReadAccs = "Yes" Then
+			If $sAccess = "Yes" Then
 				CreateTTSDialog("MOTD", $M_text)
 			Else
 				MsgBox(0, translate($lng, "Message of the day"), $M_text)

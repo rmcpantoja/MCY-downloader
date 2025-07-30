@@ -1,6 +1,10 @@
+#include "busqueda.au3"
 #include "downloader.au3"
 #include "globals.au3"
+#include "..\miscstring.au3"
+#include "Mp3_converter.au3"
 #include "options.au3"
+#include "Player.au3"
 #include "radio.au3"
 #include "reorder-gui.au3"
 #include-once
@@ -22,8 +26,7 @@ Func Menuprogram()
 	; We create the window.
 	Global $PROGRAMGUI = GUICreate("MCY Downloader " & $sProgram_ver, 500, 500)
 	; We set the keyboard shortcut to view to the help document.
-	HotKeySet("{F1}", "playhelp")
-	$ReadAccs = IniRead($sConfigPath, "Accessibility", "Enable enanced accessibility", "")
+	;HotKeySet("{F1}", "playhelp")
 	; Now we will create the menus along with their respective options.
 	; We add multi-language support.
 	Local $idDownload = GUICtrlCreateMenu("&MCY")
@@ -82,7 +85,7 @@ Func Menuprogram()
 			Case $idOptionsitem
 				writeinlog("Function: options")
 				Sleep(100)
-				If $ReadAccs = "yes" Then
+				If $sEnhancedAccessibility = "yes" Then
 					$hOptionsGui = GUICreate("options menu (accessibility)")
 					GUISetState(@SW_SHOW)
 					Sleep(500)
@@ -90,12 +93,6 @@ Func Menuprogram()
 					GUIDelete($hOptionsGui)
 				Else
 					menu_options2()
-				EndIf
-			Case $idChanges
-				If $ReadAccs = "yes" Then
-					readchanges()
-				Else
-					readchanges2()
 				EndIf
 			Case $idErrorreporting
 				ShellExecute("https://docs.google.com/forms/d/e/1FAIpQLSdDW6LqMKGHjUdKmHkAZdAlgSDilHaWQG9VZjwLz0CJSXKqHA/viewform?usp=sf_link")
@@ -106,35 +103,29 @@ Func Menuprogram()
 			Case $idCheckupdates
 				writeinlog("Checking components...")
 				GUISetState(@SW_HIDE, $PROGRAMGUI)
-				updcomponents()
+				updcomponents($PROGRAMGUI)
 			Case $GUI_EVENT_CLOSE, $idExitbutton, $idExititem
 				exitpersonaliced()
 			Case $idHelpitema
 				; This is the dialog about the program in which it will be shown on the screen.
-				MsgBox(48, translate($sLang, "About..."), $programname & ", " & translate($sLang, "version") & $program_ver & ". " & translate($sLang, "Program developed by mateo cedillo. This software is used to download multimedia from a variety of sites. 2018-2022 MT programs."))
+				MsgBox(48, translate($sLang, "About..."), $sProgramName & ", " & translate($sLang, "version") & $sProgram_ver & ". " & translate($sLang, "Program developed by mateo cedillo. This software is used to download multimedia from a variety of sites. 2018-2022 MT programs."))
 				ContinueLoop
 			Case $idHelpitemb
 				ShellExecute("http://mateocedillo.260mb.net/")
 				If @error Then MsgBox(16, translate($sLang, "Error"), translate($sLang, "Cannot run browser. It is likely that you have to add an association."))
-			Case $idHelpitemc
+			Case $idHelpitemc, $idManualbutton
 				writeinlog("function: User manual.")
-				playhelp()
+				_ReadDoc($sLang, "Manual", $sEnhancedAccessibility)
 			Case $idMenubtn
 				Send("{alt}")
-			Case $idManualbutton
-				playhelp()
-			Case $idChangesbutton
-				If $ReadAccs = "yes" Then
-					readchanges()
-				Else
-					readchanges2()
-				EndIf
+			Case $idChanges, $idChangesbutton
+				_ReadDoc($sLang, "Changes", $sEnhancedAccessibility)
 			Case $idGithubBTN
 				ShellExecute("https://github.com/rmcpantoja/")
 				If @error Then MsgBox(16, translate($sLang, "Error"), translate($sLang, "Cannot run browser. It is likely that you have to add an association."))
 			Case $idShareBTN
 				Opt("GUIOnEventMode", 1)
-				share(translate($sLang, "Hello! I share with you MCY Downloader, a software to download multimedia in high quality, videos, music, playlists, users and everything you want in a single click; rearrange your music, audio converter, radio and more!. Visit download page here, where you will find the versions for 32 and 64-bit:"), "http://mateocedillo.260mb.net/programs.html")
+				share(translate($sLang, "Hello! I share with you MCY Downloader, a software to download multimedia in high quality, videos, music, playlists, users and everything you want in a single click; rearrange your music, audio converter, radio and more!. Visit download page here, where you will find the versions for 32 and 64-bit:"), "http://mateocedillo.260mb.net/programs.html", $sLang)
 				Opt("GUIOnEventMode", 0)
 		EndSwitch
 	WEnd
@@ -163,7 +154,7 @@ Func _ReadDoc($sLang, $sTipe, $sAccessibility)
 		$idEdit = GUICtrlCreateEdit($sContent, 5, 5, 390, 360, BitOR($WS_VSCROLL, $WS_HSCROLL, $WS_TABSTOP, $ES_READONLY))
 		$idExit = GUICtrlCreateButton(translate($sLang, "&Close"), 100, 370, 150, 30)
 	else
-		createTtsDocument($sDoc, ($sGuiName)
+		createTtsDocument($sDoc, $sGuiName)
 	EndIf
 	GUISetState(@SW_SHOW)
 	While 1
