@@ -22,7 +22,7 @@ Func download_motd($sMotd, $sAccess, $sMode)
 	$background.play
 	$background.repeating = 1
 	$ok = IniWrite($sConfigPath, "misc", "motdversion", $sMotd)
-	_FileWriteLog($hFileLog, "Downloading MOTD.")
+	_CustomLog("Downloading MOTD.")
 	Select
 		Case $sMode = "audio"
 			$audio = InetGet("https://drive.google.com/uc?id=1epPH-945GiUFfnHuUcevYk_txhCFFSwt&export=download", "tmp_motd_es.ogg", 1, 0)

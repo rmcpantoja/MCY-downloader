@@ -1,5 +1,7 @@
 #include "../audio.au3"
 #include <EditConstants.au3>
+#include "file.au3"
+;#include "globals.au3"
 #include "MsgboxConstants.au3"
 #include "reorder.au3"
 #include "..\share.au3"
@@ -54,7 +56,7 @@ Func NotCompiled()
 		$errorsound.play
 		;Show error message.
 		MsgBox($MB_SYSTEMMODAL, "", "You have to compile this program first to run it. Then the program will close now.")
-		_FileWriteLog($hFileLog, "The program is not compiled... Exiting.")
+		_CustomLog("The program is not compiled... Exiting.")
 		exitpersonaliced()
 	EndIf
 EndFunc   ;==>NotCompiled

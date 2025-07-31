@@ -32,10 +32,10 @@ Func _config_start($sConfigFolder, $sConfigPath)
 	if $sProgramType = "" then
 		If @ScriptDir = "C:\MCY" Then
 			IniWrite($sConfigPath, "General settings", "Program Type", "Installable")
-			_FileWriteLog($hFileLog, "Copy: Installable.")
+			_CustomLog("Copy: Installable.")
 		else
 			IniWrite($sConfigPath, "General settings", "Program Type", "Portable")
-			_FileWriteLog($hFileLog, "Copy: Portable.")
+			_CustomLog("Copy: Portable.")
 		EndIf
 	EndIf
 	If @OSArch = "x64" And $sArchitecture = "x86" Then
@@ -65,7 +65,7 @@ Func _config_start($sConfigFolder, $sConfigPath)
 	$sLocalMOTD = IniRead($sConfigPath, "misc", "motdversion", "")
 	$sLatestMotd = IniRead(@TempDir & "\MCYWeb.dat", "motd", "Latest", "")
 	$sLatestMotdMode = IniRead(@TempDir & "\MCYWeb.dat", "motd", "Mode", "")
-	_FileWriteLog($hFileLog, "Website motd: " & $sLatestMotd & "actual motd: " & $sLocalMOTD)
+	_CustomLog("Website motd: " & $sLatestMotd & "actual motd: " & $sLocalMOTD)
 	if $sLatestMotd > $sLocalMOTD then
 		$downloading = $device.opensound("sounds/update_downloading.ogg", 0)
 		$downloading.play
@@ -75,7 +75,7 @@ Func _config_start($sConfigFolder, $sConfigPath)
 	if $sWantUpdates = "yes" then
 		If @Compiled Then checKmcyversion()
 	else
-		_FileWriteLog($hFileLog, "the user does not want updates")
+		_CustomLog("the user does not want updates")
 	EndIf
 EndFunc
 
@@ -109,3 +109,16 @@ Func _Configure_Accessibility($sConfigPath)
 	EndIf
 	Return $sEnhancedAccessibility
 EndFunc   ;==>_Configure_Accessibility
+
+func _CustomLog($sText)
+local $iRet
+if $sSaveLogs = "yes" then
+if not $hFileLog = "" then
+$iRet = _FileWriteLog($hFileLog, $sText)
+if @error then Return SetError(1, 0, "")
+else
+Return SetError(2, 0, "")
+EndIf
+EndIf
+return $iRet
+EndFunc

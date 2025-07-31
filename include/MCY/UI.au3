@@ -63,27 +63,27 @@ Func Menuprogram()
 	While 1
 		Switch GUIGetMsg()
 			Case $idDownloaditem
-				_FileWriteLog($hFileLog, "Function: download from link...")
+				_CustomLog("Function: download from link...")
 				GUISetState(@SW_HIDE, $PROGRAMGUI)
 				Imputdownload()
 			Case $idSearchitem
-				_FileWriteLog($hFileLog, "Function: Search.")
+				_CustomLog("Function: Search.")
 				GUISetState(@SW_HIDE, $PROGRAMGUI)
 				Search()
 			Case $idRadioitem
-				_FileWriteLog($hFileLog, "Function: Radio.")
+				_CustomLog("Function: Radio.")
 				Radio()
 			Case $idconvitem
-				_FileWriteLog($hFileLog, "Function: mp3Converter()")
+				_CustomLog("Function: mp3Converter()")
 				mp3Converter()
 			Case $idURLitem
-				_FileWriteLog($hFileLog, "Function: ReproducirURL()")
+				_CustomLog("Function: ReproducirURL()")
 				ReproducirURL()
 			Case $idorderitem
-				_FileWriteLog($hFileLog, "Function: reOrganizar()")
+				_CustomLog("Function: reOrganizar()")
 				reOrganizar()
 			Case $idOptionsitem
-				_FileWriteLog($hFileLog, "Function: options")
+				_CustomLog("Function: options")
 				Sleep(100)
 				If $sEnhancedAccessibility = "yes" Then
 					$hOptionsGui = GUICreate("options menu (accessibility)")
@@ -101,7 +101,7 @@ Func Menuprogram()
 				ShellExecute("https://github.com/rmcpantoja/MCY-downloader/issues/new")
 				If @error Then MsgBox(16, translate($sLang, "Error"), translate($sLang, "Cannot run browser. It is likely that you have to add an association."))
 			Case $idCheckupdates
-				_FileWriteLog($hFileLog, "Checking components...")
+				_CustomLog("Checking components...")
 				GUISetState(@SW_HIDE, $PROGRAMGUI)
 				updcomponents($PROGRAMGUI)
 			Case $GUI_EVENT_CLOSE, $idExitbutton, $idExititem
@@ -114,7 +114,7 @@ Func Menuprogram()
 				ShellExecute("http://mateocedillo.260mb.net/")
 				If @error Then MsgBox(16, translate($sLang, "Error"), translate($sLang, "Cannot run browser. It is likely that you have to add an association."))
 			Case $idHelpitemc, $idManualbutton
-				_FileWriteLog($hFileLog, "function: User manual.")
+				_CustomLog("function: User manual.")
 				_ReadDoc($sLang, "Manual", $sEnhancedAccessibility)
 			Case $idMenubtn
 				Send("{alt}")

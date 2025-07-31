@@ -17,14 +17,14 @@
 ; ===============================================================================================================================
 Func checKmcyversion()
 	$ReadAccs = IniRead($sConfigPath, "Accessibility", "Enable enanced accessibility", "")
-	_FileWriteLog($hFileLog, "Checking for updates...")
+	_CustomLog("Checking for updates...")
 	Local $yourexeversion = $sProgram_ver
 	$fileinfo = InetGet("https://www.dropbox.com/s/hcx20lgvjem0wz1/MCYWeb.dat?dl=1", @TempDir & "\MCYWeb.dat")
 	$latestver = IniRead(@TempDir & "\MCYWeb.dat", "updater", "LatestVersion", "")
 	If $ReadAccs = "Yes" Then
 		Select
 			Case $latestver <> $yourexeversion
-				_FileWriteLog($hFileLog, "Warning! Update available. Your version:" & $yourexeversion & ". New version:" & $latestver)
+				_CustomLog("Warning! Update available. Your version:" & $yourexeversion & ". New version:" & $latestver)
 				CreateTTSDialog(translate($sLang, "Update available!"), translate($sLang, "You have the version") & " " & $yourexeversion & " " & translate($sLang, "and is available the") & " " & $latestver, translate($sLang, " press enter to continue, space to repeat information."))
 				If $sArchitecture = "x64" Then
 					_Updater_update("MCY.exe", "https://www.dropbox.com/s/d49pf4blsv61aoz/extract.exe?dl=1")
@@ -36,7 +36,7 @@ Func checKmcyversion()
 	If $ReadAccs = "No" Then
 		Select
 			Case $latestver <> $yourexeversion
-				_FileWriteLog($hFileLog, translate($sLang, "You have the version") & " " & $sProgram_ver & " " & translate($sLang, "and is available the") & " " & $latestver)
+				_CustomLog(translate($sLang, "You have the version") & " " & $sProgram_ver & " " & translate($sLang, "and is available the") & " " & $latestver)
 				MsgBox(0, translate($sLang, "Update available!"), translate($sLang, "You have the version") & " " & $sProgram_ver & " " & translate($sLang, "and is available the") & " " & $latestver)
 				If $sArchitecture = "x64" Then
 					_Updater_update("MCY.exe", "https://www.dropbox.com/s/d49pf4blsv61aoz/extract.exe?dl=1")
@@ -62,7 +62,7 @@ EndFunc   ;==>checKmcyversion
 ; Example .......: No
 ; ===============================================================================================================================
 Func updcomponents($hMainGui)
-	_FileWriteLog($hFileLog, "Updating Yt-Dlp...")
+	_CustomLog("Updating Yt-Dlp...")
 	If Not FileExists($sYouTube_DL) Then
 		MsgBox(16, translate($sLang, "Error"), translate($sLang, "YT-dlp not found."))
 		exitpersonaliced()
@@ -79,7 +79,7 @@ Func updcomponents($hMainGui)
 	ProcessWaitClose($iPID)
 	$update.stop
 	If Not StringInStr(StdoutRead($iPID), 'yt-dlp is up to date') Then
-		_FileWriteLog($hFileLog, StdoutRead($iPID))
+		_CustomLog(StdoutRead($iPID))
 		MsgBox(48, translate($sLang, "Done"), translate($sLang, "Yt-dlp should be updated. Enjoin!"))
 	Else
 		MsgBox(48, translate($sLang, "Everything is up to date"), translate($sLang, "There is no update at the moment."))

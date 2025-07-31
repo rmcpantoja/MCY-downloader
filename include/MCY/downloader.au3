@@ -137,7 +137,7 @@ Func Imputdownload()
 			Case $btn_dir
 				Local $path = FileSelectFolder(translate($sLang, "Choose Folder..."), $input_dir)
 				GUICtrlSetData($input_dir, $path)
-				_FileWriteLog($hFileLog, "Folder selected: " & $path)
+				_CustomLog("Folder selected: " & $path)
 				$sDest_folder = $path
 				IniWrite($sConfigPath, "General settings", "Destination folder", $sDest_folder)
 				_create_folders($sDest_folder)
@@ -146,7 +146,7 @@ Func Imputdownload()
 				$sound_downloading.play
 				MsgBox(0, translate($sLang, "Downloading"), translate($sLang, "Wait a moment, we're looking for the video. Press OK to start."))
 				$say = "0"
-				_FileWriteLog($hFileLog, "Downloading Multimedia.")
+				_CustomLog("Downloading Multimedia.")
 				Local $command = $MAIN
 				Local $isSingle = GUICtrlRead($chkbox_isSingle) == $GUI_CHECKED
 				Local $start = Number(GUICtrlRead($input_start))
@@ -158,15 +158,15 @@ Func Imputdownload()
 				;Local $isExec = GUICtrlRead($chkbox_exec) == $GUI_CHECKED
 				$exitcmd = @CRLF & "exit"
 				If $isMP3 Then
-					_FileWriteLog($hFileLog, "Downloading as audio")
+					_CustomLog("Downloading as audio")
 					$command &= $EXTRACT_AUDIO & $AUDIO_FORMAT & "mp3" & $audioQuality
 				EndIf
 				If $isSub Then
 					If $sublang <> "Auto sub" Then
-						_FileWriteLog($hFileLog, "Downloading subtitles ...")
+						_CustomLog("Downloading subtitles ...")
 						$command &= $WRITE_SUB & $SUB_LANG & $sublang
 					Else
-						_FileWriteLog($hFileLog, "Autosub")
+						_CustomLog("Autosub")
 						$command &= $WRITE_AUTO_SUB
 					EndIf
 					If $isOnlySub Then
@@ -194,11 +194,11 @@ Func Imputdownload()
 				Local $idProgressbar = GUICtrlCreateProgress(200, 50, 325, 17)
 				GUICtrlSetColor(-1, 32250)
 				GUISetState(@SW_SHOW)
-				_FileWriteLog($hFileLog, "Starting process...")
+				_CustomLog("Starting process...")
 				Local $iSavPos = 0
 				Local $runcmd = Run(@ComSpec & " /C" & "generated.bat", @ScriptDir, @SW_HIDE, 6)
 				GUICtrlSetData($edit_out, $EMPTY_STRING)
-				_FileWriteLog($hFileLog, "downloading " & GUICtrlRead($input_url))
+				_CustomLog("downloading " & GUICtrlRead($input_url))
 				ProgressOn(translate($sLang, "Downloading"), translate($sLang, "Please wait."), "0%", 100, 20)
 				Local $DOWNLOADLINE
 				While 1
@@ -243,7 +243,7 @@ Func Imputdownload()
 										Speaking(translate($sLang, "Estimated time remaining:") & $split1)
 									EndIf
 							EndSelect
-							_FileWriteLog($hFileLog, $DOWNLOADLINE)
+							_CustomLog($DOWNLOADLINE)
 						Else
 							GUICtrlSetData($edit_out, GUICtrlRead($edit_out) & $DOWNLOADLINE)
 						EndIf
@@ -263,12 +263,12 @@ Func Imputdownload()
 					ShellExecute($sDest_folder)
 					If @error Then
 						MsgBox(16, translate($sLang, "Error"), translate($sLang, 'Unable to open folder') & '"' & $sDest_folder & '".' & @CRLF & @CRLF & @extended)
-						_FileWriteLog($hFileLog, "Unable to open folder " & $sDest_folder & '".' & @CRLF & @CRLF & @extended)
+						_CustomLog("Unable to open folder " & $sDest_folder & '".' & @CRLF & @CRLF & @extended)
 					Else
-						_FileWriteLog($hFileLog, "video Downloaded. Open Folder=yes. Opening: " & $sDest_folder)
+						_CustomLog("video Downloaded. Open Folder=yes. Opening: " & $sDest_folder)
 					EndIf
 				Else
-					_FileWriteLog($hFileLog, "video Downloaded. Open Folder=no")
+					_CustomLog("video Downloaded. Open Folder=no")
 				EndIf
 				GUIDelete($downloading)
 				GUISetState(@SW_SHOW, $dmain)

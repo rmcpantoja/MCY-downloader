@@ -1,6 +1,5 @@
 ; MCY Downloader globals
 
-#include <File.au3>
 #include "Functions.au3"
 #include "..\reader.au3"
 
@@ -17,7 +16,7 @@ global $sDest_folder
 ;configs:
 global $sEnableProgresses, $sEnhancedAccessibility, $sShowTips, $sSaveLogs, $sCheckForUpdate, $sYouTube_DL, $sLang = "en"
 ; log handling:
-global $hFileLog
+global $hFileLog = null
 
 ;register:
 ;New command line options! Incredible as it may seem, it is.
@@ -47,7 +46,7 @@ EndIf
 ; ===============================================================================================================================
 Func exitpersonaliced()
 	_nvdaControllerClient_free()
-	_FileWriteLog($hFileLog, "exiting...")
+	_CustomLog("exiting...")
 	Global $soundclose = $device.opensound("sounds/close.ogg", 0)
 	$soundclose.play
 	Sleep(500)
