@@ -79,6 +79,21 @@ Func _config_start($sConfigFolder, $sConfigPath)
 	EndIf
 EndFunc
 
+Func _radio_config_start($sConfigFolder, $sConfigPath)
+	If Not FileExists($sConfigFolder) Then
+		$hPath = DirCreate($sConfigFolder)
+		if $hPath = 0 then
+			MsgBox(16, Translate($lng, "Error"), Translate($lng, "Config folder could not be created. If so, please run the program as administrator."))
+			exitpersonaliced()
+		EndIf
+	EndIf
+	$sLatestRadioURL = IniRead($sConfigPath, "radio", "Last radio loaded", "")
+	if $sLatestRadioURL = "" then
+		$sLatestRadioURL = "0"
+		IniWrite($sConfigPath, "radio", "Last radio loaded", $sLatestRadioURL)
+	EndIf
+EndFunc
+
 func _create_folders($d_folder)
 	If Not FileExists($d_folder & "\audio") Then DirCreate($d_folder & "\audio")
 	If Not FileExists($d_folder & "\video") Then DirCreate($d_folder & "\video")

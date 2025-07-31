@@ -72,7 +72,8 @@ Func Menuprogram()
 				Search()
 			Case $idRadioitem
 				_CustomLog("Function: Radio.")
-				Radio()
+				_radio_config_start($sConfigFolder, $sConfigPath)
+				MCYRadio()
 			Case $idconvitem
 				_CustomLog("Function: mp3Converter()")
 				mp3Converter()

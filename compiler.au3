@@ -28,7 +28,6 @@ Local $aPaths = [ _
 		]
 If $sArch == "x64" Then $aPaths[1] = "engines64"
 $sFileList = "*.dll;*.txt"
-
 $sBuildDestination = @ScriptDir & "\..\compiled"
 
 _prepare_to_compile($sArch, $aPaths, $sFileList, $sBuildDestination)

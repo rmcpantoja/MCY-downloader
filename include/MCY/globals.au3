@@ -15,7 +15,8 @@ global $sConfigPath = $sConfigFolder &"\config.st"
 global $sDest_folder
 ;configs:
 global $sEnableProgresses, $sEnhancedAccessibility, $sShowTips, $sSaveLogs, $sCheckForUpdate, $sYouTube_DL, $sLang = "en"
-; log handling:
+global $sLatestRadioURL
+; handlings:
 global $hFileLog = null
 
 ;register:

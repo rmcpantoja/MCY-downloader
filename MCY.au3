@@ -3,7 +3,7 @@
 ;#AutoIt3Wrapper_UseUpx=n
 #AutoIt3Wrapper_Res_Description=Music YouTube Downloader
 #AutoIt3Wrapper_Res_Comment=This is a software that allows you to download multimedia content, as well as enjoy your favorite music by listening to our radios or plcing your prefferences.
-#AutoIt3Wrapper_Res_Fileversion=1.0.0.29
+#AutoIt3Wrapper_Res_Fileversion=1.0.0.30
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
 #AutoIt3Wrapper_Res_ProductName=Music YouTube Downloader
 #AutoIt3Wrapper_Res_ProductVersion=1.0.0.0
