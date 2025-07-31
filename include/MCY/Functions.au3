@@ -54,7 +54,7 @@ Func NotCompiled()
 		$errorsound.play
 		;Show error message.
 		MsgBox($MB_SYSTEMMODAL, "", "You have to compile this program first to run it. Then the program will close now.")
-		writeinlog("The program is not compiled... Exiting.")
+		_FileWriteLog($hFileLog, "The program is not compiled... Exiting.")
 		exitpersonaliced()
 	EndIf
 EndFunc   ;==>NotCompiled

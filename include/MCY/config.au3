@@ -1,8 +1,8 @@
 ; MCY Downloader config
 #include "checkupdate.au3"
+#include "file.au3"
 #include "globals.au3"
 #include "language_manager.au3"
-#include "..\log.au3"
 #include "motd.au3"
 #include "..\translator.au3"
 #include "..\updater.au3"
@@ -22,14 +22,20 @@ Func _config_start($sConfigFolder, $sConfigPath)
 	If Not $sEnhancedAccessibility = "Yes" Or Not $sEnhancedAccessibility = "No" Then
 		$sEnhancedAccessibility = _Configure_Accessibility($sConfigPath)
 	EndIf
+	$sSaveLogs = IniRead(@ScriptDir & "\config\config.st", "General settings", "Save Logs", "")
+	if $sSaveLogs = "" then
+		IniWrite(@ScriptDir & "\config\config.st", "General settings", "Save Logs", "yes")
+		$sSaveLogs = "yes"
+	EndIf
+	if $sSaveLogs = "yes" then $hFileLog  = FileOpen(@ScriptDir & "\logs\" & @YEAR & @MON & @MDAY & ".log", 1)
 	$sProgramType = IniRead($sConfigPath, "General settings", "Program Type", "")
 	if $sProgramType = "" then
 		If @ScriptDir = "C:\MCY" Then
 			IniWrite($sConfigPath, "General settings", "Program Type", "Installable")
-			writeinlog("Copy: Installable.")
+			_FileWriteLog($hFileLog, "Copy: Installable.")
 		else
 			IniWrite($sConfigPath, "General settings", "Program Type", "Portable")
-			writeinlog("Copy: Portable.")
+			_FileWriteLog($hFileLog, "Copy: Portable.")
 		EndIf
 	EndIf
 	If @OSArch = "x64" And $sArchitecture = "x86" Then
@@ -59,7 +65,7 @@ Func _config_start($sConfigFolder, $sConfigPath)
 	$sLocalMOTD = IniRead($sConfigPath, "misc", "motdversion", "")
 	$sLatestMotd = IniRead(@TempDir & "\MCYWeb.dat", "motd", "Latest", "")
 	$sLatestMotdMode = IniRead(@TempDir & "\MCYWeb.dat", "motd", "Mode", "")
-	writeinlog("Website motd: " & $sLatestMotd & "actual motd: " & $sLocalMOTD)
+	_FileWriteLog($hFileLog, "Website motd: " & $sLatestMotd & "actual motd: " & $sLocalMOTD)
 	if $sLatestMotd > $sLocalMOTD then
 		$downloading = $device.opensound("sounds/update_downloading.ogg", 0)
 		$downloading.play
@@ -69,7 +75,7 @@ Func _config_start($sConfigFolder, $sConfigPath)
 	if $sWantUpdates = "yes" then
 		If @Compiled Then checKmcyversion()
 	else
-		writeinlog("the user does not want updates")
+		_FileWriteLog($hFileLog, "the user does not want updates")
 	EndIf
 EndFunc
 

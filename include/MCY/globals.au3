@@ -1,5 +1,6 @@
 ; MCY Downloader globals
 
+#include <File.au3>
 #include "Functions.au3"
 #include "..\reader.au3"
 
@@ -14,7 +15,9 @@ global $sConfigFolder = @ScriptDir &"\config"
 global $sConfigPath = $sConfigFolder &"\config.st"
 global $sDest_folder
 ;configs:
-global $sEnableProgresses, $sEnhancedAccessibility, $sShowTips, $sCheckForUpdate, $sYouTube_DL, $sLang = "en"
+global $sEnableProgresses, $sEnhancedAccessibility, $sShowTips, $sSaveLogs, $sCheckForUpdate, $sYouTube_DL, $sLang = "en"
+; log handling:
+global $hFileLog
 
 ;register:
 ;New command line options! Incredible as it may seem, it is.
@@ -44,11 +47,12 @@ EndIf
 ; ===============================================================================================================================
 Func exitpersonaliced()
 	_nvdaControllerClient_free()
-	writeinlog("exiting...")
+	_FileWriteLog($hFileLog, "exiting...")
 	Global $soundclose = $device.opensound("sounds/close.ogg", 0)
 	$soundclose.play
 	Sleep(500)
 	FileDelete(@TempDir & "\MCYWeb.dat")
 	FileDelete(@ScriptDir & "\tmp_motd_es.ogg")
+	FileClose($hFileLog)
 	Exit
 EndFunc   ;==>exitpersonaliced
