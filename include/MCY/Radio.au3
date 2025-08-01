@@ -8,6 +8,7 @@
 #include <SliderConstants.au3>
 #include <WindowsConstants.au3>
 Global const $sRadio_ver = "0.5.3"
+global const $sInstallFilePath = @DesktopDir & "\MCY Radio.lnk"
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: Mcyradio
 ; Description ...: MCY radio!
@@ -28,7 +29,17 @@ Func MCYRadio()
 	local $aRadios[][] = [["SONVA radio", "https://stream.zeno.fm/qhpfuuaq11zuv"], ["Blaster Radio", "https://blasterradio.net/blaster"], ["ALD prod radio", "http://stream.zeno.fm/1d6tptefguhvv"]]
 	Dim $aHelpButtons[7]
 	Global $hMusicHandle
-	Global $sInfo1
+	Global $sInfo1, $sInstallState
+	Local $bRadioStopPressed = False, $bRadioPausePressed = False, $bShowHelpPressed = False, $bInstPressed = False
+	local $bIsInstalled = FileExists($sInstallFilePath)
+	if @compiled then
+		if $bIsInstalled then
+			$sInstallState = translate($sLang, "Uninstall MCY Radio")
+			$bInstPressed = True
+		else
+			$sInstallState = translate($sLang, "install only MCY Radio")
+		EndIf
+	EndIf
 	_Audio_init_start()
 	$label = GUICtrlCreateLabel(translate($sLang, "Welcome!"), 0, 50, 100, 20)
 	Local $idpause = GUICtrlCreateButton(TRANSLATE($sLang,"Pause"), 90, 50, 70, 25)
@@ -45,14 +56,14 @@ Func MCYRadio()
 	$aHelpButtons[2] = GUICtrlCreateButton(translate($sLang, "Changes"), 150, 175, 70, 25)
 	$aHelpButtons[3] = GUICtrlCreateButton(translate($sLang, "Get version for android"), 150, 230, 70, 25)
 	$aHelpButtons[4] = GUICtrlCreateButton(translate($sLang, "About..."), 150, 260, 70, 25)
-	$aHelpButtons[5] = GUICtrlCreateButton(translate($sLang, "install only MCY Radio"), 150, 300, 70, 25)
+	$aHelpButtons[5] = GUICtrlCreateButton($sInstallState, 150, 300, 70, 25)
+	If Not @Compiled Then GUICtrlSetState(-1, $GUI_DISABLE)
 	$aHelpButtons[6] = GUICtrlCreateButton(translate($sLang, "Privacy policy"), 150, 375, 70, 25)
 	For $I = 0 To UBound($aHelpButtons, $UBOUND_ROWS) - 1
 		GUICtrlSetState($aHelpButtons[$I], $GUI_HIDE)
 	Next
 	Local $idBtn_Close = GUICtrlCreateButton(translate($sLang, "close"), 200, 200, 100, 25)
 	GUISetState(@SW_SHOW)
-	Local $bRadioStopPressed = False, $bRadioPausePressed = False, $bShowHelpPressed = False, $bInstPressed = False
 	$hMusicHandle = _Set_url($aRadios[$sLatestRadioURL][1])
 	sleep(1000)
 	If @error Then
@@ -165,16 +176,18 @@ EndFunc   ;==>Mcyradio
 ; Example .......: No
 ; ===============================================================================================================================
 Func installmcyradio()
-	If Not FileExists(@DesktopDir & "\MCY Radio.lnk") Then
+	If Not FileExists($sInstallFilePath) Then
 		$iInstallResult = FileCreateShortcut(@ScriptDir & "\MCY.exe", @DesktopDir & "\MCY Radio.lnk", @ScriptDir, "/radio", _
 				translate($sLang, "Enjoy the best radio content, like music and live broadcasts."), "", "^!R", "", @SW_SHOW)
 		if $iInstallResult == 1 then
 			MsgBox(48, translate($sLang, "Information"), translate($sLang, "MCY Radio has been installed on the desktop"))
 		else
 			MSGBox(16, translate($sLang, "Error"), translate($sLang, "An error ocurred while installing MCY radio"))
+			return SetError(1, 0, "")
 		EndIf
 	Else
 		MsgBox(16, translate($sLang, "Error"), translate($sLang, "MCY Radio is already installed"))
+		return SetError(2, 0, "")
 	EndIf
 	return $iInstallResult
 EndFunc   ;==>installmcyradio
@@ -238,7 +251,7 @@ Func RadioSelector($hMainWindow, $aRadioList)
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE, $idRadioClose
 				GUIDelete($hRadio)
-				GUISetState(@SW_SHOW, ($hMainWindow)
+				GUISetState(@SW_SHOW, $hMainWindow)
 				ExitLoop
 			Case $idCopy
 				$aCurrentSelection = StringSplit(GUICtrlRead(GUICtrlRead($idRadioList)), "|")
@@ -276,7 +289,7 @@ EndFunc   ;==>RadioSelector
 ; ===============================================================================================================================
 Func sayinfo()
 	;$MusicHandle = _Set_url(IniRead($sConfigPath, "Misc", "Last radio loaded", ""))
-	Local $sInfo = _Get_streamtitle($MusicHandle)
+	Local $sInfo = _Get_streamtitle($hMusicHandle)
 	speaking(translate($sLang, "stream/song name:") & " " & $sInfo)
 	If $sInfo = "0" Then speaking(translate($sLang, "no song is playing"))
 EndFunc   ;==>sayinfo

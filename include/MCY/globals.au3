@@ -19,17 +19,6 @@ global $sLatestRadioURL
 ; handlings:
 global $hFileLog = null
 
-;register:
-;New command line options! Incredible as it may seem, it is.
-If _StringInArray($cmdline, '/radio') Then
-	radio()
-	exitpersonaliced()
-ElseIf _StringInArray($cmdline, '/help') Then
-	MsgBox(0, "command line instructions", "/radio: open MCY Radio" & @CRLF & "/help: query this help.")
-	exitpersonaliced()
-EndIf
-
-
 ; funcs:
 
 ; #FUNCTION# ====================================================================================================================
