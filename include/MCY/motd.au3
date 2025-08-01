@@ -27,7 +27,7 @@ Func download_motd($sMotd, $sAccess, $sMode)
 		Case $sMode = "audio"
 			$audio = InetGet("https://drive.google.com/uc?id=1epPH-945GiUFfnHuUcevYk_txhCFFSwt&export=download", "tmp_motd_es.ogg", 1, 0)
 			;While @InetGetActive
-				Sleep(100)
+			Sleep(100)
 			;Wend
 			InetClose($audio)
 			$motd = $device.opensound("tmp_motd_es.ogg", 0)
@@ -50,4 +50,4 @@ Func download_motd($sMotd, $sAccess, $sMode)
 			EndIf
 	EndSelect
 	GUIDelete($downloadingmotd)
-EndFunc   ;==>motdprincipal
+EndFunc   ;==>download_motd

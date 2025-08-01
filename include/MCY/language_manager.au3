@@ -68,7 +68,7 @@ Func Selector()
 	WEnd
 	GUIDelete($hLangGUI)
 	Opt("GUIOnEventMode", $iOldOpt)
-	return $bReturn
+	Return $bReturn
 EndFunc   ;==>Selector
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: select

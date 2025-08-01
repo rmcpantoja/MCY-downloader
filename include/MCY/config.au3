@@ -11,7 +11,7 @@
 Func _config_start($sConfigFolder, $sConfigPath)
 	If Not FileExists($sConfigFolder) Then
 		$hPath = DirCreate($sConfigFolder)
-		if $hPath = 0 then
+		If $hPath = 0 Then
 			MsgBox(16, Translate($lng, "Error"), Translate($lng, "Config folder could not be created. If so, please run the program as administrator."))
 			exitpersonaliced()
 		EndIf
@@ -23,17 +23,17 @@ Func _config_start($sConfigFolder, $sConfigPath)
 		$sEnhancedAccessibility = _Configure_Accessibility($sConfigPath)
 	EndIf
 	$sSaveLogs = IniRead(@ScriptDir & "\config\config.st", "General settings", "Save Logs", "")
-	if $sSaveLogs = "" then
+	If $sSaveLogs = "" Then
 		IniWrite(@ScriptDir & "\config\config.st", "General settings", "Save Logs", "yes")
 		$sSaveLogs = "yes"
 	EndIf
-	if $sSaveLogs = "yes" then $hFileLog  = FileOpen(@ScriptDir & "\logs\" & @YEAR & @MON & @MDAY & ".log", 1)
+	If $sSaveLogs = "yes" Then $hFileLog = FileOpen(@ScriptDir & "\logs\" & @YEAR & @MON & @MDAY & ".log", 1)
 	$sProgramType = IniRead($sConfigPath, "General settings", "Program Type", "")
-	if $sProgramType = "" then
+	If $sProgramType = "" Then
 		If @ScriptDir = "C:\MCY" Then
 			IniWrite($sConfigPath, "General settings", "Program Type", "Installable")
 			_CustomLog("Copy: Installable.")
-		else
+		Else
 			IniWrite($sConfigPath, "General settings", "Program Type", "Portable")
 			_CustomLog("Copy: Portable.")
 		EndIf
@@ -41,7 +41,7 @@ Func _config_start($sConfigFolder, $sConfigPath)
 	If @OSArch = "x64" And $sArchitecture = "x86" Then
 		MsgBox(48, Translate($lng, "Warning"), Translate($lng, "You run a 64-bit pc with the 32-bit version of the program. For better performance in the program, we recommend that you download the 64-bit version at http://mateocedillo.260mb.net/programs.html"))
 		exitpersonaliced()
-	elseIf @OSArch = "x86" And $sArchitecture = "x64" Then
+	ElseIf @OSArch = "x86" And $sArchitecture = "x64" Then
 		MsgBox(48, Translate($lng, "Warning"), Translate($lng, "You run a 32-bit pc with the 64-bit version of the program. For better performance in the program, we recommend that you download the 32-bit version at http://mateocedillo.260mb.net/programs.html"))
 		exitpersonaliced()
 	EndIf
@@ -52,13 +52,13 @@ Func _config_start($sConfigFolder, $sConfigPath)
 		$sYouTube_DL = IniRead($sConfigPath, 'General Settings', 'Youtube-DL', 'engines\yt-dlp_x86.exe')
 	EndIf
 	$sDest_folder = IniRead($sConfigPath, "General settings", "Destination folder", "")
-	if $sDest_folder = "" then
+	If $sDest_folder = "" Then
 		$sDest_folder = "C:\MCY\Download"
 		IniWrite($sConfigPath, "General settings", "Destination folder", $sDest_folder)
 		_create_folders($sDest_folder)
 	EndIf
 	$sWantUpdates = IniRead($sConfigPath, "General settings", "Check updates", "")
-	if $sWantUpdates = "" and @compiled then
+	If $sWantUpdates = "" And @Compiled Then
 		IniWrite($sConfigPath, "General settings", "Check updates", "Yes")
 		$sWantUpdates = "yes"
 	EndIf
@@ -66,38 +66,38 @@ Func _config_start($sConfigFolder, $sConfigPath)
 	$sLatestMotd = IniRead(@TempDir & "\MCYWeb.dat", "motd", "Latest", "")
 	$sLatestMotdMode = IniRead(@TempDir & "\MCYWeb.dat", "motd", "Mode", "")
 	_CustomLog("Website motd: " & $sLatestMotd & "actual motd: " & $sLocalMOTD)
-	if $sLatestMotd > $sLocalMOTD then
+	If $sLatestMotd > $sLocalMOTD Then
 		$downloading = $device.opensound("sounds/update_downloading.ogg", 0)
 		$downloading.play
 		download_motd($sLatestMotd, $sEnhancedAccessibility, $sLatestMotdMode)
 	EndIf
 	; Finally:
-	if $sWantUpdates = "yes" then
+	If $sWantUpdates = "yes" Then
 		If @Compiled Then checKmcyversion()
-	else
+	Else
 		_CustomLog("the user does not want updates")
 	EndIf
-EndFunc
+EndFunc   ;==>_config_start
 
 Func _radio_config_start($sConfigFolder, $sConfigPath)
 	If Not FileExists($sConfigFolder) Then
 		$hPath = DirCreate($sConfigFolder)
-		if $hPath = 0 then
+		If $hPath = 0 Then
 			MsgBox(16, Translate($lng, "Error"), Translate($lng, "Config folder could not be created. If so, please run the program as administrator."))
 			exitpersonaliced()
 		EndIf
 	EndIf
 	$sLatestRadioURL = IniRead($sConfigPath, "radio", "Last radio loaded", "")
-	if $sLatestRadioURL = "" then
+	If $sLatestRadioURL = "" Then
 		$sLatestRadioURL = "0"
 		IniWrite($sConfigPath, "radio", "Last radio loaded", $sLatestRadioURL)
 	EndIf
-EndFunc
+EndFunc   ;==>_radio_config_start
 
-func _create_folders($d_folder)
+Func _create_folders($d_folder)
 	If Not FileExists($d_folder & "\audio") Then DirCreate($d_folder & "\audio")
 	If Not FileExists($d_folder & "\video") Then DirCreate($d_folder & "\video")
-EndFunc
+EndFunc   ;==>_create_folders
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _ConfigureAccessibility
@@ -125,15 +125,15 @@ Func _Configure_Accessibility($sConfigPath)
 	Return $sEnhancedAccessibility
 EndFunc   ;==>_Configure_Accessibility
 
-func _CustomLog($sText)
-local $iRet
-if $sSaveLogs = "yes" then
-if not $hFileLog = "" then
-$iRet = _FileWriteLog($hFileLog, $sText)
-if @error then Return SetError(1, 0, "")
-else
-Return SetError(2, 0, "")
-EndIf
-EndIf
-return $iRet
-EndFunc
+Func _CustomLog($sText)
+	Local $iRet
+	If $sSaveLogs = "yes" Then
+		If Not $hFileLog = "" Then
+			$iRet = _FileWriteLog($hFileLog, $sText)
+			If @error Then Return SetError(1, 0, "")
+		Else
+			Return SetError(2, 0, "")
+		EndIf
+	EndIf
+	Return $iRet
+EndFunc   ;==>_CustomLog

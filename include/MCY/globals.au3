@@ -10,14 +10,14 @@ Global $sProgramName = "MCY Downloader"
 Global $sArchitecture = "x64"
 Global $sProgram_ver = "1.0B1"
 ; Paths:
-global $sConfigFolder = @ScriptDir &"\config"
-global $sConfigPath = $sConfigFolder &"\config.st"
-global $sDest_folder
+Global $sConfigFolder = @ScriptDir & "\config"
+Global $sConfigPath = $sConfigFolder & "\config.st"
+Global $sDest_folder
 ;configs:
-global $sEnableProgresses, $sEnhancedAccessibility, $sShowTips, $sSaveLogs, $sCheckForUpdate, $sYouTube_DL, $sLang = "en"
-global $sLatestRadioURL
+Global $sEnableProgresses, $sEnhancedAccessibility, $sShowTips, $sSaveLogs, $sCheckForUpdate, $sYouTube_DL, $sLang = "en"
+Global $sLatestRadioURL
 ; handlings:
-global $hFileLog = null
+Global $hFileLog = Null
 
 ; funcs:
 

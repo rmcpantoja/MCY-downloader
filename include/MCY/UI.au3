@@ -145,7 +145,7 @@ Func _ReadDoc($sLang, $sTipe, $sAccessibility)
 		Return SetError(1, 0, "")
 	EndIf
 	$hChangesGui = GUICreate($sGuiName)
-	if $sAccessibility = "yes" then
+	If $sAccessibility = "yes" Then
 		Local $hFile = FileOpen($sDoc, $FO_READ)
 		If $hFile = -1 Then
 			MsgBox(16, translate($sLang, "error"), translate($sLang, "An error occurred when reading the file."))
@@ -154,14 +154,14 @@ Func _ReadDoc($sLang, $sTipe, $sAccessibility)
 		$sContent = FileRead($hFile)
 		$idEdit = GUICtrlCreateEdit($sContent, 5, 5, 390, 360, BitOR($WS_VSCROLL, $WS_HSCROLL, $WS_TABSTOP, $ES_READONLY))
 		$idExit = GUICtrlCreateButton(translate($sLang, "&Close"), 100, 370, 150, 30)
-	else
+	Else
 		createTtsDocument($sDoc, $sGuiName)
 	EndIf
 	GUISetState(@SW_SHOW)
 	While 1
 		Switch GUIGetMsg()
 			Case $GUI_EVENT_CLOSE, $idExit
-				if isDeclared("hFile") then FileClose($hFile)
+				If IsDeclared("hFile") Then FileClose($hFile)
 				ExitLoop
 		EndSwitch
 	WEnd

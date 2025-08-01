@@ -25,22 +25,22 @@ Func menu_options()
 	$okmessaje = "OK"
 	$menuPos = translate($lng, "OF")
 	$menuString = translate($lng, "Select audio quality.") & "|" & _
-		translate($lng, "Change download folder, Currently") & " " & $download_dir & "|" & _
-		translate($lng, "Change language, Currently") & " " & $sLanguage & "|" & _
-		translate($lng, "Enable or disable enhanced accessibility.") & "|" & _
-		translate($lng, "Select screen reader") & "|" & _
-		translate($lng, "Re-organize audios and videos now") & "|" & _
-		translate($lng, "Save log file") & "|" & _
-		translate($lng, "Always check for program and component updates (recommended)") & "|" & _
-		translate($lng, "Enable / disable:") & " " & translate($lng, "Read download progress bars") & "|" & _
-		translate($lng, "Enable / disable:") & " " & translate($lng, "Read remaining time of download") & "|" & _
-		translate($lng, "Enable / disable:") & " " & translate($lng, "Beep for progress bars") & "|" & _
-		translate($lng, "Enable / disable:") & " " & translate($lng, "Down the multimedia volume while the screen reader is speaking") & "|" & _
-		translate($lng, "Enable / disable:") & " " & translate($lng, "Announce position of items in menus and in lists") & "|" & _
-		translate($lng, "Show tips") & "|" & _
-		translate($lng, "Select quantity of search results") & "|" & _
-		translate($lng, "Clear settings") & "|" & _
-		translate($lng, "Close this menu.")
+			translate($lng, "Change download folder, Currently") & " " & $download_dir & "|" & _
+			translate($lng, "Change language, Currently") & " " & $sLanguage & "|" & _
+			translate($lng, "Enable or disable enhanced accessibility.") & "|" & _
+			translate($lng, "Select screen reader") & "|" & _
+			translate($lng, "Re-organize audios and videos now") & "|" & _
+			translate($lng, "Save log file") & "|" & _
+			translate($lng, "Always check for program and component updates (recommended)") & "|" & _
+			translate($lng, "Enable / disable:") & " " & translate($lng, "Read download progress bars") & "|" & _
+			translate($lng, "Enable / disable:") & " " & translate($lng, "Read remaining time of download") & "|" & _
+			translate($lng, "Enable / disable:") & " " & translate($lng, "Beep for progress bars") & "|" & _
+			translate($lng, "Enable / disable:") & " " & translate($lng, "Down the multimedia volume while the screen reader is speaking") & "|" & _
+			translate($lng, "Enable / disable:") & " " & translate($lng, "Announce position of items in menus and in lists") & "|" & _
+			translate($lng, "Show tips") & "|" & _
+			translate($lng, "Select quantity of search results") & "|" & _
+			translate($lng, "Clear settings") & "|" & _
+			translate($lng, "Close this menu.")
 	$p_options = reader_Create_Menu(translate($lng, "Options menu. Use up and down arrows to go to them, and enter to execute an action."), $menuString, $Rpositioning, $menuPos)
 	Select
 		Case $p_options = 1

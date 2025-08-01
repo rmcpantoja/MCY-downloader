@@ -7,8 +7,8 @@
 #include <InetConstants.au3>
 #include <SliderConstants.au3>
 #include <WindowsConstants.au3>
-Global const $sRadio_ver = "0.5.3"
-global const $sInstallFilePath = @DesktopDir & "\MCY Radio.lnk"
+Global Const $sRadio_ver = "0.5.3"
+Global Const $sInstallFilePath = @DesktopDir & "\MCY Radio.lnk"
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: Mcyradio
 ; Description ...: MCY radio!
@@ -26,24 +26,24 @@ Func MCYRadio()
 	$hWindow_radio = GUICreate("MCY Radio " & $sRadio_ver)
 	Global $BASS_PAUSE_POS
 	$iVolLevel = 100
-	local $aRadios[][] = [["SONVA radio", "https://stream.zeno.fm/qhpfuuaq11zuv"], ["Blaster Radio", "https://blasterradio.net/blaster"], ["ALD prod radio", "http://stream.zeno.fm/1d6tptefguhvv"]]
+	Local $aRadios[][] = [["SONVA radio", "https://stream.zeno.fm/qhpfuuaq11zuv"], ["Blaster Radio", "https://blasterradio.net/blaster"], ["ALD prod radio", "http://stream.zeno.fm/1d6tptefguhvv"]]
 	Dim $aHelpButtons[7]
 	Global $hMusicHandle
 	Global $sInfo1, $sInstallState
 	Local $bRadioStopPressed = False, $bRadioPausePressed = False, $bShowHelpPressed = False, $bInstPressed = False
-	local $bIsInstalled = FileExists($sInstallFilePath)
-	if @compiled then
-		if $bIsInstalled then
+	Local $bIsInstalled = FileExists($sInstallFilePath)
+	If @Compiled Then
+		If $bIsInstalled Then
 			$sInstallState = translate($sLang, "Uninstall MCY Radio")
 			$bInstPressed = True
-		else
+		Else
 			$sInstallState = translate($sLang, "install only MCY Radio")
 		EndIf
 	EndIf
 	_Audio_init_start()
 	$label = GUICtrlCreateLabel(translate($sLang, "Welcome!"), 0, 50, 100, 20)
-	Local $idpause = GUICtrlCreateButton(TRANSLATE($sLang,"Pause"), 90, 50, 70, 25)
-	Local $idStop = GUICtrlCreateButton(TRANSLATE($sLang,"Stop"), 90, 115, 70, 25)
+	Local $idpause = GUICtrlCreateButton(TRANSLATE($sLang, "Pause"), 90, 50, 70, 25)
+	Local $idStop = GUICtrlCreateButton(TRANSLATE($sLang, "Stop"), 90, 115, 70, 25)
 	Local $idvolumelabel = GUICtrlCreateLabel(translate($sLang, "Change volume"), 50, 140, 70, 25)
 	Local $idvolume = GUICtrlCreateSlider(90, 140, 70, 25, BitOR($GUI_SS_DEFAULT_SLIDER, $WS_TABSTOP))
 	GUICtrlSetLimit(-1, 100, 0)
@@ -59,13 +59,11 @@ Func MCYRadio()
 	$aHelpButtons[5] = GUICtrlCreateButton($sInstallState, 150, 300, 70, 25)
 	If Not @Compiled Then GUICtrlSetState(-1, $GUI_DISABLE)
 	$aHelpButtons[6] = GUICtrlCreateButton(translate($sLang, "Privacy policy"), 150, 375, 70, 25)
-	For $I = 0 To UBound($aHelpButtons, $UBOUND_ROWS) - 1
-		GUICtrlSetState($aHelpButtons[$I], $GUI_HIDE)
-	Next
+	_toggle_controls($aHelpButtons, $GUI_HIDE)
 	Local $idBtn_Close = GUICtrlCreateButton(translate($sLang, "close"), 200, 200, 100, 25)
 	GUISetState(@SW_SHOW)
 	$hMusicHandle = _Set_url($aRadios[$sLatestRadioURL][1])
-	sleep(1000)
+	Sleep(1000)
 	If @error Then
 		MsgBox(0, translate($sLang, "Error"), translate($sLang, "The URL cannot be loaded. Reason:") & " " & @extended)
 		GUIDelete($hWindow_radio)
@@ -95,19 +93,19 @@ Func MCYRadio()
 					$bRadioPausePressed = Not $bRadioPausePressed
 					If $bRadioPausePressed Then
 						_Audio_pause($hMusicHandle)
-						GUICtrlSetData($idpause, TRANSLATE($sLang,"Play"))
+						GUICtrlSetData($idpause, TRANSLATE($sLang, "Play"))
 					Else
 						_Audio_play($hMusicHandle)
-						GUICtrlSetData($idpause, TRANSLATE($sLang,"Pause"))
+						GUICtrlSetData($idpause, TRANSLATE($sLang, "Pause"))
 					EndIf
 				Case $idStop
 					$bRadioStopPressed = Not $bRadioStopPressed
 					If $bRadioStopPressed Then
 						_Audio_stop($hMusicHandle)
-						GUICtrlSetData($idStop, TRANSLATE($sLang,"Play"))
+						GUICtrlSetData($idStop, TRANSLATE($sLang, "Play"))
 					Else
 						_Audio_play($hMusicHandle)
-						GUICtrlSetData($idStop, TRANSLATE($sLang,"Stop"))
+						GUICtrlSetData($idStop, TRANSLATE($sLang, "Stop"))
 					EndIf
 				Case $idvolume
 					$iRadiovol = GUICtrlRead($idvolume)
@@ -118,14 +116,10 @@ Func MCYRadio()
 				Case $idShowhelp
 					$bShowHelpPressed = Not $bShowHelpPressed
 					If $bShowHelpPressed Then
-						For $I = 0 To UBound($aHelpButtons, $UBOUND_ROWS) - 1
-							GUICtrlSetState($aHelpButtons[$I], $GUI_SHOW)
-						Next
+						_toggle_controls($aHelpButtons, $GUI_SHOW)
 						GUICtrlSetData($idShowhelp, translate($sLang, "Help") & ", " & translate($sLang, "expanded"))
 					Else
-						For $I = 0 To UBound($aHelpButtons, $UBOUND_ROWS) - 1
-							GUICtrlSetState($aHelpButtons[$I], $GUI_HIDE)
-						Next
+						_toggle_controls($aHelpButtons, $GUI_HIDE)
 						GUICtrlSetData($idShowhelp, translate($sLang, "Help") & ", " & translate($sLang, "collapsed"))
 					EndIf
 				Case $aHelpButtons[0]
@@ -141,7 +135,7 @@ Func MCYRadio()
 				Case $aHelpButtons[4]
 					MsgBox(0, translate($sLang, "About..."), translate($sLang, "MCY Radio, version") & " " & $sRadio_ver & ". " & translate($sLang, "Program to listen to content such as music, live broadcasts from users, other radios, comedy and more.") & @CRLF & "This product is sponsored by SONVA Radio")
 				Case $aHelpButtons[5]
-					if not @compiled then
+					If Not @Compiled Then
 						MsgBox(16, translate($sLang, "Error"), translate($sLang, "Can't install MCY Radio from source code"))
 						ContinueLoop
 					EndIf
@@ -161,7 +155,15 @@ Func MCYRadio()
 		WEnd
 		_Audio_init_stop($hMusicHandle)
 	EndIf
-EndFunc   ;==>Mcyradio
+EndFunc   ;==>MCYRadio
+
+Func _toggle_controls($aArrayIds, $iGuiState)
+	For $I = 0 To UBound($aArrayIds, $UBOUND_ROWS) - 1
+		GUICtrlSetState($aArrayIds[$I], $iGuiState)
+	Next
+	Return 1
+EndFunc   ;==>_toggle_controls
+
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: installmcyradio
 ; Description ...: Install MCY radio on the desktop
@@ -179,17 +181,17 @@ Func installmcyradio()
 	If Not FileExists($sInstallFilePath) Then
 		$iInstallResult = FileCreateShortcut(@ScriptDir & "\MCY.exe", @DesktopDir & "\MCY Radio.lnk", @ScriptDir, "/radio", _
 				translate($sLang, "Enjoy the best radio content, like music and live broadcasts."), "", "^!R", "", @SW_SHOW)
-		if $iInstallResult == 1 then
+		If $iInstallResult == 1 Then
 			MsgBox(48, translate($sLang, "Information"), translate($sLang, "MCY Radio has been installed on the desktop"))
-		else
-			MSGBox(16, translate($sLang, "Error"), translate($sLang, "An error ocurred while installing MCY radio"))
-			return SetError(1, 0, "")
+		Else
+			MsgBox(16, translate($sLang, "Error"), translate($sLang, "An error ocurred while installing MCY radio"))
+			Return SetError(1, 0, "")
 		EndIf
 	Else
 		MsgBox(16, translate($sLang, "Error"), translate($sLang, "MCY Radio is already installed"))
-		return SetError(2, 0, "")
+		Return SetError(2, 0, "")
 	EndIf
-	return $iInstallResult
+	Return $iInstallResult
 EndFunc   ;==>installmcyradio
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: uninstallmcyradio
@@ -240,7 +242,7 @@ Func RadioSelector($hMainWindow, $aRadioList)
 	$idRadioList = GUICtrlCreateListView(translate($sLang, "Number") & "|" & translate($sLang, "Radio") & "|" & translate($sLang, "URL"), 85, 90, 300, 20)
 	For $I = 0 To UBound($aRadioList, $UBOUND_ROWS) - 1
 		If $sLatestRadioURL = $I Then $sCurrent &= $aRadioList[$I][0] & " " & translate($sLang, "is set as default") & "."
-		GUICtrlCreateListViewItem($I &"|" & $aRadioList[$I][0] & "|" & $aRadioList[$I][1], $idRadioList)
+		GUICtrlCreateListViewItem($I & "|" & $aRadioList[$I][0] & "|" & $aRadioList[$I][1], $idRadioList)
 	Next
 	GUICtrlSetData($idSelectorStatus, translate($sLang, "Status:") & " " & $sCurrent)
 	$idCopy = GUICtrlCreateButton(translate($sLang, "Copy &URL"), 140, 10, 50, 20)
