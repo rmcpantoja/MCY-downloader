@@ -1,5 +1,7 @@
 #include "..\bass.au3"
 #include "..\BassConstants.au3"
+#include "globals.au3"
+
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: PlayDirectAudioURL
 ; Description ...: reproductor URL
@@ -14,11 +16,11 @@
 ; Example .......: No
 ; ===============================================================================================================================
 Func PlayDirectAudioURL($url)
-	HotKeySet("{i}", "info")
+	;HotKeySet("{i}", "info")
 	$player_window = GUICreate("MCY Downloader: Playing " & $url)
 	Global $BASS_PAUSE_POS
 	Global $Volume = "100"
-	StartAudio()
+	StartAudio($url)
 EndFunc   ;==>PlayDirectAudioURL
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: StartAudio
@@ -33,12 +35,11 @@ EndFunc   ;==>PlayDirectAudioURL
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func StartAudio()
-	$ReadAccs = IniRead("config\config.st", "Accessibility", "Enable enanced accessibility", "")
+Func StartAudio($sUrl)
 	Local $MusicHandle
 	Local $infox
 	_Audio_init_start()
-	$MusicHandle = _Set_url($Enlace)
+	$MusicHandle = _Set_url($sUrl)
 	_Audio_play($MusicHandle)
 	Local $idMenu = GUICtrlCreateButton(translate($lng, "Open menu"), 90, 50, 70, 25)
 	Local $idBtn_Close = GUICtrlCreateButton(translate($lng, "Close"), 140, 50, 70, 25)
@@ -131,9 +132,9 @@ EndFunc   ;==>StartAudio
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func info()
+Func info($sUrl)
 	;local $info2 = _Get_streamtitle($MusicHandle)
-	$MusicHandle = _Set_url($ENlace)
+	$MusicHandle = _Set_url($sUrl)
 	_Set_volume(25)
 	Sleep(300)
 	speaking(translate($lng, "stream/song name:") & _Get_streamtitle($MusicHandle))

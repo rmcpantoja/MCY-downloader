@@ -2,31 +2,13 @@
 #include <AutoItConstants.au3>
 #include "..\Bass.au3"
 #include "..\BassConstants.au3"
+#include "globals.au3"
 #include <GUIConstantsEx.au3>
 #include <InetConstants.au3>
 #include <SliderConstants.au3>
 #include <WindowsConstants.au3>
-Global $mcyradio_ver = "0.5.3"
-; #FUNCTION# ====================================================================================================================
-; Name ..........: radio
-; Description ...: MCY radio!
-; Syntax ........: radio()
-; Parameters ....: None
-; Return values .: None
-; Author ........: Mateo Cedillo
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func radio()
-	Global $Window_radio = GUICreate("MCY Radio " & $mcyradio_ver)
-	Global $BASS_PAUSE_POS
-	$VolLevel = "100"
-	Global $lng
-	Mcyradio()
-EndFunc   ;==>radio
+Global Const $sRadio_ver = "0.5.3"
+Global Const $sInstallFilePath = @DesktopDir & "\MCY Radio.lnk"
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: Mcyradio
 ; Description ...: MCY radio!
@@ -40,134 +22,148 @@ EndFunc   ;==>radio
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func Mcyradio()
-	$ReadAccs = IniRead("config\config.st", "Accessibility", "Enable enanced accessibility", "")
-	$ultimaURLCargada = IniRead("config\config.st", "Misc", "Last radio loaded", "")
-	Global $radios[] = ["https://stream.zeno.fm/qhpfuuaq11zuv", "https://blasterradio.net/blaster", "http://stream.zeno.fm/1d6tptefguhvv"]
-	Global $radionames[] = ["Default", "Blaster Radio", "ALD prod radio"]
-	Dim $helpbuttons[7]
-	Global $MusicHandle
-	Global $info1
+Func MCYRadio()
+	$hWindow_radio = GUICreate("MCY Radio " & $sRadio_ver)
+	Global $BASS_PAUSE_POS
+	$iVolLevel = 100
+	Local $aRadios[][] = [["SONVA radio", "https://stream.zeno.fm/qhpfuuaq11zuv"], ["Blaster Radio", "https://blasterradio.net/blaster"], ["ALD prod radio", "http://stream.zeno.fm/1d6tptefguhvv"]]
+	Dim $aHelpButtons[7]
+	Global $hMusicHandle
+	Global $sInfo1, $sInstallState
+	Local $bRadioStopPressed = False, $bRadioPausePressed = False, $bShowHelpPressed = False, $bInstPressed = False
+	Local $bIsInstalled = FileExists($sInstallFilePath)
+	If @Compiled Then
+		If $bIsInstalled Then
+			$sInstallState = translate($sLang, "Uninstall MCY Radio")
+			$bInstPressed = True
+		Else
+			$sInstallState = translate($sLang, "install only MCY Radio")
+		EndIf
+	EndIf
 	_Audio_init_start()
-	Select
-		Case $ultimaURLCargada = ""
-			IniWrite("config\config.st", "Misc", "Last radio loaded", $radios[0])
-	EndSelect
-	$label = GUICtrlCreateLabel(translate($lng, "Welcome!"), 0, 50, 100, 20)
-	Local $idpause = GUICtrlCreateButton(ChrW(9208), 90, 50, 70, 25)
-	Local $idStop = GUICtrlCreateButton(ChrW(9209), 90, 115, 70, 25)
-	Local $idvolumelabel = GUICtrlCreateLabel(translate($lng, "Change volume"), 50, 140, 70, 25)
+	$label = GUICtrlCreateLabel(translate($sLang, "Welcome!"), 0, 50, 100, 20)
+	Local $idpause = GUICtrlCreateButton(TRANSLATE($sLang, "Pause"), 90, 50, 70, 25)
+	Local $idStop = GUICtrlCreateButton(TRANSLATE($sLang, "Stop"), 90, 115, 70, 25)
+	Local $idvolumelabel = GUICtrlCreateLabel(translate($sLang, "Change volume"), 50, 140, 70, 25)
 	Local $idvolume = GUICtrlCreateSlider(90, 140, 70, 25, BitOR($GUI_SS_DEFAULT_SLIDER, $WS_TABSTOP))
 	GUICtrlSetLimit(-1, 100, 0)
 	GUICtrlSetData(-1, 50)
-	Local $idselector = GUICtrlCreateButton(translate($lng, "Radio selector"), 90, 175, 70, 25)
-	Local $idInfo = GUICtrlCreateButton(translate($lng, "stream/song info"), 90, 210, 70, 25)
-	Local $idShowhelp = GUICtrlCreateButton(translate($lng, "Help") & ", " & translate($lng, "collapsed"), 90, 250, 70, 25)
-	$helpbuttons[0] = GUICtrlCreateButton(translate($lng, "Visit YouTube channel"), 150, 50, 70, 25)
-	$helpbuttons[1] = GUICtrlCreateButton(translate($lng, "&User manual"), 150, 120, 70, 25)
-	$helpbuttons[2] = GUICtrlCreateButton(translate($lng, "Changes"), 150, 175, 70, 25)
-	$helpbuttons[3] = GUICtrlCreateButton(translate($lng, "Get version for android"), 150, 230, 70, 25)
-	$helpbuttons[4] = GUICtrlCreateButton(translate($lng, "About..."), 150, 260, 70, 25)
-	$helpbuttons[5] = GUICtrlCreateButton(translate($lng, "install only MCY Radio"), 150, 300, 70, 25)
-	$helpbuttons[6] = GUICtrlCreateButton(translate($lng, "Privacy policy"), 150, 375, 70, 25)
-	For $I = 0 To UBound($helpbuttons, $UBOUND_ROWS) - 1
-		GUICtrlSetState($helpbuttons[$I], $GUI_HIDE)
-	Next
-	Local $idBtn_Close = GUICtrlCreateButton(translate($lng, "close"), 200, 200, 100, 25)
+	Local $idselector = GUICtrlCreateButton(translate($sLang, "Radio selector"), 90, 175, 70, 25)
+	Local $idInfo = GUICtrlCreateButton(translate($sLang, "stream/song info"), 90, 210, 70, 25)
+	Local $idShowhelp = GUICtrlCreateButton(translate($sLang, "Help") & ", " & translate($sLang, "collapsed"), 90, 250, 70, 25)
+	$aHelpButtons[0] = GUICtrlCreateButton(translate($sLang, "Visit YouTube channel"), 150, 50, 70, 25)
+	$aHelpButtons[1] = GUICtrlCreateButton(translate($sLang, "&User manual"), 150, 120, 70, 25)
+	$aHelpButtons[2] = GUICtrlCreateButton(translate($sLang, "Changes"), 150, 175, 70, 25)
+	$aHelpButtons[3] = GUICtrlCreateButton(translate($sLang, "Get version for android"), 150, 230, 70, 25)
+	$aHelpButtons[4] = GUICtrlCreateButton(translate($sLang, "About..."), 150, 260, 70, 25)
+	$aHelpButtons[5] = GUICtrlCreateButton($sInstallState, 150, 300, 70, 25)
+	If Not @Compiled Then GUICtrlSetState(-1, $GUI_DISABLE)
+	$aHelpButtons[6] = GUICtrlCreateButton(translate($sLang, "Privacy policy"), 150, 375, 70, 25)
+	_toggle_controls($aHelpButtons, $GUI_HIDE)
+	Local $idBtn_Close = GUICtrlCreateButton(translate($sLang, "close"), 200, 200, 100, 25)
 	GUISetState(@SW_SHOW)
-	Local $radioStopPressed = False
-	Local $radioPausePressed = False
-	Local $ShowHelpPressed = False
-	Local $instPressed = False
-	$MusicHandle = _Set_url(IniRead("config\config.st", "Misc", "Last radio loaded", ""))
+	$hMusicHandle = _Set_url($aRadios[$sLatestRadioURL][1])
+	Sleep(1000)
 	If @error Then
-		MsgBox(0, translate($lng, "Error"), translate($lng, "The URL cannot be loaded. Reason:") & " " & @extended)
-		GUIDelete($Window_radio)
-		_Audio_stop($MusicHandle)
-		_Audio_init_stop($MusicHandle)
+		MsgBox(0, translate($sLang, "Error"), translate($sLang, "The URL cannot be loaded. Reason:") & " " & @extended)
+		GUIDelete($hWindow_radio)
+		_Audio_stop($hMusicHandle)
+		_Audio_init_stop($hMusicHandle)
 	Else
-		_Audio_play($MusicHandle)
+		_Audio_play($hMusicHandle)
 		While 1
 			Switch GUIGetMsg()
 				Case $GUI_EVENT_CLOSE, $idBtn_Close
-					GUIDelete($Window_radio)
-					_Audio_stop($MusicHandle)
-					_Audio_init_stop($MusicHandle)
+					GUIDelete($hWindow_radio)
+					_Audio_stop($hMusicHandle)
+					_Audio_init_stop($hMusicHandle)
 					ExitLoop
 				Case $idInfo
-					If $ReadAccs = "yes" Then
-						speaking(translate($lng, "stream/song name:") & " " & _Get_streamtitle($MusicHandle))
-						If _Get_streamtitle($MusicHandle) = "0" Then speaking(translate($lng, "no song is playing"))
+					$sStreamInfo = _Get_streamtitle($hMusicHandle)
+					If $sEnhancedAccessibility = "yes" Then
+						If $sStreamInfo = "0" Then
+							speaking(translate($sLang, "no song is playing"))
+							ContinueLoop
+						EndIf
+						speaking(translate($sLang, "stream/song name:") & " " & $sStreamInfo)
 					Else
-						MsgBox(0, translate($lng, "stream/song name:"), _Get_streamtitle($MusicHandle))
+						MsgBox(0, translate($sLang, "stream/song name:"), $sStreamInfo)
 					EndIf
 				Case $idpause
-					$radioPausePressed = Not $radioPausePressed
-					If $radioPausePressed Then
-						_Audio_pause($MusicHandle)
-						GUICtrlSetData($idpause, ChrW("9654"))
+					$bRadioPausePressed = Not $bRadioPausePressed
+					If $bRadioPausePressed Then
+						_Audio_pause($hMusicHandle)
+						GUICtrlSetData($idpause, TRANSLATE($sLang, "Play"))
 					Else
-						_Audio_play($MusicHandle)
-						GUICtrlSetData($idpause, ChrW(9208))
+						_Audio_play($hMusicHandle)
+						GUICtrlSetData($idpause, TRANSLATE($sLang, "Pause"))
 					EndIf
 				Case $idStop
-					$radioStopPressed = Not $radioStopPressed
-					If $radioStopPressed Then
-						_Audio_stop($MusicHandle)
-						GUICtrlSetData($idStop, ChrW(9654))
+					$bRadioStopPressed = Not $bRadioStopPressed
+					If $bRadioStopPressed Then
+						_Audio_stop($hMusicHandle)
+						GUICtrlSetData($idStop, TRANSLATE($sLang, "Play"))
 					Else
-						_Audio_play($MusicHandle)
-						GUICtrlSetData($idStop, ChrW(9209))
+						_Audio_play($hMusicHandle)
+						GUICtrlSetData($idStop, TRANSLATE($sLang, "Stop"))
 					EndIf
 				Case $idvolume
-					$radiovol = GUICtrlRead($idvolume)
-					_Set_volume($radiovol)
-					If $ReadAccs = "yes" Then speaking(translate($lng, "music volume set to") & " " & $radiovol & "%")
+					$iRadiovol = GUICtrlRead($idvolume)
+					_Set_volume($iRadiovol)
+					If $sEnhancedAccessibility = "yes" Then speaking(translate($sLang, "music volume set to") & " " & $iRadiovol & "%")
 				Case $idselector
-					RadioSelector()
+					RadioSelector($hWindow_radio, $aRadios)
 				Case $idShowhelp
-					$ShowHelpPressed = Not $ShowHelpPressed
-					If $ShowHelpPressed Then
-						For $I = 0 To UBound($helpbuttons, $UBOUND_ROWS) - 1
-							GUICtrlSetState($helpbuttons[$I], $GUI_SHOW)
-						Next
-						GUICtrlSetData($idShowhelp, translate($lng, "Help") & ", " & translate($lng, "expanded"))
+					$bShowHelpPressed = Not $bShowHelpPressed
+					If $bShowHelpPressed Then
+						_toggle_controls($aHelpButtons, $GUI_SHOW)
+						GUICtrlSetData($idShowhelp, translate($sLang, "Help") & ", " & translate($sLang, "expanded"))
 					Else
-						For $I = 0 To UBound($helpbuttons, $UBOUND_ROWS) - 1
-							GUICtrlSetState($helpbuttons[$I], $GUI_HIDE)
-						Next
-						GUICtrlSetData($idShowhelp, translate($lng, "Help") & ", " & translate($lng, "collapsed"))
+						_toggle_controls($aHelpButtons, $GUI_HIDE)
+						GUICtrlSetData($idShowhelp, translate($sLang, "Help") & ", " & translate($sLang, "collapsed"))
 					EndIf
-				Case $helpbuttons[0]
+				Case $aHelpButtons[0]
 					ShellExecute("https://www.youtube.com/channel/UC85GqFKqjaAFrpJ7IPt6gcQ")
-					If @error Then MsgBox(16, translate($lng, "Error"), translate($lng, "Cannot run browser. It is likely that you have to add an association."))
-				Case $helpbuttons[1]
-					ShellExecute(@ScriptDir & "\documentation\" & $lng & "\manual_radio.txt")
-				Case $helpbuttons[2]
-					ShellExecute(@ScriptDir & "\documentation\" & $lng & "\changes_radio.txt")
-				Case $helpbuttons[3]
+					If @error Then MsgBox(16, translate($sLang, "Error"), translate($sLang, "Cannot run browser. It is likely that you have to add an association."))
+				Case $aHelpButtons[1]
+					ShellExecute(@ScriptDir & "\documentation\" & $sLang & "\manual_radio.txt")
+				Case $aHelpButtons[2]
+					ShellExecute(@ScriptDir & "\documentation\" & $sLang & "\changes_radio.txt")
+				Case $aHelpButtons[3]
 					ShellExecute("https://www.appcreator24.com/app1372446")
-					If @error Then MsgBox(16, translate($lng, "Error"), translate($lng, "Cannot run browser. It is likely that you have to add an association."))
-				Case $helpbuttons[4]
-					MsgBox(0, translate($lng, "About..."), translate($lng, "MCY Radio, version") & " " & $mcyradio_ver & ". " & translate($lng, "Program to listen to content such as music, live broadcasts from users, other radios, comedy and more.") & @CRLF & "Author: MT Programs" & @CRLF & "Original idea: Mateo Cedillo")
-				Case $helpbuttons[5]
-					$instPressed = Not $instPressed
-					If $instPressed Then
-						GUICtrlSetData($helpbuttons[5], translate($lng, "uninstall MCY Radio"))
+					If @error Then MsgBox(16, translate($sLang, "Error"), translate($sLang, "Cannot run browser. It is likely that you have to add an association."))
+				Case $aHelpButtons[4]
+					MsgBox(0, translate($sLang, "About..."), translate($sLang, "MCY Radio, version") & " " & $sRadio_ver & ". " & translate($sLang, "Program to listen to content such as music, live broadcasts from users, other radios, comedy and more.") & @CRLF & "This product is sponsored by SONVA Radio")
+				Case $aHelpButtons[5]
+					If Not @Compiled Then
+						MsgBox(16, translate($sLang, "Error"), translate($sLang, "Can't install MCY Radio from source code"))
+						ContinueLoop
+					EndIf
+					$bInstPressed = Not $bInstPressed
+					If $bInstPressed Then
+						GUICtrlSetData($aHelpButtons[5], translate($sLang, "uninstall MCY Radio"))
 						installmcyradio()
 					Else
-						GUICtrlSetData($helpbuttons[5], translate($lng, "install only MCY Radio"))
+						GUICtrlSetData($aHelpButtons[5], translate($sLang, "install only MCY Radio"))
 						uninstallmcyradio()
 					EndIf
-				Case $helpbuttons[6]
-					$pp = InetRead("http://www.e-droid.net/privacy.php?ida=1372446&idl=es")
-					$ppdata = BinaryToString($pp)
-					MsgBox(48, translate($lng, "Privacy Policy"), $ppdata)
+				Case $aHelpButtons[6]
+					$hPrivacy = InetRead("http://www.e-droid.net/privacy.php?ida=1372446&idl=es")
+					$sPolicy = BinaryToString($hPrivacy)
+					MsgBox(48, translate($sLang, "Privacy Policy"), $sPolicy)
 			EndSwitch
 		WEnd
-		_Audio_init_stop($MusicHandle)
+		_Audio_init_stop($hMusicHandle)
 	EndIf
-EndFunc   ;==>Mcyradio
+EndFunc   ;==>MCYRadio
+
+Func _toggle_controls($aArrayIds, $iGuiState)
+	For $I = 0 To UBound($aArrayIds, $UBOUND_ROWS) - 1
+		GUICtrlSetState($aArrayIds[$I], $iGuiState)
+	Next
+	Return 1
+EndFunc   ;==>_toggle_controls
+
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: installmcyradio
 ; Description ...: Install MCY radio on the desktop
@@ -182,17 +178,20 @@ EndFunc   ;==>Mcyradio
 ; Example .......: No
 ; ===============================================================================================================================
 Func installmcyradio()
-	If @Compiled Then
-		If Not FileExists(@DesktopDir & "\MCY Radio.lnk") Then
-			FileCreateShortcut(@ScriptDir & "\MCY.exe", @DesktopDir & "\MCY Radio.lnk", @ScriptDir, "/radio", _
-					translate($lng, "Enjoy the best radio content, like music and live broadcasts."), "", "^!R", "", @SW_SHOW)
-			MsgBox(48, translate($lng, "Information"), translate($lng, "MCY Radio has been installed on the desktop"))
+	If Not FileExists($sInstallFilePath) Then
+		$iInstallResult = FileCreateShortcut(@ScriptDir & "\MCY.exe", @DesktopDir & "\MCY Radio.lnk", @ScriptDir, "/radio", _
+				translate($sLang, "Enjoy the best radio content, like music and live broadcasts."), "", "^!R", "", @SW_SHOW)
+		If $iInstallResult == 1 Then
+			MsgBox(48, translate($sLang, "Information"), translate($sLang, "MCY Radio has been installed on the desktop"))
 		Else
-			MsgBox(16, translate($lng, "Error"), translate($lng, "MCY Radio is already installed"))
+			MsgBox(16, translate($sLang, "Error"), translate($sLang, "An error ocurred while installing MCY radio"))
+			Return SetError(1, 0, "")
 		EndIf
 	Else
-		MsgBox(16, translate($lng, "Error"), translate($lng, "Can't install MCY Radio from source code"))
+		MsgBox(16, translate($sLang, "Error"), translate($sLang, "MCY Radio is already installed"))
+		Return SetError(2, 0, "")
 	EndIf
+	Return $iInstallResult
 EndFunc   ;==>installmcyradio
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: uninstallmcyradio
@@ -208,14 +207,14 @@ EndFunc   ;==>installmcyradio
 ; Example .......: No
 ; ===============================================================================================================================
 Func uninstallmcyradio()
-	$confirmuninst = MsgBox(4, translate($lng, "Uninstall MCY Radio"), translate($lng, "Are you sure?"))
+	$confirmuninst = MsgBox(4, translate($sLang, "Uninstall MCY Radio"), translate($sLang, "Are you sure?"))
 	Select
 		Case $confirmuninst = 6
 			$uninst = FileDelete(@DesktopDir & "\MCY Radio.lnk")
 			If $uninst = 0 Then
-				MsgBox(16, translate($lng, "Error"), translate($lng, "Failed to uninstall MCY Radio. It is likely that it has already been uninstalled."))
+				MsgBox(16, translate($sLang, "Error"), translate($sLang, "Failed to uninstall MCY Radio. It is likely that it has already been uninstalled."))
 			Else
-				MsgBox(48, translate($lng, "Information"), translate($lng, "MCY Radio has been uninstalled"))
+				MsgBox(48, translate($sLang, "Information"), translate($sLang, "MCY Radio has been uninstalled"))
 			EndIf
 			Return 1
 	EndSelect
@@ -233,46 +232,46 @@ EndFunc   ;==>uninstallmcyradio
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func RadioSelector()
-	$ifitisdefault = ""
-	GUISetState(@SW_HIDE, $Window_radio)
-	$rsdialog = GUICreate(translate($lng, "List of radios"))
+Func RadioSelector($hMainWindow, $aRadioList)
+	$sCurrent = ""
+	GUISetState(@SW_HIDE, $hMainWindow)
+	$hRadio = GUICreate(translate($sLang, "List of radios"))
 	GUISetBkColor(0x00E0FFFF)
-	$rslabel = GUICtrlCreateLabel(translate($lng, "select a radio from the list to turn it on and hit apply when done:"), 0, 10, 50, 20)
-	$listlabel = GUICtrlCreateLabel(translate($lng, "radio list"), 85, 10, 50, 20)
-	$radioList = GUICtrlCreateListView(translate($lng, "Radio") & "|" & translate($lng, "URL"), 85, 90, 300, 20)
-	For $I = 0 To UBound($radios, $UBOUND_ROWS) - 1
-		If IniRead("config\config.st", "Misc", "Last radio loaded", "") = $radios[$I] Then $ifitisdefault &= $radionames[$I] & " " & translate($lng, "is set as default") & "."
-		GUICtrlCreateListViewItem($radionames[$I] & "|" & $radios[$I], $radioList)
+	$idSelectorStatus = GUICtrlCreateLabel(translate($sLang, "select a radio from the list to turn it on and hit apply when done:"), 0, 10, 50, 20)
+	GUICtrlCreateLabel(translate($sLang, "radio list"), 85, 10, 50, 20)
+	$idRadioList = GUICtrlCreateListView(translate($sLang, "Number") & "|" & translate($sLang, "Radio") & "|" & translate($sLang, "URL"), 85, 90, 300, 20)
+	For $I = 0 To UBound($aRadioList, $UBOUND_ROWS) - 1
+		If $sLatestRadioURL = $I Then $sCurrent &= $aRadioList[$I][0] & " " & translate($sLang, "is set as default") & "."
+		GUICtrlCreateListViewItem($I & "|" & $aRadioList[$I][0] & "|" & $aRadioList[$I][1], $idRadioList)
 	Next
-	GUICtrlSetData($rslabel, translate($lng, "Status:") & " " & $ifitisdefault)
-	$rscopy = GUICtrlCreateButton(translate($lng, "Copy &URL"), 140, 10, 50, 20)
-	$rsaply = GUICtrlCreateButton(translate($lng, "&Aply"), 140, 60, 50, 20)
-	$rsclose = GUICtrlCreateButton(translate($lng, "&Close"), 140, 120, 50, 20)
+	GUICtrlSetData($idSelectorStatus, translate($sLang, "Status:") & " " & $sCurrent)
+	$idCopy = GUICtrlCreateButton(translate($sLang, "Copy &URL"), 140, 10, 50, 20)
+	$idAply = GUICtrlCreateButton(translate($sLang, "&Aply"), 140, 60, 50, 20)
+	$idRadioClose = GUICtrlCreateButton(translate($sLang, "&Close"), 140, 120, 50, 20)
 	GUISetState(@SW_SHOW)
 	While 1
 		Switch GUIGetMsg()
-			Case $GUI_EVENT_CLOSE, $rsclose
-				GUIDelete($rsdialog)
-				GUISetState(@SW_SHOW, $Window_radio)
+			Case $GUI_EVENT_CLOSE, $idRadioClose
+				GUIDelete($hRadio)
+				GUISetState(@SW_SHOW, $hMainWindow)
 				ExitLoop
-			Case $rscopy
-				$OnlyTheRadioPlease = StringSplit(GUICtrlRead(GUICtrlRead($radioList)), "|")
-				ClipPut($OnlyTheRadioPlease[2])
-				GUIDelete($rsdialog)
-				GUISetState(@SW_SHOW, $Window_radio)
+			Case $idCopy
+				$aCurrentSelection = StringSplit(GUICtrlRead(GUICtrlRead($idRadioList)), "|")
+				ClipPut($aCurrentSelection[3])
+				GUIDelete($hRadio)
+				GUISetState(@SW_SHOW, $hMainWindow)
 				ExitLoop
-			Case $rsaply
-				$OnlyTheRadioPlease = StringSplit(GUICtrlRead(GUICtrlRead($radioList)), "|")
-				_Audio_stop($MusicHandle)
-				_Audio_init_stop($MusicHandle)
-				IniWrite("config\config.st", "Misc", "Last radio loaded", $OnlyTheRadioPlease[2])
-				Sleep(100)
+			Case $idAply
+				$aCurrentSelection = StringSplit(GUICtrlRead(GUICtrlRead($idRadioList)), "|")
+				_Audio_stop($hMusicHandle)
+				_Audio_init_stop($hMusicHandle)
+				$sLatestRadioURL = $aCurrentSelection[1]
+				IniWrite($sConfigPath, "radio", "Last radio loaded", $sLatestRadioURL)
 				_Audio_init_start()
-				$MusicHandle = _Set_url(IniRead("config\config.st", "Misc", "Last radio loaded", ""))
+				$MusicHandle = _Set_url($aRadioList[$sLatestRadioURL][1])
 				_Audio_play($MusicHandle)
-				GUIDelete($rsdialog)
-				GUISetState(@SW_SHOW, $Window_radio)
+				GUIDelete($hRadio)
+				GUISetState(@SW_SHOW, $hMainWindow)
 				ExitLoop
 		EndSwitch
 	WEnd
@@ -291,11 +290,10 @@ EndFunc   ;==>RadioSelector
 ; Example .......: No
 ; ===============================================================================================================================
 Func sayinfo()
-	$MusicHandle = _Set_url(IniRead("config\config.st", "Misc", "Last radio loaded", ""))
-	Local $info2 = _Get_streamtitle($MusicHandle)
-	Sleep(300)
-	speaking(translate($lng, "stream/song name:") & " " & $info2)
-	If $info2 = "0" Then speaking(translate($lng, "no song is playing"))
+	;$MusicHandle = _Set_url(IniRead($sConfigPath, "Misc", "Last radio loaded", ""))
+	Local $sInfo = _Get_streamtitle($hMusicHandle)
+	speaking(translate($sLang, "stream/song name:") & " " & $sInfo)
+	If $sInfo = "0" Then speaking(translate($sLang, "no song is playing"))
 EndFunc   ;==>sayinfo
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _Audio_init_start
@@ -531,8 +529,8 @@ EndFunc   ;==>_Get_volume
 ; Example .......: No
 ; ===============================================================================================================================
 Func _Get_bitrate($MusicHandle)
-	$a = Round(_Bass_ChannelBytes2Seconds($MusicHandle, _BASS_ChannelGetLength($MusicHandle, $BASS_POS_BYTE)))
-	$return = Round(_BASS_StreamGetFilePosition($MusicHandle, $BASS_FILEPOS_END) * 8 / $a / 1000)
+	$iAudioLen = Round(_Bass_ChannelBytes2Seconds($MusicHandle, _BASS_ChannelGetLength($MusicHandle, $BASS_POS_BYTE)))
+	$return = Round(_BASS_StreamGetFilePosition($MusicHandle, $BASS_FILEPOS_END) * 8 / $iAudioLen / 1000)
 	If StringInStr($return, "-") Then
 		$return = _BASS_StreamGetFilePosition($MusicHandle, $BASS_FILEPOS_END) * 8 / _BASS_GetConfig($BASS_CONFIG_NET_BUFFER)
 	EndIf

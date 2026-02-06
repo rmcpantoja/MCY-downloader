@@ -22,14 +22,14 @@ Func reOrganizar()
 	Sleep(1000)
 	For $I = 0 To UBound($AudioFormats, $UBOUND_ROWS) - 1
 		GUICtrlSetData($rlabel, translate($lng, "Reordering audios with the format") & " " & $AudioFormats[$I] & "...")
-		$reorderrresult = ReOrder("video", $AudioFormats[$I], $d_folder & "\audio")
+		$reorderrresult = ReOrder("video", $AudioFormats[$I], $sDest_folder, $sDest_folder & "\audio")
 		Sleep(100)
 		If $reorderrresult = 0 Then GUICtrlSetData($rlabel, translate($lng, "There is nothing to reorder here."))
 		Sleep(100)
 	Next
 	For $I = 0 To UBound($videoFormats, $UBOUND_ROWS) - 1
 		GUICtrlSetData($rlabel, translate($lng, "Reordering videos with the format") & " " & $videoFormats[$I] & "...")
-		$reorderrresult = ReOrder("Audio", $videoFormats[$I], $d_folder & "\video")
+		$reorderrresult = ReOrder("Audio", $videoFormats[$I], $sDest_folder, $sDest_folder & "\video")
 		Sleep(100)
 		If $reorderrresult = 0 Then GUICtrlSetData($rlabel, translate($lng, "There is nothing to reorder here."))
 		Sleep(100)

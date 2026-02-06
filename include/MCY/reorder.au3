@@ -1,6 +1,7 @@
 #include <FileConstants.au3>
 #include "..\translator.au3"
-Global $d_folder = IniRead("config\config.st", "General settings", "Destination folder", "")
+#include-once
+
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: reorder
 ; Description ...: rearrange audio and video, UDF which is part of MCY Downloader.
@@ -16,16 +17,16 @@ Global $d_folder = IniRead("config\config.st", "General settings", "Destination 
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func reorder($orig, $format, $destination)
+Func reorder($sOrig, $sFormat, $sBase, $sDestination)
 	$beep = "110"
-	$hFiles = FileFindFirstFile($d_folder & "\" & $orig & "\*." & $format)
+	$hFiles = FileFindFirstFile($sBase & "\" & $sOrig & "\*." & $sFormat)
 	If $hFiles = -1 Then Return False
 	Local $sFileName = "", $iResult = 0
 	While 1
 		$beep = $beep + 1
 		$sFileName = FileFindNextFile($hFiles)
 		If @error Then ExitLoop
-		$iResult = FileMove($d_folder & "\" & $sFileName, $destination)
+		$iResult = FileMove($sBase & "\" & $sFileName, $sDestination)
 		Beep($beep, 70)
 		Sleep(100)
 	WEnd

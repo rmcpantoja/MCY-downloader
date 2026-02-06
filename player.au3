@@ -1,7 +1,7 @@
 #include <guiConstants.au3>
 #include "include\log.au3"
 #include "include\reader.au3"
-#include "include\radio.au3"
+#include "include\MCY\radio.au3"
 $inputUrl = "https://www.youtube.com/watch?v=o-z3pcd4Mxo"
 Global $sYouTube_DL = IniRead("config\config.st", 'General Settings', 'Youtube-DL', 'engines64\yt-dlp.exe')
 local $linkareplay
@@ -13,7 +13,7 @@ $linkareplay = StdoutRead($iPID)
 sleep(1000)
 $split = StringSplit($linkareplay, @lf)
 If @Error Then return 0
-$selection = $Split[1] ;Because are two URLs generated
+$selection = $Split[2] ;Because are two URLs generated
 msgbox(0, "url result", $selection)
 if not StringInStr($linkareplay, "https://") then
 MsgBox(16, "error" ,"The URL is not recognized")

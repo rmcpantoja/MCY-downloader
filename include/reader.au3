@@ -2,14 +2,13 @@
 #include <File.au3>
 #include "jfw.au3"
 #include "kbc.au3"
-#include "log.au3"
 #include "menu_nvda.au3"
 #include "NVDAControllerClient.au3"
 #include "sapi.au3"
 #include <StringConstants.au3>
 #include "translator.au3"
 Global $rd_Ver = "1.5.1"
-global $lng = "en", $sSpeechHistory = "", $movement = 1, $historyEnhabled = True
+Global $lng = "en", $sSpeechHistory = "", $movement = 1, $historyEnhabled = True
 ;This is a script for interacting whit screen readers.
 ;this is a more extended version of the original reader.
 ;Author: Mateo Cedillo.
@@ -56,7 +55,7 @@ Func speaking($sText, $bInterrupt = False, $bEnableHistory = False)
 				_NVDAControllerClient_BrailleMessage($sText)
 			EndIf
 		Case $speak = "Sapi"
-			If not $bInterrupt Then
+			If Not $bInterrupt Then
 				speak($sText)
 			Else
 				speak($sText, 3)
@@ -68,7 +67,6 @@ Func speaking($sText, $bInterrupt = False, $bEnableHistory = False)
 			autodetect()
 	EndSelect
 	If $bEnableHistory And $historyEnhabled Then
-		writeinlog("ReaderEx: Speech history activated")
 		$sSpeechHistory &= $sText & @CRLF
 		HotKeySet("{home}", "SpeechHistory")
 		HotKeySet("{pgdn}", "SpeechHistory")
@@ -96,7 +94,6 @@ EndFunc   ;==>speaking
 ; Example .......: No
 ; ===============================================================================================================================
 Func disableHotkeys()
-	writeinlog("disabling hotkeys")
 	$historyEnhabled = False
 	HotKeySet("{home}")
 	HotKeySet("{pgdn}")
@@ -121,7 +118,6 @@ EndFunc   ;==>disableHotkeys
 Func SpeechHistory()
 	$aNavigator = StringSplit(StringTrimRight($sSpeechHistory, 1), @LF)
 	Sleep(10)
-	writeinlog(@HotKeyPressed)
 	Switch @HotKeyPressed
 		Case "{HOME}"
 			If IsArray($aNavigator) Then
@@ -167,8 +163,8 @@ Func SpeechHistory()
 			EndIf
 		Case "{c}"
 			If IsArray($aNavigator) Then
-				clipPut($aNavigator[$movement])
-				speaking(translate($lng, "copied to clipboard") &": " &$aNavigator[$movement])
+				ClipPut($aNavigator[$movement])
+				speaking(translate($lng, "copied to clipboard") & ": " & $aNavigator[$movement])
 			Else
 				speaking(translate($lng, "no history"))
 			EndIf
@@ -176,7 +172,7 @@ Func SpeechHistory()
 			$aNavigator = ""
 			$sSpeechHistory = ""
 			speaking(translate($lng, "Speech history cleared"))
-		case "{bs}"
+		Case "{bs}"
 			disableHotkeys()
 			speaking(translate($lng, "History off"))
 	EndSwitch
@@ -224,16 +220,16 @@ EndFunc   ;==>autodetect
 Func CreateTtsDialog($sDialogName, $sText, $sTtsString = translate($lng, "press enter to continue, space to repeat information."))
 	disableHotkeys()
 	;Identifies if the dialog has more than one line. If so, we will have the user scroll through the lines with the arrows.
-	if StringInStr($sText, @lf) then
-		$isMultiLine = true
+	If StringInStr($sText, @LF) Then
+		$isMultiLine = True
 		$sTtsString = translate($lng, "Use the arrows to read this dialog and enter to continue")
-		$separateML = StringSplit($sText, @lf)
+		$separateML = StringSplit($sText, @LF)
 		$dmove = 1
-		speaking($sDialogName & "  " &translate($lng, "Dialog") & @LF & $separateml[1] & @lf & $SttsString, true)
+		speaking($sDialogName & "  " & translate($lng, "Dialog") & @LF & $separateML[1] & @LF & $sTtsString, True)
 	Else
-		$isMultiLine = false
-		speaking($sDialogName & "  " &translate($lng, "Dialog") & @LF & $sText & @lf & $SttsString, true)
-	EndIF
+		$isMultiLine = False
+		speaking($sDialogName & "  " & translate($lng, "Dialog") & @LF & $sText & @LF & $sTtsString, True)
+	EndIf
 	While 1
 		$active_window = WinGetProcess("")
 		If $active_window = @AutoItPID Then
@@ -242,83 +238,83 @@ Func CreateTtsDialog($sDialogName, $sText, $sTtsString = translate($lng, "press 
 			ContinueLoop
 		EndIf
 		If _IsPressed($spacebar) Or _IsPressed($left) Or _IsPressed($right) Then
-			if $isMultiLine then
-				speaking($separateml[$dmove])
+			If $isMultiLine Then
+				speaking($separateML[$dmove])
 			Else
 				speaking($sText & @LF & $sTtsString)
-			EndIF
+			EndIf
 			While _IsPressed($spacebar) Or _IsPressed($left) Or _IsPressed($right)
 				Sleep(50)
 			WEnd
 		EndIf
-		If _IsPressed($down) then
-			if $isMultiLine then
-				$dmove = $dmove +1
+		If _IsPressed($down) Then
+			If $isMultiLine Then
+				$dmove = $dmove + 1
 				If $dmove >= $separateML[0] Then
-					$dmove = $separateml[0]
+					$dmove = $separateML[0]
 					speaking(translate($lng, "Press enter to continue"))
-				EndIF
+				EndIf
 				speaking($separateML[$dmove])
 			Else
-				speaking($sText & @LF & $sTtsString)			
-			EndIF
+				speaking($sText & @LF & $sTtsString)
+			EndIf
 			While _IsPressed($down)
 				Sleep(50)
 			WEnd
 		EndIf
-		If _IsPressed($up) then
-			if $isMultiLine then
-				$dmove = $dmove -1
+		If _IsPressed($up) Then
+			If $isMultiLine Then
+				$dmove = $dmove - 1
 				If $dmove <= 1 Then $dmove = 1
 				speaking($separateML[$dmove])
 			Else
-				speaking($sText & @LF & $sTtsString)			
-			EndIF
+				speaking($sText & @LF & $sTtsString)
+			EndIf
 			While _IsPressed($up)
 				Sleep(50)
 			WEnd
 		EndIf
-		If _IsPressed($home) then
-			if $isMultiLine then
+		If _IsPressed($home) Then
+			If $isMultiLine Then
 				$dmove = 1
 				speaking($separateML[$dmove])
 			Else
-				speaking($sText & @LF & $sTtsString)			
-			EndIF
+				speaking($sText & @LF & $sTtsString)
+			EndIf
 			While _IsPressed($home)
 				Sleep(50)
 			WEnd
 		EndIf
-		If _IsPressed($end) then
-			if $isMultiLine then
-				$dmove = $separateml[0]
+		If _IsPressed($end) Then
+			If $isMultiLine Then
+				$dmove = $separateML[0]
 				speaking($separateML[$dmove])
 			Else
-				speaking($sText & @LF & $sTtsString)			
-			EndIF
+				speaking($sText & @LF & $sTtsString)
+			EndIf
 			While _IsPressed($end)
 				Sleep(50)
 			WEnd
 		EndIf
-		If _IsPressed($caps) and _IsPressed($tab) or _IsPressed($insert) and _IsPressed($tab) then
-			speaking($sDialogName &", " &translate($lng, "Dialog"))
-			While _IsPressed($caps) and _IsPressed($tab) or _IsPressed($insert) and _IsPressed($tab)
+		If _IsPressed($caps) And _IsPressed($tab) Or _IsPressed($insert) And _IsPressed($tab) Then
+			speaking($sDialogName & ", " & translate($lng, "Dialog"))
+			While _IsPressed($caps) And _IsPressed($tab) Or _IsPressed($insert) And _IsPressed($tab)
 				Sleep(50)
 			WEnd
 		EndIf
-		If _IsPressed($tab) then
+		If _IsPressed($tab) Then
 			speaking($sDialogName)
 			While _IsPressed($tab)
 				Sleep(50)
 			WEnd
 		EndIf
 		If _IsPressed($control) And _IsPressed($c) Then
-			if $isMultiLine then
-				ClipPut($separateml[$dmove])
+			If $isMultiLine Then
+				ClipPut($separateML[$dmove])
 			Else
 				ClipPut($sText)
 			EndIf
-			speaking(translate($lng, "Copied to clipboard") &". " & clipGet())
+			speaking(translate($lng, "Copied to clipboard") & ". " & ClipGet())
 			While _IsPressed($control) And _IsPressed($c)
 				Sleep(50)
 			WEnd
@@ -331,7 +327,7 @@ Func CreateTtsDialog($sDialogName, $sText, $sTtsString = translate($lng, "press 
 		EndIf
 		Sleep(10)
 	WEnd
-EndFunc   ;==>TTsDialog
+EndFunc   ;==>CreateTtsDialog
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: createTtsDocument
 ; Description ...: Document reader, interactive document, document manager with tts, etc. If i had to give a fuller description of this itself i would say its a greath document reader but based on tts and keyboard shortcuts.
@@ -346,10 +342,8 @@ EndFunc   ;==>TTsDialog
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func createTtsDocument($sFiletoread, $sTitle, $bSelectionMode = false)
+Func createTtsDocument($sFiletoread, $sTitle, $bSelectionMode = False)
 	disableHotkeys()
-	writeinlog("ReaderEx.au3: Loading document mode...")
-	writeinlog("Using ReaderEx version: " & $rd_Ver)
 	$move_doc = 0
 	$textselector = 0
 	Local $r_file = FileReadToArray($sFiletoread)
@@ -362,22 +356,19 @@ Func createTtsDocument($sFiletoread, $sTitle, $bSelectionMode = false)
 	Local $textselected = ""
 	If @error Then
 		speaking(translate($lng, "Error reading file..."))
-		writeinlog("Document mode: File to read: " & $sFiletoread & " error. Error reading file.")
 		$docError = 1
 	Else
-		if not $bSelectionmode then
+		If Not $bSelectionMode Then
 			$smResult = translate($lng, "Selection mode off")
 		Else
 			$smResult = translate($lng, "Selection mode on")
 		EndIf
 		speaking($sTitle & " " & translate($lng, "document.") & @CRLF & $smResult)
-		writeinlog("Document mode: Dialog: " & $sTitle & @CRLF & "file to read: " & $sFiletoread &@crlf &"Document information: Lines: " & $iCountLines)
 	EndIf
 	HotKeySet("{f1}")
 	For $foundPages = 0 To $iCountLines Step 30
 		$pages = $pages + 1
 	Next
-	writeinlog("Document mode: Total number of pages: " & $pages)
 	While 1
 		If $docError = 1 Then ExitLoop
 		$active_window = WinGetProcess("")
@@ -387,48 +378,42 @@ Func createTtsDocument($sFiletoread, $sTitle, $bSelectionMode = false)
 			ContinueLoop
 		EndIf
 		If _IsPressed($f1) Then
-			writeinlog("Document mode: f1 pressed")
-			speaking(translate($lng, "Interaction commands:") & @CRLF & translate($lng, "Use the up and down arrows to read the document.") & @CRLF & translate($lng, "Use the home and end keys to go to the beginning or end of the document.") & @CRLF & translate($lng, "Use page up and page down to go forward or backward ten lines.") & @CRLF & translate($lng, "Use control+d and control+u to go forward or backward one page.") & @CRLF & translate($lng, "Press the s and r keys to enhable automatic reading. A to read all content from start to end, r to read from cursor position to end.") &@crlf &translate($lng, "Use control+shift+s to open selection mode, which will allow you to select multiple text marks and perform editing commands and operations.") & @CRLF & translate($lng, "Press the I key to open the print options, which will allow you to print the entire document or specific content.") & @CRLF & translate($lng, "Use the editing commands to cut, copy, paste and select all the text.") & @CRLF & translate($lng, "Escape to exit document mode."))
+			speaking(translate($lng, "Interaction commands:") & @CRLF & translate($lng, "Use the up and down arrows to read the document.") & @CRLF & translate($lng, "Use the home and end keys to go to the beginning or end of the document.") & @CRLF & translate($lng, "Use page up and page down to go forward or backward ten lines.") & @CRLF & translate($lng, "Use control+d and control+u to go forward or backward one page.") & @CRLF & translate($lng, "Press the s and r keys to enhable automatic reading. A to read all content from start to end, r to read from cursor position to end.") & @CRLF & translate($lng, "Use control+shift+s to open selection mode, which will allow you to select multiple text marks and perform editing commands and operations.") & @CRLF & translate($lng, "Press the I key to open the print options, which will allow you to print the entire document or specific content.") & @CRLF & translate($lng, "Use the editing commands to cut, copy, paste and select all the text.") & @CRLF & translate($lng, "Escape to exit document mode."))
 			While _IsPressed($f1)
 				Sleep(50)
 			WEnd
 		EndIf
 		If _IsPressed($f2) Then
-			writeinlog("Document mode: f2 pressed")
 			speaking(translate($lng, "Information commands:") & @CRLF & translate($lng, "Press the e key to spell the current line.") & @CRLF & translate($lng, "Use the l key to speak the line number you are on.") & @CRLF & translate($lng, "Use the T key to check the number of total and remaining lines of the document.") & @CRLF & translate($lng, "Press SHIFT+P to see the total number of pages in the document (useful for printing, for example).") & @CRLF & translate($lng, "Commands to check number of words:") & @CRLF & translate($lng, "1: Speaks the total number of words in the entire document.") & @CRLF & translate($lng, "2: Speaks the total number of words in the current line.") & @CRLF & translate($lng, "3: Speaks the total number of words filled in the selection."), True)
 			While _IsPressed($f2)
 				Sleep(50)
 			WEnd
 		EndIf
 		If _IsPressed($f3) Then
-			writeinlog("Document mode: f3 pressed")
-			speaking(translate($lng, "Voice commands:") & @CRLF & translate($lng, "Press CTRL+SHIFT+plus (+) key to increase the reading speed.") & @CRLF & translate($lng, "Press CTRL+SHIFT+minus or dash (-) key to decrease the reading speed.") &@crlf &translate($lng, "You can also press the plus (+) or minus (-) key to increase or decrease the reading volume."), True)
+			speaking(translate($lng, "Voice commands:") & @CRLF & translate($lng, "Press CTRL+SHIFT+plus (+) key to increase the reading speed.") & @CRLF & translate($lng, "Press CTRL+SHIFT+minus or dash (-) key to decrease the reading speed.") & @CRLF & translate($lng, "You can also press the plus (+) or minus (-) key to increase or decrease the reading volume."), True)
 			While _IsPressed($f3)
 				Sleep(50)
 			WEnd
 		EndIf
 		If _IsPressed($home) Then
-			writeinlog("Home pressed")
-			If $bSelectionmode Then
+			If $bSelectionMode Then
 				If Not $textselected = "" Then
 					speaking(translate($lng, "Unselected"), True)
 					$textselected = ""
 				EndIf
 			EndIf
 			$move_doc = "0"
-			if $r_file[$move_doc] = "" then
+			If $r_file[$move_doc] = "" Then
 				speaking(translate($lng, "Blank line"))
 			Else
 				speaking($r_file[$move_doc], True)
 			EndIf
-			writeinlog("Home pressed. Position " &$move_doc)
 			While _IsPressed($home)
 				Sleep(50)
 			WEnd
 		EndIf
 		If _IsPressed($page_down) Then
-			writeinlog("PGDN pressed")
-			If $bSelectionmode Then
+			If $bSelectionMode Then
 				For $I = $move_doc To $move_doc + 9
 					If $move_doc >= $iCountLines - 1 Then
 						$move_doc = $iCountLines - 1
@@ -439,26 +424,24 @@ Func createTtsDocument($sFiletoread, $sTitle, $bSelectionMode = false)
 				Next
 				speaking(translate($lng, "Ten lines have been selected"), True)
 				speaking($r_file[$move_doc], True)
-				writeinlog("Selected line: " & $move_doc)
 			Else
 				$move_doc = $move_doc + 10
 				If $move_doc >= $iCountLines Then
 					$move_doc = $iCountLines - 1
 					speaking(translate($lng, "document end. Press escape to back."), True)
 				EndIf
-				if $r_file[$move_doc] = "" then
+				If $r_file[$move_doc] = "" Then
 					speaking(translate($lng, "Blank line"))
 				Else
 					speaking($r_file[$move_doc], True)
-				EndIF
-				writeinlog("line: " & $move_doc)
+				EndIf
 			EndIf
 			While _IsPressed($page_down)
 				Sleep(50)
 			WEnd
 		EndIf
 		If _IsPressed($page_up) Then
-			If $bSelectionmode Then
+			If $bSelectionMode Then
 				$textselector = 10
 				For $I = $move_doc To $move_doc - 9 Step -1
 					If $move_doc <= 0 Then
@@ -471,25 +454,21 @@ Func createTtsDocument($sFiletoread, $sTitle, $bSelectionMode = false)
 				Next
 				speaking(translate($lng, "Ten lines have been selected"))
 				speaking($r_file[$move_doc], True)
-				writeinlog("Selected line: " & $move_doc)
 			Else
 				$move_doc = $move_doc - 10
 				If $move_doc <= 0 Then $move_doc = "0"
-					if $r_file[$move_doc] = "" then
-						speaking(translate($lng, "Blank line"))
-					Else
-						speaking($r_file[$move_doc], True)
+				If $r_file[$move_doc] = "" Then
+					speaking(translate($lng, "Blank line"))
+				Else
+					speaking($r_file[$move_doc], True)
 				EndIf
-				writeinlog("Line: " & $move_doc)
 			EndIf
 			While _IsPressed($page_up)
 				Sleep(50)
 			WEnd
 		EndIf
 		If _IsPressed($control) And _IsPressed($d) Then
-			writeinlog("Control+d pressed. Forwarding page")
-			If $bSelectionmode Then
-				writeinlog("Selection mode on. Selecting the page...")
+			If $bSelectionMode Then
 				For $I = $move_doc To $move_doc + 29
 					If $move_doc >= $iCountLines - 1 Then
 						$move_doc = $iCountLines - 1
@@ -507,16 +486,13 @@ Func createTtsDocument($sFiletoread, $sTitle, $bSelectionMode = false)
 					speaking(translate($lng, "document end. Press escape to back."), True)
 				EndIf
 				speaking($r_file[$move_doc], True)
-				writeinlog("Line: " & $move_doc)
 			EndIf
 			While _IsPressed($control) And _IsPressed($d)
 				Sleep(50)
 			WEnd
 		EndIf
 		If _IsPressed($control) And _IsPressed($u) Then
-			writeinlog("Control+U pressed")
-			If $bSelectionmode Then
-				writeinlog("Selection mode on. Selecting page...")
+			If $bSelectionMode Then
 				$textselector = 30
 				For $I = $move_doc To $move_doc - 29 Step -1
 					If $move_doc <= 0 Then
@@ -533,26 +509,24 @@ Func createTtsDocument($sFiletoread, $sTitle, $bSelectionMode = false)
 				$move_doc = $move_doc - 30
 				If $move_doc <= 0 Then $move_doc = "0"
 				speaking($r_file[$move_doc], True)
-				writeinlog("Line: " & $move_doc)
 			EndIf
 			While _IsPressed($control) And _IsPressed($u)
 				Sleep(50)
 			WEnd
 		EndIf
 		If _IsPressed($end) Then
-			If $bSelectionmode Then
+			If $bSelectionMode Then
 				If Not $textselected = "" Then
 					speaking(translate($lng, "Unselected"), True)
 					$textselected = ""
 				EndIf
 			EndIf
 			$move_doc = $iCountLines - 1
-			if $r_file[$move_doc] = "" then
+			If $r_file[$move_doc] = "" Then
 				speaking(translate($lng, "Blank line"))
 			Else
 				speaking($r_file[$move_doc] & @CRLF & translate($lng, "document end. Press escape to back."), True)
 			EndIf
-			writeinlog("Line: " & $move_doc)
 			While _IsPressed($end)
 				Sleep(50)
 			WEnd
@@ -560,58 +534,54 @@ Func createTtsDocument($sFiletoread, $sTitle, $bSelectionMode = false)
 		If _IsPressed($up) Then
 			$move_doc = $move_doc - 1
 			If $move_doc <= 0 Then
-				If $bSelectionmode Then speaking(translate($lng, "You have reached the home of the document, there is nothing else to select."), True)
+				If $bSelectionMode Then speaking(translate($lng, "You have reached the home of the document, there is nothing else to select."), True)
 				$move_doc = "0"
 			EndIf
-			If $bSelectionmode Then
+			If $bSelectionMode Then
 				$textselected &= $r_file[$move_doc] & @CRLF
 				speaking(translate($lng, "Was selected") & " " & $r_file[$move_doc], True)
 			Else
-				if $r_file[$move_doc] = "" then
+				If $r_file[$move_doc] = "" Then
 					speaking(translate($lng, "Blank line"))
 				Else
 					speaking($r_file[$move_doc], True)
 				EndIf
-				writeinlog("Line: " & $move_doc)
 			EndIf
 			While _IsPressed($up)
-				If $bSelectionmode Then Beep(4000, 50)
+				If $bSelectionMode Then Beep(4000, 50)
 				Sleep(50)
 			WEnd
 		EndIf
 		If _IsPressed($down) Then
 			$move_doc = $move_doc + 1
 			If $move_doc >= $iCountLines Then
-				If $bSelectionmode Then speaking(translate($lng, "You have reached the end of the document, there is nothing else to select."))
+				If $bSelectionMode Then speaking(translate($lng, "You have reached the end of the document, there is nothing else to select."))
 				speaking(translate($lng, "document end. Press escape to back."), True)
 				$move_doc = $iCountLines - 1
 			EndIf
-			If $bSelectionmode Then
+			If $bSelectionMode Then
 				$textselected &= $r_file[$move_doc] & @CRLF
 				speaking(translate($lng, "Was selected") & " " & $r_file[$move_doc], True)
 			Else
-				if $r_file[$move_doc] = "" then
+				If $r_file[$move_doc] = "" Then
 					speaking(translate($lng, "Blank line"))
 				Else
 					speaking($r_file[$move_doc], True)
 				EndIf
-				writeinlog("Line: " & $move_doc)
 			EndIf
 			While _IsPressed($down)
-				If $bSelectionmode Then Beep(4000, 50)
+				If $bSelectionMode Then Beep(4000, 50)
 				Sleep(50)
 			WEnd
 		EndIf
 		If _IsPressed($l) Then
-			writeinlog("L pressed")
 			speaking(translate($lng, "Line:") & " " & $move_doc + 1, True)
 			While _IsPressed($l)
 				Sleep(50)
 			WEnd
 		EndIf
 		If _IsPressed($e) Then
-			writeinlog("E pressed")
-			if not $r_file[$move_doc] = "" then
+			If Not $r_file[$move_doc] = "" Then
 				$lenght = StringLen($r_file[$move_doc])
 				$remove = -1
 				$remover = $lenght
@@ -628,7 +598,7 @@ Func createTtsDocument($sFiletoread, $sTitle, $bSelectionMode = false)
 					If StringTrimLeft(StringTrimRight($r_file[$move_doc], $remover), $remove) = "(" Then speaking(translate($lng, "Open parentheses"))
 					If StringTrimLeft(StringTrimRight($r_file[$move_doc], $remover), $remove) = ")" Then speaking(translate($lng, "Close parentheses"))
 				Next
-			else
+			Else
 				speaking(translate($lng, "blank line"))
 			EndIf
 			While _IsPressed($e)
@@ -636,21 +606,18 @@ Func createTtsDocument($sFiletoread, $sTitle, $bSelectionMode = false)
 			WEnd
 		EndIf
 		If _IsPressed($t) Then
-			writeinlog("T pressed")
 			speaking(translate($lng, "total lines:") & " " & $iCountLines & @CRLF & translate($lng, "Remaining lines:") & " " & $iCountLines - $move_doc - 1, True)
 			While _IsPressed($t)
 				Sleep(50)
 			WEnd
 		EndIf
 		If _IsPressed($shift) And _IsPressed($p) Then
-			writeinlog("SHIFT+P pressed")
 			speaking(translate($lng, "Total number of pages:") & " " & $pages, True)
 			While _IsPressed($shift) And _IsPressed($p)
 				Sleep(50)
 			WEnd
 		EndIf
-		If _IsPressed($control) and _IsPressed($shift) and _IsPressed($tPlus) Then
-			writeinlog("CTRL+SHIFT+plus normal keyboard pressed")
+		If _IsPressed($control) And _IsPressed($shift) And _IsPressed($tPlus) Then
 			If IniRead(@ScriptDir & "\config\config.st", "accessibility", "Speak Whit", "") = "Sapi" Or autodetect() = "Sapi" Then
 				$sprate = $sprate + 1
 				sprate($sprate)
@@ -663,12 +630,11 @@ Func createTtsDocument($sFiletoread, $sTitle, $bSelectionMode = false)
 			Else
 				speaking(translate($lng, "This command is not supported in") & " " & autodetect() & ".", True)
 			EndIf
-			While _IsPressed($control) and _IsPressed($shift) and _IsPressed($tPlus)
+			While _IsPressed($control) And _IsPressed($shift) And _IsPressed($tPlus)
 				Sleep(50)
 			WEnd
 		EndIf
 		If _IsPressed($tPlus) Then
-			writeinlog("plus normal keyboard pressed")
 			If IniRead(@ScriptDir & "\config\config.st", "accessibility", "Speak Whit", "") = "Sapi" Or autodetect() = "Sapi" Then
 				$spvol = $spvol + 10
 				spvolume($spvol)
@@ -685,8 +651,7 @@ Func createTtsDocument($sFiletoread, $sTitle, $bSelectionMode = false)
 				Sleep(50)
 			WEnd
 		EndIf
-		If _IsPressed($control) and _IsPressed($shift) and _IsPressed($tMinus) Then
-			writeinlog("CTRL+SHIFT+dash normal keyboard pressed")
+		If _IsPressed($control) And _IsPressed($shift) And _IsPressed($tMinus) Then
 			If IniRead(@ScriptDir & "\config\config.st", "accessibility", "Speak Whit", "") = "Sapi" Or autodetect() = "Sapi" Then
 				$sprate = $sprate - 1
 				sprate($sprate)
@@ -699,12 +664,11 @@ Func createTtsDocument($sFiletoread, $sTitle, $bSelectionMode = false)
 			Else
 				speaking(translate($lng, "This command is not supported in") & " " & autodetect() & ".", True)
 			EndIf
-			While _IsPressed($control) and _IsPressed($shift) and _IsPressed($tMinus)
+			While _IsPressed($control) And _IsPressed($shift) And _IsPressed($tMinus)
 				Sleep(50)
 			WEnd
 		EndIf
 		If _IsPressed($tMinus) Then
-			writeinlog("dash normal keyboard pressed")
 			If IniRead(@ScriptDir & "\config\config.st", "accessibility", "Speak Whit", "") = "Sapi" Or autodetect() = "Sapi" Then
 				$spvol = $spvol - 10
 				spvolume($spvol)
@@ -730,8 +694,8 @@ Func createTtsDocument($sFiletoread, $sTitle, $bSelectionMode = false)
 				Else
 					speaking(translate($lng, "An error occurred while sending text"), True)
 				EndIf
-				If $bSelectionmode Then
-					$bSelectionmode = false
+				If $bSelectionMode Then
+					$bSelectionMode = False
 					speaking(translate($lng, "Selection mode off"))
 				EndIf
 			EndIf
@@ -746,21 +710,21 @@ Func createTtsDocument($sFiletoread, $sTitle, $bSelectionMode = false)
 				$textselected &= $r_file[$selecting] & @CRLF
 			Next
 			speaking(translate($lng, "All text was selected"))
-			If $bSelectionmode Then
-				$bSelectionmode = false
+			If $bSelectionMode Then
+				$bSelectionMode = False
 				speaking(translate($lng, "Selection mode off"))
-			EndIF
+			EndIf
 			While _IsPressed($control) And _IsPressed($a)
 				Sleep(50)
 			WEnd
 		EndIf
 		If _IsPressed($control) And _IsPressed($shift) And _IsPressed($s) Then
-			If $bSelectionmode Then
+			If $bSelectionMode Then
 				speaking(translate($lng, "He left the selection mode"), True)
-				$bSelectionmode = false
+				$bSelectionMode = False
 			Else
 				speaking(translate($lng, "Entered to the selection mode"), True)
-				$bSelectionmode = true
+				$bSelectionMode = True
 			EndIf
 			While _IsPressed($control) And _IsPressed($shift) And _IsPressed($s)
 				Sleep(50)
@@ -797,12 +761,11 @@ Func createTtsDocument($sFiletoread, $sTitle, $bSelectionMode = false)
 			WEnd
 		EndIf
 		If _IsPressed($s) Then
-			writeinlog("S pressed")
-			speaking(translate($lng, "Automatic reading mode activated") &". " &translate($lng, "Reading all the content."))
-			for $Iread = 0 to $iCountLines -1
+			speaking(translate($lng, "Automatic reading mode activated") & ". " & translate($lng, "Reading all the content."))
+			For $Iread = 0 To $iCountLines - 1
 				$move_doc = $Iread
 				speaking($r_file[$Iread])
-				sleep(10)
+				Sleep(10)
 			Next
 			speaking(translate($lng, "Done"))
 			While _IsPressed($s)
@@ -810,12 +773,11 @@ Func createTtsDocument($sFiletoread, $sTitle, $bSelectionMode = false)
 			WEnd
 		EndIf
 		If _IsPressed($r) Then
-			writeinlog("R pressed")
-			speaking(translate($lng, "Automatic reading mode activated") &". " &translate($lng, "Reading from position at cursor."))
-			for $Iread = $move_doc to $iCountLines -1
+			speaking(translate($lng, "Automatic reading mode activated") & ". " & translate($lng, "Reading from position at cursor."))
+			For $Iread = $move_doc To $iCountLines - 1
 				$move_doc = $Iread
 				speaking($r_file[$Iread])
-				sleep(10)
+				Sleep(10)
 			Next
 			speaking(translate($lng, "Done"))
 			While _IsPressed($r)
@@ -823,7 +785,6 @@ Func createTtsDocument($sFiletoread, $sTitle, $bSelectionMode = false)
 			WEnd
 		EndIf
 		If _IsPressed($I) Then
-			writeinlog("I pressed")
 			$prtemp = @TempDir & "\prtemp.txt"
 			$printmenu = reader_create_menu(translate($lng, "Print options, use the arrows to navigate and enter to start"), translate($lng, "Print the entire document") & "|" & translate($lng, "Print selection") & "|" & translate($lng, "Close this menu"), 1, translate($lng, "OF"))
 			Select
@@ -859,13 +820,10 @@ Func createTtsDocument($sFiletoread, $sTitle, $bSelectionMode = false)
 			WEnd
 		EndIf
 		If _IsPressed($escape) Then
-			writeinlog("Escape pressed")
 			$newfilename = ""
 			$not = 0
 			If Not $textselected = "" Then
-				writeinlog("there are selected elements. Opening menu.")
 				$sabemenu = reader_create_menu(translate($lng, "Attention! you have selected items. Would you like to save them?"), translate($lng, "Copy to clipboard") & "|" & translate($lng, "Save to a text file") & "|" & translate($lng, "Don't save") & "|" & translate($lng, "Cancel"), 1, translate($lng, "OF"))
-				writeinlog("Menu item selected: " & $sabemenu)
 				Select
 					Case $sabemenu = 1
 						ClipPut($textselected)
